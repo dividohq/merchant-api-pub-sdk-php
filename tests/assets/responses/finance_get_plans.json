@@ -1,0 +1,166 @@
+{
+  "meta": {
+    "count": 4,
+    "current_page": 1,
+    "first_item": 1,
+    "has_more_pages": false,
+    "last_item": 4,
+    "last_page": 1,
+    "per_page": 100,
+    "total": 4
+  },
+  "data": [
+    {
+      "type": "finance-plans",
+      "id": "F7485F0E5-202B-4879-4F00-154E109E7FE4",
+      "attributes": {
+        "agreement_duration_months": 12,
+        "deferral_period_months": 0,
+        "interest_rate_percentage": 0.199,
+        "deposit": {
+          "maximum_percentage": 0.5,
+          "minimum_percentage": 0.1
+        },
+        "credit_amount": {
+          "minimum_amount": 250,
+          "maximum_amount": null
+        },
+        "fees": {
+          "instalment_fee_amount": 0,
+          "setup_fee_amount": 0
+        },
+        "description": "[omni.f4][UK] Omni 12 months, 19.9%, 10% deposit, hosted signing",
+        "calculation_family": "d9401b9e8d7dbff9040fddf2b54f1d5b",
+        "lender_code": "49d3fdc2-5404-4c83-84be-b2f449550a7b"
+      },
+      "relationships": {
+        "country": {
+          "data": {
+            "type": "countries",
+            "id": "GB"
+          }
+        },
+        "currency": {
+          "data": {
+            "type": "currencies",
+            "id": "GBP"
+          }
+        }
+      }
+    },
+    {
+      "type": "finance-plans",
+      "id": "F656092B8-0266-DEC6-A614-9B110C63A98B",
+      "attributes": {
+        "agreement_duration_months": 12,
+        "deferral_period_months": 0,
+        "interest_rate_percentage": 0.099,
+        "deposit": {
+          "maximum_percentage": 1,
+          "minimum_percentage": 0
+        },
+        "credit_amount": {
+          "minimum_amount": 0,
+          "maximum_amount": null
+        },
+        "fees": {
+          "instalment_fee_amount": 0,
+          "setup_fee_amount": 0
+        },
+        "description": "[shawbrook.f3][UK] Shawbrook 12 months, 9.9%, 10% deposit, hosted signing",
+        "calculation_family": "ca326d0cb730607e594b13f2fa06ec6d",
+        "lender_code": "MEF"
+      },
+      "relationships": {
+        "country": {
+          "data": {
+            "type": "countries",
+            "id": "GB"
+          }
+        },
+        "currency": {
+          "data": {
+            "type": "currencies",
+            "id": "GBP"
+          }
+        }
+      }
+    },
+    {
+      "type": "finance-plans",
+      "id": "FFC6BF69F-C16C-A954-2A4F-F814A6C760F4",
+      "attributes": {
+        "agreement_duration_months": 12,
+        "deferral_period_months": 0,
+        "interest_rate_percentage": 0,
+        "deposit": {
+          "maximum_percentage": 0.5,
+          "minimum_percentage": 0
+        },
+        "credit_amount": {
+          "minimum_amount": 0,
+          "maximum_amount": null
+        },
+        "fees": {
+          "instalment_fee_amount": 0,
+          "setup_fee_amount": 0
+        },
+        "description": "[shawbrook.f1][UK]\u00a0Shawbrook 12 months, interest free, 10% deposit, hosted signing",
+        "calculation_family": "ca326d0cb730607e594b13f2fa06ec6d",
+        "lender_code": "MEF"
+      },
+      "relationships": {
+        "country": {
+          "data": {
+            "type": "countries",
+            "id": "GB"
+          }
+        },
+        "currency": {
+          "data": {
+            "type": "currencies",
+            "id": "GBP"
+          }
+        }
+      }
+    },
+    {
+      "type": "finance-plans",
+      "id": "F1781D583-84A4-E1EE-4CDB-768E996F0409",
+      "attributes": {
+        "agreement_duration_months": 24,
+        "deferral_period_months": 0,
+        "interest_rate_percentage": 0.099,
+        "deposit": {
+          "maximum_percentage": 0,
+          "minimum_percentage": 0
+        },
+        "credit_amount": {
+          "minimum_amount": 0,
+          "maximum_amount": null
+        },
+        "fees": {
+          "instalment_fee_amount": 0,
+          "setup_fee_amount": 0
+        },
+        "description": "Consors Finanz - 9.9% 12 months",
+        "calculation_family": "234ff4a5ed290e2c2eb86850854843f2",
+        "lender_code": "2512-8403"
+      },
+      "relationships": {
+        "country": {
+          "data": {
+            "type": "countries",
+            "id": "DE"
+          }
+        },
+        "currency": {
+          "data": {
+            "type": "currencies",
+            "id": "EUR"
+          }
+        }
+      }
+    }
+  ]
+}
