@@ -11,6 +11,7 @@ abstract class AbstractModel
 
     public function getPayload()
     {
+        // @todo - snake_case attributes.
         return array_filter(get_object_vars($this), function ($value) {
             return !is_null($value);
         });
