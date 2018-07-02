@@ -1,8 +1,15 @@
 <?php
 
 namespace Divido\MerchantSDK;
+
 use Divido\MerchantSDK\Handlers\ApplicationsHandler;
+use Divido\MerchantSDK\Handlers\ApplicationActivationsHandler;
+use Divido\MerchantSDK\Handlers\ApplicationCancellationsHandler;
+use Divido\MerchantSDK\Handlers\ApplicationDocumentsHandler;
+use Divido\MerchantSDK\Handlers\ApplicationRefundsHandler;
+use Divido\MerchantSDK\Handlers\ChannelsHandler;
 use Divido\MerchantSDK\Handlers\FinancesHandler;
+use Divido\MerchantSDK\Handlers\SettlementsHandler;
 use Divido\MerchantSDK\HttpClient\GuzzleAdapter;
 use Divido\MerchantSDK\HttpClient\HttpClientWrapper;
 
@@ -15,7 +22,6 @@ use Divido\MerchantSDK\HttpClient\HttpClientWrapper;
  */
 class Client
 {
-
     /**
      * The API environment to consume
      *
@@ -36,7 +42,6 @@ class Client
      * @var HttpClientWrapper
      */
     private $httpClientWrapper;
-
 
     final public function __construct(string $apiKey, $environment = Environment::SANDBOX, $httpClient = null)
     {
@@ -62,7 +67,6 @@ class Client
     {
         return $this->environment;
     }
-
 
     /**
      * Get the Finances method handler
@@ -94,7 +98,93 @@ class Client
         return $this->handlers['applications'];
     }
 
+    /**
+     * Get the Settlements methods handler
+     *
+     * @return SettlementsHandler
+     * @throws \Exception
+     */
+    public function settlements()
+    {
+        if (!array_key_exists('settlements', $this->handlers)) {
+            $this->handlers['settlements'] = new SettlementsHandler($this->httpClientWrapper);
+        }
 
+        return $this->handlers['settlements'];
+    }
 
+    /**
+     * Get the Channels methods handler
+     *
+     * @return ChannelsHandler
+     * @throws \Exception
+     */
+    public function channels()
+    {
+        if (!array_key_exists('channels', $this->handlers)) {
+            $this->handlers['channels'] = new ChannelsHandler($this->httpClientWrapper);
+        }
 
+        return $this->handlers['channels'];
+    }
+
+    /**
+     * Get the Activations methods handler
+     *
+     * @return ApplicationActivationsHandler
+     * @throws \Exception
+     */
+    public function application_activations()
+    {
+        if (!array_key_exists('application_activations', $this->handlers)) {
+            $this->handlers['application_activations'] = new ApplicationActivationsHandler($this->httpClientWrapper);
+        }
+
+        return $this->handlers['application_activations'];
+    }
+
+    /**
+     * Get the Cancellations methods handler
+     *
+     * @return ApplicationCancellationsHandler
+     * @throws \Exception
+     */
+    public function application_cancellations()
+    {
+        if (!array_key_exists('application_cancellations', $this->handlers)) {
+            $this->handlers['application_cancellations'] = new ApplicationCancellationsHandler($this->httpClientWrapper);
+        }
+
+        return $this->handlers['application_cancellations'];
+    }
+
+    /**
+     * Get the Refunds methods handler
+     *
+     * @return ApplicationRefundsHandler
+     * @throws \Exception
+     */
+    public function application_refunds()
+    {
+        if (!array_key_exists('application_refunds', $this->handlers)) {
+            $this->handlers['application_refunds'] = new ApplicationRefundsHandler($this->httpClientWrapper);
+        }
+
+        return $this->handlers['application_refunds'];
+    }
+
+    /**
+     * Get the Documents methods handler
+     *
+     * @return ApplicationDocumentsHandler
+     * @throws \Exception
+     */
+    public function application_documents()
+    {
+        if (!array_key_exists('application_documents', $this->handlers)) {
+            $this->handlers['application_documents'] = new ApplicationDocumentsHandler($this->httpClientWrapper);
+        }
+
+        return $this->handlers['application_documents'];
+    }
 }

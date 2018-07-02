@@ -54,10 +54,13 @@ abstract class AbstractHttpHandler
 
         while ($hasMorePages)
         {
-            $methodArgs = array_merge([$currentPage], $args);
+            // Re-structure the args if Models are passed over.
+            $methodArgs = $this->arrangeCallbackArgs($callback, $args, $currentPage);
 
             /** @var ResponseWrapper $response */
             $response = call_user_func([$this, $callback], ...$methodArgs);
+
+            // Should this be >= ?
             if (count($response->getResources()) > 1) {
                 $resources = array_merge($resources, $response->getResources());
             }
@@ -87,7 +90,8 @@ abstract class AbstractHttpHandler
 
         while ($hasMorePages)
         {
-            $methodArgs = array_merge([$currentPage], $args);
+            // Re-structure the args if Models are passed over.
+            $methodArgs = $this->arrangeCallbackArgs($callback, $args, $currentPage);
 
             /** @var ResponseWrapper $response */
             $response = call_user_func([$this, $callback], ...$methodArgs);
@@ -98,8 +102,21 @@ abstract class AbstractHttpHandler
             $hasMorePages = $currentPage < $response->getMetadata()->getTotalPages();
             $currentPage++;
         }
-
     }
 
+    private function arrangeCallbackArgs($callback, $args, $currentPage)
+    {
+        $models = [];
+        $other = [];
 
+        foreach ($args as $arg) {
+            if ($arg instanceof \Divido\MerchantSDK\Models\AbstractModel) {
+                $models[] = $arg;
+            } else {
+                $other[] = $arg;
+            }
+        }
+
+        return array_merge($models, [$currentPage], $other);
+    }
 }
