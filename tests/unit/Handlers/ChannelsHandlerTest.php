@@ -9,63 +9,32 @@ use Divido\MerchantSDK\Response\ResponseWrapper;
 use GuzzleHttp\Psr7\Response;
 use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 
-class FinancesHandlerTest extends MerchantSDKTestCase
+class ChannelsHandlerTest extends MerchantSDKTestCase
 {
     use MockeryPHPUnitIntegration;
 
-    function test_GetFinancesByPage_ReturnsFinances()
+    function test_GetChannelsByPage_ReturnsChannels()
     {
 
         $history = [];
 
         $client = $this->getGuzzleStackedClient([
-            new Response(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/finance_get_plans.json')),
+            new Response(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/channels_page_1.json')),
         ], $history);
 
         $sdk = new Client('test_key', Environment::SANDBOX, new GuzzleAdapter($client));
 
-        $plans = $sdk->finances()->getPlansByPage(3);
+        $channels = $sdk->channels()->getChannelsByPage(1);
 
-        self::assertInstanceOf(ResponseWrapper::class, $plans);
-        self::assertCount(4, $plans->getResources());
-        self::assertInternalType('object', $plans->getResources()[0]);
-        self::assertObjectHasAttribute('id', $plans->getResources()[0]);
-        self::assertSame('F7485F0E5-202B-4879-4F00-154E109E7FE4', $plans->getResources()[0]->id);
-
-        self::assertCount(1, $history);
-        self::assertSame('GET', $history[0]['request']->getMethod());
-        self::assertSame('/finance-plans', $history[0]['request']->getUri()->getPath());
-
-        $query = [];
-        parse_str($history[0]['request']->getUri()->getQuery(), $query);
-
-        self::assertArrayHasKey('page', $query);
-        self::assertSame('3', $query['page']);
-
-    }
-
-    function test_GetAllFinances_ReturnsFinances()
-    {
-
-        $history = [];
-
-        $client = $this->getGuzzleStackedClient([
-            new Response(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/finance_get_plans.json')),
-        ], $history);
-
-        $sdk = new Client('test_key', Environment::SANDBOX, new GuzzleAdapter($client));
-
-        $plans = $sdk->finances()->getAllPlans();
-
-        self::assertInstanceOf(ResponseWrapper::class, $plans);
-        self::assertCount(4, $plans->getResources());
-        self::assertInternalType('object', $plans->getResources()[0]);
-        self::assertObjectHasAttribute('id', $plans->getResources()[0]);
-        self::assertSame('F7485F0E5-202B-4879-4F00-154E109E7FE4', $plans->getResources()[0]->id);
+        self::assertInstanceOf(ResponseWrapper::class, $channels);
+        self::assertCount(2, $channels->getResources());
+        self::assertInternalType('object', $channels->getResources()[0]);
+        self::assertObjectHasAttribute('id', $channels->getResources()[0]);
+        self::assertSame('CF0A92CE9-4935-DC6F-DD0D-463EC9D654A1', $channels->getResources()[0]->id);
 
         self::assertCount(1, $history);
         self::assertSame('GET', $history[0]['request']->getMethod());
-        self::assertSame('/finance-plans', $history[0]['request']->getUri()->getPath());
+        self::assertSame('/channels', $history[0]['request']->getUri()->getPath());
 
         $query = [];
         parse_str($history[0]['request']->getUri()->getQuery(), $query);
@@ -75,32 +44,63 @@ class FinancesHandlerTest extends MerchantSDKTestCase
 
     }
 
-    function test_YieldAllFinances_ReturnsFinanceGenerator()
+    function test_GetAllChannels_ReturnsChannels()
     {
 
         $history = [];
 
         $client = $this->getGuzzleStackedClient([
-            new Response(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/finance_get_plans.json')),
+            new Response(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/channels_page_1.json')),
         ], $history);
 
         $sdk = new Client('test_key', Environment::SANDBOX, new GuzzleAdapter($client));
 
-        $plans = $sdk->finances()->yieldAllPlans();
+        $channels = $sdk->channels()->getAllChannels();
 
-        self::assertInstanceOf(\Generator::class, $plans);
+        self::assertInstanceOf(ResponseWrapper::class, $channels);
+        self::assertCount(2, $channels->getResources());
+        self::assertInternalType('object', $channels->getResources()[0]);
+        self::assertObjectHasAttribute('id', $channels->getResources()[0]);
+        self::assertSame('CF0A92CE9-4935-DC6F-DD0D-463EC9D654A1', $channels->getResources()[0]->id);
 
-        $plan = $plans->current();
-        self::assertCount(4, $plans);
+        self::assertCount(1, $history);
+        self::assertSame('GET', $history[0]['request']->getMethod());
+        self::assertSame('/channels', $history[0]['request']->getUri()->getPath());
+
+        $query = [];
+        parse_str($history[0]['request']->getUri()->getQuery(), $query);
+
+        self::assertArrayHasKey('page', $query);
+        self::assertSame('1', $query['page']);
+
+    }
+
+    function test_YieldAllChannels_ReturnsFinanceGenerator()
+    {
+
+        $history = [];
+
+        $client = $this->getGuzzleStackedClient([
+            new Response(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/channels_page_1.json')),
+        ], $history);
+
+        $sdk = new Client('test_key', Environment::SANDBOX, new GuzzleAdapter($client));
+
+        $channels = $sdk->channels()->yieldAllChannels();
+
+        self::assertInstanceOf(\Generator::class, $channels);
+
+        $plan = $channels->current();
+        self::assertCount(2, $channels);
 
 
         self::assertInternalType('object', $plan);
         self::assertObjectHasAttribute('id', $plan);
-        self::assertSame('F7485F0E5-202B-4879-4F00-154E109E7FE4', $plan->id);
+        self::assertSame('CF0A92CE9-4935-DC6F-DD0D-463EC9D654A1', $plan->id);
 
         self::assertCount(1, $history);
         self::assertSame('GET', $history[0]['request']->getMethod());
-        self::assertSame('/finance-plans', $history[0]['request']->getUri()->getPath());
+        self::assertSame('/channels', $history[0]['request']->getUri()->getPath());
 
         $query = [];
         parse_str($history[0]['request']->getUri()->getQuery(), $query);
@@ -110,21 +110,21 @@ class FinancesHandlerTest extends MerchantSDKTestCase
 
     }
 
-    function test_GetFinancesByPage_WithSort_ReturnsSortedFinances()
+    function test_GetChannelsByPage_WithSort_ReturnsSortedChannels()
     {
 
         $history = [];
 
         $client = $this->getGuzzleStackedClient([
-            new Response(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/finance_get_plans.json')),
+            new Response(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/channels_page_1.json')),
         ], $history);
         $sdk = new Client('test_key', Environment::SANDBOX, new GuzzleAdapter($client));
 
-        $sdk->finances()->getPlansByPage(1, '-created_at');
+        $sdk->channels()->getChannelsByPage(1, '-created_at');
 
         self::assertCount(1, $history);
         self::assertSame('GET', $history[0]['request']->getMethod());
-        self::assertSame('/finance-plans', $history[0]['request']->getUri()->getPath());
+        self::assertSame('/channels', $history[0]['request']->getUri()->getPath());
 
         $query = [];
         parse_str($history[0]['request']->getUri()->getQuery(), $query);

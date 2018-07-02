@@ -5,53 +5,55 @@ namespace Divido\MerchantSDK\Handlers;
 use Divido\MerchantSDK\Response\ResponseWrapper;
 
 /**
- * FinancesHandler Client
+ * ChannelsHandler Client
  *
  * @author Neil McGibbon <neil.mcgibbon@divido.com>
  * @copyright (c) 2018, Divido
  * @package Divido\MerchantSDK
  */
-class FinancesHandler extends AbstractHttpHandler
+class ChannelsHandler extends AbstractHttpHandler
 {
     /**
-     * Get finance plans by a specific page number
+     * Get channels by a specific page number
      *
      * @param int $page The page to retrieve
      * @param string $sort
      * @return ResponseWrapper
      */
-    public function getPlansByPage($page = 1, $sort = '')
+    public function getChannelsByPage($page = 1, $sort = '')
     {
         $query = [
             'page' => $page,
             'sort' => $sort,
         ];
 
-        $response = $this->httpClientWrapper->request('get', 'finance-plans', $query);
+        $response = $this->httpClientWrapper->request('get', 'channels', $query);
         $parsed = $this->parseJsonApiResourceResponse($response);
 
         return $parsed;
     }
 
     /**
-     * Get all plans in a single array
+     * Get all channels in a single array
      *
      * @return ResponseWrapper
      */
-    public function getAllPlans()
+    public function getAllChannels()
     {
-        return $this->getFullResourceCollection('getPlansByPage');
+        return $this->getFullResourceCollection('getChannelsByPage');
     }
 
     /**
-     * Get all plans and yield one plan at a time using a generator
+     * Get all channels and yield one plan at a time using a generator
      *
      * @return \Generator
      */
-    public function yieldAllPlans()
+    public function yieldAllChannels()
     {
-        foreach ($this->yieldFullResourceCollection('getPlansByPage') as $resource) {
+        foreach ($this->yieldFullResourceCollection('getChannelsByPage') as $resource) {
             yield $resource;
         }
     }
+
+
 }
