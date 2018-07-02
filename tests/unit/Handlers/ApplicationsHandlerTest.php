@@ -130,7 +130,7 @@ class ApplicationsHandlerTest extends MerchantSDKTestCase
         ], $history);
         $sdk = new Client('test_key', Environment::SANDBOX, new GuzzleAdapter($client));
 
-        $sdk->applications()->getApplicationsByPage(1, [], '-created_at');
+        $sdk->applications()->getApplicationsByPage(1, '-created_at');
 
         self::assertCount(1, $history);
         self::assertSame('GET', $history[0]['request']->getMethod());
@@ -144,4 +144,89 @@ class ApplicationsHandlerTest extends MerchantSDKTestCase
 
     }
 
+    function test_GetSingleApplication_ReturnsSingleApplication()
+    {
+        $history = [];
+
+        $client = $this->getGuzzleStackedClient([
+            new Response(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/applications_get_one.json')),
+        ], $history);
+        $sdk = new Client('test_key', Environment::SANDBOX, new GuzzleAdapter($client));
+
+        $response = $sdk->applications()->getSingleApplication('6985ef52-7d7c-457e-9a03-e98b648bf9b7');
+
+        self::assertCount(1, $history);
+        self::assertSame('GET', $history[0]['request']->getMethod());
+        self::assertSame('/applications/6985ef52-7d7c-457e-9a03-e98b648bf9b7', $history[0]['request']->getUri()->getPath());
+
+        $result = json_decode($response->getBody(), true);
+
+        self::assertSame('6985ef52-7d7c-457e-9a03-e98b648bf9b7', $result['data']['id']);
+    }
+
+    function test_CreateApplication_ReturnsNewlyCreatedApplication()
+    {
+        $history = [];
+
+        $client = $this->getGuzzleStackedClient([
+            new Response(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/applications_get_one.json')),
+        ], $history);
+        $sdk = new Client('test_key', Environment::SANDBOX, new GuzzleAdapter($client));
+
+        $application = (new \Divido\MerchantSDK\Models\Application)
+            ->withFinancePlanId('F335FED7A-A266-A8BF-960A-4CB56CC6DE6F')
+            ->withMerchantChannelId('C47B81C83-08A8-B05A-EBD3-B9CFA1D60A07')
+            ->withApplicants([
+                [
+                    'firstName' => 'Ann',
+                    'middleNames' => '',
+                    'lastName' => 'Heselden',
+                    'phoneNumber' => '07512345678',
+                    'email' => 'test@example.com',
+                ],
+            ])
+            ->withOrderItems([
+                [
+                    'name' => 'Sofa',
+                    'quantity' => 1,
+                    'price' => 50000,
+                ],
+            ])
+            ->withDepositAmount(10000);
+
+        $response = $sdk->applications()->createApplication($application);
+
+        self::assertCount(1, $history);
+        self::assertSame('POST', $history[0]['request']->getMethod());
+        self::assertSame('/applications', $history[0]['request']->getUri()->getPath());
+
+        $result = json_decode($response->getBody(), true);
+
+        self::assertSame('6985ef52-7d7c-457e-9a03-e98b648bf9b7', $result['data']['id']);
+    }
+
+    function test_UpdateApplication_ReturnsUpdatedApplication()
+    {
+        $history = [];
+
+        $client = $this->getGuzzleStackedClient([
+            new Response(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/applications_get_one.json')),
+        ], $history);
+        $sdk = new Client('test_key', Environment::SANDBOX, new GuzzleAdapter($client));
+
+        $application = (new \Divido\MerchantSDK\Models\Application)
+            ->withId('6985ef52-7d7c-457e-9a03-e98b648bf9b7')
+            ->withFinancePlanId('F335FED7A-A266-A8BF-960A-4CB56CC6DE6F')
+            ->withDepositAmount(10000);
+
+        $response = $sdk->applications()->updateApplication($application);
+
+        self::assertCount(1, $history);
+        self::assertSame('PATCH', $history[0]['request']->getMethod());
+        self::assertSame('/applications/6985ef52-7d7c-457e-9a03-e98b648bf9b7', $history[0]['request']->getUri()->getPath());
+
+        $result = json_decode($response->getBody(), true);
+
+        self::assertSame('6985ef52-7d7c-457e-9a03-e98b648bf9b7', $result['data']['id']);
+    }
 }

@@ -2,6 +2,7 @@
 
 namespace Divido\MerchantSDK\Handlers;
 
+use Divido\MerchantSDK\Models\Application;
 use Divido\MerchantSDK\Response\ResponseWrapper;
 
 /**
@@ -13,21 +14,19 @@ use Divido\MerchantSDK\Response\ResponseWrapper;
  */
 class ApplicationsHandler extends AbstractHttpHandler
 {
-
     /**
      * Get applications by a specific page number
      *
      * @param int $page The page to retrieve
-     * @param array $included A list of inclusions to retrieve
      * @param string $sort
      * @return ResponseWrapper
      */
-    public function getApplicationsByPage($page = 1, $included = [], $sort = '')
+    public function getApplicationsByPage($page = 1, $sort = '', $filters = [])
     {
         $query = [
             'page' => $page,
-            'include' => implode(',', $included),
             'sort' => $sort,
+            'filter' => $filters,
         ];
 
         $response = $this->httpClientWrapper->request('get', 'applications', $query);
@@ -36,31 +35,71 @@ class ApplicationsHandler extends AbstractHttpHandler
         return $parsed;
     }
 
-
     /**
      * Get all applications in a single array
      *
-     * @param array $included
-     *
      * @return ResponseWrapper
      */
-    public function getAllApplications($included = [])
+    public function getAllApplications()
     {
-        return $this->getFullResourceCollection('getApplicationsByPage', $included);
+        return $this->getFullResourceCollection('getApplicationsByPage');
     }
 
     /**
-     * Get all applications and yield one plan at a time using a generator
+     * Get all applications and yield one application at a time using a generator
      *
-     * @param array $included
+     * @todo - Sort and filter?
+     *
      * @return \Generator
      */
-    public function yieldAllApplications($included = [])
+    public function yieldAllApplications()
     {
-        foreach ($this->yieldFullResourceCollection('getApplicationsByPage', $included) as $resource) {
+        foreach ($this->yieldFullResourceCollection('getApplicationsByPage') as $resource) {
             yield $resource;
         }
     }
 
+    /**
+     * Get single application by id
+     *
+     * @return ResponseWrapper
+     */
+    public function getSingleApplication($applicationId)
+    {
+        $path = vsprintf('%s/%s', [
+            'applications',
+            $applicationId,
+        ]);
 
+        return $this->httpClientWrapper->request('get', $path);
+    }
+
+    /**
+     * Create an application
+     *
+     * @return ResponseWrapper
+     */
+    public function createApplication(Application $application)
+    {
+        $path = vsprintf('%s', [
+            'applications',
+        ]);
+
+        return $this->httpClientWrapper->request('post', $path, [], [], $application->getJsonPayload());
+    }
+
+    /**
+     * Update an application
+     *
+     * @return ResponseWrapper
+     */
+    public function updateApplication(Application $application)
+    {
+        $path = vsprintf('%s/%s', [
+            'applications',
+            $application->getId(),
+        ]);
+
+        return $this->httpClientWrapper->request('patch', $path, [], [], $application->getJsonPayload());
+    }
 }
