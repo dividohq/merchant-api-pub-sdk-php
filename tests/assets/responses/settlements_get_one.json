@@ -1,0 +1,65 @@
+{
+  "data": {
+    "type": "settlements",
+    "id": "6EC506EE-7919-11E8-A4CE-0242AC1E000B",
+    "text": null,
+    "date": "2018-01-25",
+    "total_subsidy_amount": 0,
+    "merchant": {
+      "id": "M1B3D626A-9835-3B54-25D5-E50E50212627",
+      "name": "Rules test merchant"
+    },
+    "lender": {
+      "id": "L2493ECEF-D7FF-3535-E630-2ACE526B2425",
+      "name": "Duologi",
+      "app_name": "Duologi",
+      "settings": ""
+    },
+    "currency": {
+      "id": "GBP",
+      "foreign_names": "[]"
+    },
+    "settlement_details": [
+      {
+        "id": "6EC55C5C-7919-11E8-9E19-0242AC1E000B",
+        "customer": "Smith, James",
+        "reference": "qwerty-123",
+        "purchase_price": 1000000,
+        "deposit_amount": 300000,
+        "credit_amount": 700000,
+        "commission_amount": 14000,
+        "partner_commission_amount": 0,
+        "subsidy_amount": 0,
+        "net_payment": 0,
+        "created_at": "2018-06-26T08:17:57+00:00",
+        "updated_at": null,
+        "application": {
+          "id": "0b614a45-2d5f-4fb9-a599-ec35b935bdb7"
+        },
+        "merchant_finance": {
+          "id": "F2D3D5935-9D25-2E10-258A-6F8F15729DA7"
+        }
+      },
+      {
+        "id": "6EC55D6A-7919-11E8-98AD-0242AC1E000B",
+        "customer": "Smith, James",
+        "reference": "qwerty-123",
+        "purchase_price": 100000,
+        "deposit_amount": 10000,
+        "credit_amount": 90000,
+        "commission_amount": 1800,
+        "partner_commission_amount": 0,
+        "subsidy_amount": 0,
+        "net_payment": 0,
+        "created_at": "2018-06-26T08:17:57+00:00",
+        "updated_at": null,
+        "application": {
+          "id": "e2ce0897-1752-4183-b504-0040ea8348a8"
+        },
+        "merchant_finance": {
+          "id": "F2D3D5935-9D25-2E10-258A-6F8F15729DA7"
+        }
+      }
+    ]
+  }
+}
