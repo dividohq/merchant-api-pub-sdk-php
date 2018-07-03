@@ -2,8 +2,8 @@
 
 namespace Divido\MerchantSDK;
 
+use Divido\MerchantSDK\Handlers\ApplicationActivations\Handler as ApplicationActivationsHandler;
 use Divido\MerchantSDK\Handlers\ApplicationsHandler;
-use Divido\MerchantSDK\Handlers\ApplicationActivationsHandler;
 use Divido\MerchantSDK\Handlers\ApplicationCancellationsHandler;
 use Divido\MerchantSDK\Handlers\ApplicationDocumentsHandler;
 use Divido\MerchantSDK\Handlers\ApplicationRefundsHandler;
@@ -22,6 +22,9 @@ use Divido\MerchantSDK\HttpClient\HttpClientWrapper;
  */
 class Client
 {
+
+    use Handlers\ApplicationActivations\ClientProxyTrait;
+
     /**
      * The API environment to consume
      *
@@ -187,4 +190,6 @@ class Client
 
         return $this->handlers['application_documents'];
     }
+
+
 }

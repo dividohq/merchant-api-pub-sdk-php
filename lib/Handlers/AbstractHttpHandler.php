@@ -46,27 +46,23 @@ abstract class AbstractHttpHandler
         return $httpResponseWrapper;
     }
 
-    public function getFullResourceCollection($callback, ...$args)
+    public function getFullResourceCollection($callback, ApiRequestOptions $options, ...$args)
     {
         $resources = [];
         $hasMorePages = true;
-        $currentPage = 1;
+        $options->setPage(1);
 
         while ($hasMorePages)
         {
-            // Re-structure the args if Models are passed over.
-            $methodArgs = $this->arrangeCallbackArgs($callback, $args, $currentPage);
-
             /** @var ResponseWrapper $response */
-            $response = call_user_func([$this, $callback], ...$methodArgs);
+            $response = call_user_func([$this, $callback], $options, ...$args);
 
-            // Should this be >= ?
-            if (count($response->getResources()) > 1) {
+            if (count($response->getResources()) > 0) {
                 $resources = array_merge($resources, $response->getResources());
             }
 
-            $hasMorePages = $currentPage < $response->getMetadata()->getTotalPages();
-            $currentPage++;
+            $hasMorePages = $options->getPage() < $response->getMetadata()->getTotalPages();
+            $options->setPage($options->getPage() + 1);
         }
 
         $httpResponseWrapper = new ResponseWrapper(
@@ -83,40 +79,22 @@ abstract class AbstractHttpHandler
      * @param array $args
      * @return \Generator
      */
-    public function yieldFullResourceCollection($callback, ...$args)
+    public function yieldFullResourceCollection($callback, $options, ...$args)
     {
         $hasMorePages = true;
-        $currentPage = 1;
+        $options->setPage(1);
 
         while ($hasMorePages)
         {
-            // Re-structure the args if Models are passed over.
-            $methodArgs = $this->arrangeCallbackArgs($callback, $args, $currentPage);
-
             /** @var ResponseWrapper $response */
-            $response = call_user_func([$this, $callback], ...$methodArgs);
+            $response = call_user_func([$this, $callback], $options, ...$args);
             foreach ($response->getResources() as $resource) {
                 yield $resource;
             }
 
-            $hasMorePages = $currentPage < $response->getMetadata()->getTotalPages();
-            $currentPage++;
+            $hasMorePages = $options->getPage() < $response->getMetadata()->getTotalPages();
+            $options->setPage($options->getPage() + 1);
         }
     }
 
-    private function arrangeCallbackArgs($callback, $args, $currentPage)
-    {
-        $models = [];
-        $other = [];
-
-        foreach ($args as $arg) {
-            if ($arg instanceof \Divido\MerchantSDK\Models\AbstractModel) {
-                $models[] = $arg;
-            } else {
-                $other[] = $arg;
-            }
-        }
-
-        return array_merge($models, [$currentPage], $other);
-    }
 }

@@ -3,6 +3,7 @@ namespace Divido\MerchantSDK\Test\Unit;
 
 use Divido\MerchantSDK\Client;
 use Divido\MerchantSDK\Environment;
+use Divido\MerchantSDK\Handlers\ApiRequestOptions;
 use Divido\MerchantSDK\HttpClient\GuzzleAdapter;
 use Divido\MerchantSDK\Models\Application;
 use Divido\MerchantSDK\Response\ResponseWrapper;
@@ -26,8 +27,10 @@ class ApplicationActivationsHandlerTest extends MerchantSDKTestCase
         $sdk = new Client('test_key', Environment::SANDBOX, new GuzzleAdapter($client));
 
         $application = (new Application)->withId($this->applicationId);
+        $requestOptions = (new ApiRequestOptions())->setPage(1);
 
-        $activations = $sdk->application_activations()->getApplicationActivationsByPage($application, 1);
+        $activations = $sdk->getApplicationActivationsByPage($requestOptions, $application);
+
 
         self::assertInstanceOf(ResponseWrapper::class, $activations);
         self::assertCount(2, $activations->getResources());
@@ -59,14 +62,18 @@ class ApplicationActivationsHandlerTest extends MerchantSDKTestCase
 
         $application = (new Application)->withId($this->applicationId);
 
-        $activations = $sdk->application_activations()->getAllApplicationActivations($application);
+        $requestOptions = (new ApiRequestOptions())->setPaginated(false);
+        $activations = $sdk->getAllApplicationActivations($requestOptions, $application);
+
 
         self::assertInstanceOf(ResponseWrapper::class, $activations);
-        self::assertCount(2, $activations->getResources());
+        self::assertCount(3, $activations->getResources());
         self::assertInternalType('object', $activations->getResources()[0]);
         self::assertObjectHasAttribute('id', $activations->getResources()[0]);
         self::assertSame('97ca1476-2c9c-4ca2-b4c6-1f41f2ecdf5b', $activations->getResources()[0]->id);
         self::assertSame('69c08979-b727-407b-b449-6f03de02dd77', $activations->getResources()[1]->id);
+        self::assertSame('69c08979-b727-407b-b449-6f03de02dd78', $activations->getResources()[2]->id);
+
 
         self::assertCount(2, $history);
         self::assertSame('GET', $history[0]['request']->getMethod());
@@ -95,8 +102,9 @@ class ApplicationActivationsHandlerTest extends MerchantSDKTestCase
         $sdk = new Client('test_key', Environment::SANDBOX, new GuzzleAdapter($client));
 
         $application = (new Application)->withId($this->applicationId);
+        $requestOptions = (new ApiRequestOptions())->setPaginated(false);
 
-        $activations = $sdk->application_activations()->yieldAllApplicationActivations($application, 2, 'hello');
+        $activations = $sdk->yieldAllApplicationActivations($requestOptions, $application);
 
         self::assertInstanceOf(\Generator::class, $activations);
 
@@ -120,6 +128,43 @@ class ApplicationActivationsHandlerTest extends MerchantSDKTestCase
         self::assertArrayHasKey('page', $query2);
         self::assertSame('1', $query1['page']);
         self::assertSame('2', $query2['page']);
+    }
+
+    function test_YieldApplicationActivationsByPage_ReturnsApplicationActivationsGenerator()
+    {
+        $history = [];
+
+        $client = $this->getGuzzleStackedClient([
+            new Response(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/application_activations_page_1.json')),
+            new Response(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/application_activations_page_2.json')),
+        ], $history);
+
+        $sdk = new Client('test_key', Environment::SANDBOX, new GuzzleAdapter($client));
+
+        $application = (new Application)->withId($this->applicationId);
+        $requestOptions = (new ApiRequestOptions());
+
+        $activations = $sdk->yieldApplicationActivationsByPage($requestOptions, $application);
+
+        self::assertInstanceOf(\Generator::class, $activations);
+
+        $activation = $activations->current();
+        self::assertCount(2, $activations);
+
+        self::assertInternalType('object', $activation);
+        self::assertObjectHasAttribute('id', $activation);
+        self::assertSame('97ca1476-2c9c-4ca2-b4c6-1f41f2ecdf5b', $activation->id);
+
+        self::assertCount(1, $history);
+        self::assertSame('GET', $history[0]['request']->getMethod());
+        self::assertSame("/applications/{$this->applicationId}/activations", $history[0]['request']->getUri()->getPath());
+
+        $query1 = [];
+        parse_str($history[0]['request']->getUri()->getQuery(), $query1);
+
+        self::assertArrayHasKey('page', $query1);
+        self::assertSame('1', $query1['page']);
+
     }
 
     function test_GetApplicationActivtionsByPage_WithSort_ReturnsSortedApplicationActivations()
