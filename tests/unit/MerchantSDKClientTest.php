@@ -3,7 +3,6 @@ namespace Divido\MerchantSDK\Test\Unit;
 
 use Divido\MerchantSDK\Client;
 use Divido\MerchantSDK\Environment;
-
 use Divido\MerchantSDK\GuzzleWrapper;
 use Divido\MerchantSDK\Handlers\FinancesHandler;
 use GuzzleHttp\ClientInterface;
@@ -25,6 +24,4 @@ class MerchantSDKClientTest extends TestCase
         $sdk = new Client('test-api-key', Environment::PRODUCTION);
         $this->assertSame(Environment::PRODUCTION, $sdk->getEnvironment());
     }
-
-
 }

@@ -6,12 +6,12 @@ use Divido\MerchantSDK\Handlers\AbstractHttpHandler;
 use Divido\MerchantSDK\Handlers\ApiRequestOptions;
 use Divido\MerchantSDK\Models\Application;
 use Divido\MerchantSDK\Models\ApplicationCancellation;
-use Divido\MerchantSDK\Response\ResponseWrapper;
 
 /**
- * Handler Client
+ * Class Handler
  *
  * @author Neil McGibbon <neil.mcgibbon@divido.com>
+ * @author Mike Lovely <mike.lovely@divido.com>
  * @copyright (c) 2018, Divido
  * @package Divido\MerchantSDK
  */
@@ -56,7 +56,7 @@ class Handler extends AbstractHttpHandler
     }
 
     /**
-     * Get all applications and yield one plan at a time using a generator
+     * Get all applications and yield one at a time using a generator
      *
      * @param ApiRequestOptions $options API Request options
      * @param Application $application
@@ -69,6 +69,13 @@ class Handler extends AbstractHttpHandler
         }
     }
 
+    /**
+     * Get all application cancellations by page.
+     *
+     * @param ApiRequestOptions $options API Request options
+     * @param Application $application
+     * @return \ResponseWrapper
+     */
     protected function getApplicationCancellationsByPage(ApiRequestOptions $options, Application $application)
     {
         $path = vsprintf('%s/%s/%s', [
@@ -101,7 +108,7 @@ class Handler extends AbstractHttpHandler
     }
 
     /**
-     * Get single cancellation by id
+     * Get single application cancellation by id
      *
      * @return ResponseWrapper
      */
@@ -118,7 +125,7 @@ class Handler extends AbstractHttpHandler
     }
 
     /**
-     * Create an cancellation
+     * Create an application cancellation.
      *
      * @return ResponseWrapper
      */

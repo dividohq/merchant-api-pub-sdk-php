@@ -6,12 +6,12 @@ use Divido\MerchantSDK\Handlers\AbstractHttpHandler;
 use Divido\MerchantSDK\Handlers\ApiRequestOptions;
 use Divido\MerchantSDK\Models\Application;
 use Divido\MerchantSDK\Models\ApplicationActivation;
-use Divido\MerchantSDK\Response\ResponseWrapper;
 
 /**
- * Handler Client
+ * Class Handler
  *
  * @author Neil McGibbon <neil.mcgibbon@divido.com>
+ * @author Mike Lovely <mike.lovely@divido.com>
  * @copyright (c) 2018, Divido
  * @package Divido\MerchantSDK
  */
@@ -56,7 +56,7 @@ class Handler extends AbstractHttpHandler
     }
 
     /**
-     * Get all applications and yield one plan at a time using a generator
+     * Get all application activations and yield one plan at a time using a generator
      *
      * @param ApiRequestOptions $options API Request options
      * @param Application $application
@@ -69,6 +69,13 @@ class Handler extends AbstractHttpHandler
         }
     }
 
+    /**
+     * Get all application activations by page.
+     *
+     * @param ApiRequestOptions $options API Request options
+     * @param Application $application
+     * @return \ResponseWrapper
+     */
     protected function getApplicationActivationsByPage(ApiRequestOptions $options, Application $application)
     {
         $path = vsprintf('%s/%s/%s', [
@@ -88,9 +95,8 @@ class Handler extends AbstractHttpHandler
         return $parsed;
     }
 
-
     /**
-     * Get all applications in a single array
+     * Get all application activations in a single array
      *
      * @param ApiRequestOptions $options API Request options
      * @param Application $application
@@ -101,10 +107,8 @@ class Handler extends AbstractHttpHandler
         return $this->getFullResourceCollection('getApplicationActivationsByPage', $options, $application);
     }
 
-
-
     /**
-     * Get single activation by id
+     * Get single application activation by id
      *
      * @return ResponseWrapper
      */
@@ -121,7 +125,7 @@ class Handler extends AbstractHttpHandler
     }
 
     /**
-     * Create an activation
+     * Create an application activation.
      *
      * @return ResponseWrapper
      */

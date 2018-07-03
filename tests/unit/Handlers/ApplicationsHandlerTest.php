@@ -4,7 +4,6 @@ namespace Divido\MerchantSDK\Test\Unit;
 use Divido\MerchantSDK\Client;
 use Divido\MerchantSDK\Environment;
 use Divido\MerchantSDK\Handlers\ApiRequestOptions;
-
 use Divido\MerchantSDK\HttpClient\GuzzleAdapter;
 use Divido\MerchantSDK\Response\ResponseWrapper;
 use GuzzleHttp\Psr7\Response;
@@ -16,7 +15,6 @@ class ApplicationsHandlerTest extends MerchantSDKTestCase
 
     function test_GetApplicationsByPage_ReturnsApplications()
     {
-
         $history = [];
 
         $client = $this->getGuzzleStackedClient([
@@ -44,12 +42,10 @@ class ApplicationsHandlerTest extends MerchantSDKTestCase
 
         self::assertArrayHasKey('page', $query);
         self::assertSame('3', $query['page']);
-
     }
 
     function test_GetAllApplications_ReturnsAllApplications()
     {
-
         $history = [];
 
         $client = $this->getGuzzleStackedClient([
@@ -83,12 +79,10 @@ class ApplicationsHandlerTest extends MerchantSDKTestCase
         self::assertArrayHasKey('page', $query2);
         self::assertSame('1', $query1['page']);
         self::assertSame('2', $query2['page']);
-
     }
 
     function test_YieldAllApplications_ReturnsApplicationsGenerator()
     {
-
         $history = [];
 
         $client = $this->getGuzzleStackedClient([
@@ -107,7 +101,6 @@ class ApplicationsHandlerTest extends MerchantSDKTestCase
         $application = $applications->current();
         self::assertCount(35, $applications);
 
-
         self::assertInternalType('object', $application);
         self::assertObjectHasAttribute('id', $application);
         self::assertSame('0074dd19-dbba-4d80-bdb7-c4a2176cb399', $application->id);
@@ -124,12 +117,10 @@ class ApplicationsHandlerTest extends MerchantSDKTestCase
         self::assertArrayHasKey('page', $query2);
         self::assertSame('1', $query1['page']);
         self::assertSame('2', $query2['page']);
-
     }
 
     function test_GetApplicationsByPage_WithSort_ReturnsSortedApplications()
     {
-
         $history = [];
 
         $client = $this->getGuzzleStackedClient([
@@ -150,7 +141,6 @@ class ApplicationsHandlerTest extends MerchantSDKTestCase
 
         self::assertArrayHasKey('sort', $query);
         self::assertSame('-created_at', $query['sort']);
-
     }
 
     function test_GetSingleApplication_ReturnsSingleApplication()

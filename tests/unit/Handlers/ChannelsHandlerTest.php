@@ -4,7 +4,6 @@ namespace Divido\MerchantSDK\Test\Unit;
 use Divido\MerchantSDK\Client;
 use Divido\MerchantSDK\Environment;
 use Divido\MerchantSDK\Handlers\ApiRequestOptions;
-
 use Divido\MerchantSDK\HttpClient\GuzzleAdapter;
 use Divido\MerchantSDK\Response\ResponseWrapper;
 use GuzzleHttp\Psr7\Response;
@@ -16,7 +15,6 @@ class ChannelsHandlerTest extends MerchantSDKTestCase
 
     function test_GetChannelsByPage_ReturnsChannels()
     {
-
         $history = [];
 
         $client = $this->getGuzzleStackedClient([
@@ -44,12 +42,10 @@ class ChannelsHandlerTest extends MerchantSDKTestCase
 
         self::assertArrayHasKey('page', $query);
         self::assertSame('1', $query['page']);
-
     }
 
     function test_GetAllChannels_ReturnsChannels()
     {
-
         $history = [];
 
         $client = $this->getGuzzleStackedClient([
@@ -77,12 +73,10 @@ class ChannelsHandlerTest extends MerchantSDKTestCase
 
         self::assertArrayHasKey('page', $query);
         self::assertSame('1', $query['page']);
-
     }
 
     function test_YieldAllChannels_ReturnsFinanceGenerator()
     {
-
         $history = [];
 
         $client = $this->getGuzzleStackedClient([
@@ -114,12 +108,10 @@ class ChannelsHandlerTest extends MerchantSDKTestCase
 
         self::assertArrayHasKey('page', $query);
         self::assertSame('1', $query['page']);
-
     }
 
     function test_GetChannelsByPage_WithSort_ReturnsSortedChannels()
     {
-
         $history = [];
 
         $client = $this->getGuzzleStackedClient([
@@ -140,7 +132,5 @@ class ChannelsHandlerTest extends MerchantSDKTestCase
 
         self::assertArrayHasKey('sort', $query);
         self::assertSame('-created_at', $query['sort']);
-
     }
-
 }

@@ -8,16 +8,17 @@ use Divido\MerchantSDK\Models\Channel;
 use Divido\MerchantSDK\Response\ResponseWrapper;
 
 /**
- * Handler Client
+ * Class Handler
  *
  * @author Neil McGibbon <neil.mcgibbon@divido.com>
+ * @author Mike Lovely <mike.lovely@divido.com>
  * @copyright (c) 2018, Divido
  * @package Divido\MerchantSDK
  */
 class Handler extends AbstractHttpHandler
 {
     /**
-     * Get application channels as a collection, either a specific page or all
+     * Get channels as a collection, either a specific page or all
      *
      * @param ApiRequestOptions $options API Request options
      * @return ResponseWrapper
@@ -32,7 +33,7 @@ class Handler extends AbstractHttpHandler
     }
 
     /**
-     * Yield application channels one at a time, either from a specific page or all
+     * Yield channels one at a time, either from a specific page or all
      *
      * @param ApiRequestOptions $options API Request options
      * @return \Generator
@@ -53,7 +54,7 @@ class Handler extends AbstractHttpHandler
     }
 
     /**
-     * Get all applications and yield one plan at a time using a generator
+     * Get all channels and yield one at a time using a generator
      *
      * @param ApiRequestOptions $options API Request options
      * @return \Generator
@@ -65,6 +66,12 @@ class Handler extends AbstractHttpHandler
         }
     }
 
+    /**
+     * Get all channels by page.
+     *
+     * @param ApiRequestOptions $options API Request options
+     * @return \ResponseWrapper
+     */
     protected function getChannelsByPage(ApiRequestOptions $options)
     {
         $path = vsprintf('%s', [
@@ -83,7 +90,7 @@ class Handler extends AbstractHttpHandler
     }
 
     /**
-     * Get all applications in a single array
+     * Get all channels in a single array
      *
      * @param ApiRequestOptions $options API Request options
      * @return ResponseWrapper

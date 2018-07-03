@@ -24,7 +24,5 @@ class MerchantSDKTestCase extends TestCase
         $stack->push($historyHandler);
 
         return new \GuzzleHttp\Client(['handler' => $stack,]);
-
-
     }
 }

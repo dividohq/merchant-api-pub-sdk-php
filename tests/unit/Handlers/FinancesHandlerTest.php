@@ -4,7 +4,6 @@ namespace Divido\MerchantSDK\Test\Unit;
 use Divido\MerchantSDK\Client;
 use Divido\MerchantSDK\Environment;
 use Divido\MerchantSDK\Handlers\ApiRequestOptions;
-
 use Divido\MerchantSDK\HttpClient\GuzzleAdapter;
 use Divido\MerchantSDK\Response\ResponseWrapper;
 use GuzzleHttp\Psr7\Response;
@@ -16,7 +15,6 @@ class FinancesHandlerTest extends MerchantSDKTestCase
 
     function test_GetFinancesByPage_ReturnsFinances()
     {
-
         $history = [];
 
         $client = $this->getGuzzleStackedClient([
@@ -44,12 +42,10 @@ class FinancesHandlerTest extends MerchantSDKTestCase
 
         self::assertArrayHasKey('page', $query);
         self::assertSame('3', $query['page']);
-
     }
 
     function test_GetAllFinances_ReturnsFinances()
     {
-
         $history = [];
 
         $client = $this->getGuzzleStackedClient([
@@ -77,12 +73,10 @@ class FinancesHandlerTest extends MerchantSDKTestCase
 
         self::assertArrayHasKey('page', $query);
         self::assertSame('1', $query['page']);
-
     }
 
     function test_YieldAllFinances_ReturnsFinanceGenerator()
     {
-
         $history = [];
 
         $client = $this->getGuzzleStackedClient([
@@ -114,12 +108,10 @@ class FinancesHandlerTest extends MerchantSDKTestCase
 
         self::assertArrayHasKey('page', $query);
         self::assertSame('1', $query['page']);
-
     }
 
     function test_GetFinancesByPage_WithSort_ReturnsSortedFinances()
     {
-
         $history = [];
 
         $client = $this->getGuzzleStackedClient([

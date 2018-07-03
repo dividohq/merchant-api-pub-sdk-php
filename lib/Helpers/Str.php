@@ -2,6 +2,14 @@
 
 namespace Divido\MerchantSDK\Helpers;
 
+/**
+ * Class Str
+ *
+ * Original code from Laravel 5.6 (Support) Str class
+ *
+ * @author Taylor Ottwell
+ * @source https://laravel.com/api/5.6/Illuminate/Support/Str.html
+ */
 class Str
 {
     /**

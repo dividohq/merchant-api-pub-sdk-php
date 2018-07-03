@@ -7,9 +7,10 @@ use Divido\MerchantSDK\Handlers\ApiRequestOptions;
 use Divido\MerchantSDK\Response\ResponseWrapper;
 
 /**
- * Handler Client
+ * Class Handler
  *
  * @author Neil McGibbon <neil.mcgibbon@divido.com>
+ * @author Mike Lovely <mike.lovely@divido.com>
  * @copyright (c) 2018, Divido
  * @package Divido\MerchantSDK
  */
@@ -64,6 +65,12 @@ class Handler extends AbstractHttpHandler
         }
     }
 
+    /**
+     * Get all plans by page.
+     *
+     * @param ApiRequestOptions $options API Request options
+     * @return \ResponseWrapper
+     */
     protected function getPlansByPage(ApiRequestOptions $options)
     {
         $path = vsprintf('%s', [

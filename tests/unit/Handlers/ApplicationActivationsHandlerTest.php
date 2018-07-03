@@ -31,7 +31,6 @@ class ApplicationActivationsHandlerTest extends MerchantSDKTestCase
 
         $activations = $sdk->getApplicationActivationsByPage($requestOptions, $application);
 
-
         self::assertInstanceOf(ResponseWrapper::class, $activations);
         self::assertCount(2, $activations->getResources());
 
@@ -192,7 +191,6 @@ class ApplicationActivationsHandlerTest extends MerchantSDKTestCase
 
         self::assertArrayHasKey('sort', $query);
         self::assertSame('-created_at', $query['sort']);
-
     }
 
     function test_GetSingleApplicationActivation_ReturnsSingleApplicationActivation()

@@ -5,12 +5,12 @@ namespace Divido\MerchantSDK\Handlers\Settlements;
 use Divido\MerchantSDK\Handlers\AbstractHttpHandler;
 use Divido\MerchantSDK\Handlers\ApiRequestOptions;
 use Divido\MerchantSDK\Models\Settlement;
-use Divido\MerchantSDK\Response\ResponseWrapper;
 
 /**
- * Handler Client
+ * Class Handler
  *
  * @author Neil McGibbon <neil.mcgibbon@divido.com>
+ * @author Mike Lovely <mike.lovely@divido.com>
  * @copyright (c) 2018, Divido
  * @package Divido\MerchantSDK
  */

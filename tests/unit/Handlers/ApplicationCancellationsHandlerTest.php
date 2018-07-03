@@ -4,13 +4,11 @@ namespace Divido\MerchantSDK\Test\Unit;
 use Divido\MerchantSDK\Client;
 use Divido\MerchantSDK\Environment;
 use Divido\MerchantSDK\Handlers\ApiRequestOptions;
-
 use Divido\MerchantSDK\HttpClient\GuzzleAdapter;
+use Divido\MerchantSDK\Models\Application;
 use Divido\MerchantSDK\Response\ResponseWrapper;
 use GuzzleHttp\Psr7\Response;
 use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
-
-use Divido\MerchantSDK\Models\Application;
 
 class ApplicationCancellationsHandlerTest extends MerchantSDKTestCase
 {
@@ -35,7 +33,7 @@ class ApplicationCancellationsHandlerTest extends MerchantSDKTestCase
         $cancellations = $sdk->getApplicationCancellationsByPage($requestOptions, $application);
 
         self::assertInstanceOf(ResponseWrapper::class, $cancellations);
-        // self::assertCount(1, $cancellations->getResources());
+        self::assertCount(2, $cancellations->getResources());
 
         self::assertInternalType('object', $cancellations->getResources()[0]);
         self::assertObjectHasAttribute('id', $cancellations->getResources()[0]);
@@ -69,11 +67,11 @@ class ApplicationCancellationsHandlerTest extends MerchantSDKTestCase
         $cancellations = $sdk->getAllApplicationCancellations($requestOptions, $application);
 
         self::assertInstanceOf(ResponseWrapper::class, $cancellations);
-        // self::assertCount(2, $cancellations->getResources());
+        self::assertCount(3, $cancellations->getResources());
         self::assertInternalType('object', $cancellations->getResources()[0]);
         self::assertObjectHasAttribute('id', $cancellations->getResources()[0]);
-        // self::assertSame('97ca1476-2c9c-4ca2-b4c6-1f41f2ecdf5b', $cancellations->getResources()[0]->id);
-        // self::assertSame('69c08979-b727-407b-b449-6f03de02dd77', $cancellations->getResources()[1]->id);
+        self::assertSame('5d1b94f5-3a7f-4f70-be6e-bb53abd7f955', $cancellations->getResources()[0]->id);
+        self::assertSame('5d1b94f5-3a7f-4f70-be6e-ab53abd7f950', $cancellations->getResources()[1]->id);
 
         self::assertCount(2, $history);
         self::assertSame('GET', $history[0]['request']->getMethod());
@@ -114,7 +112,7 @@ class ApplicationCancellationsHandlerTest extends MerchantSDKTestCase
 
         self::assertInternalType('object', $cancellation);
         self::assertObjectHasAttribute('id', $cancellation);
-        // self::assertSame('97ca1476-2c9c-4ca2-b4c6-1f41f2ecdf5b', $cancellation->id);
+        self::assertSame('5d1b94f5-3a7f-4f70-be6e-bb53abd7f955', $cancellation->id);
 
         self::assertCount(2, $history);
         self::assertSame('GET', $history[0]['request']->getMethod());
@@ -209,7 +207,6 @@ class ApplicationCancellationsHandlerTest extends MerchantSDKTestCase
             ->withDeliveryMethod('delivery')
             ->withTrackingNumber('2m987-769m-27i');
 
-
         $response = $sdk->application_cancellations()->createApplicationCancellation($application, $cancellation);
 
         self::assertCount(1, $history);
@@ -218,6 +215,6 @@ class ApplicationCancellationsHandlerTest extends MerchantSDKTestCase
 
         $result = json_decode($response->getBody(), true);
 
-        // self::assertSame('69c08979-b727-407b-b449-6f03de02dd77', $result['data']['id']);
+        self::assertSame('5d1b94f5-3a7f-4f70-be6e-bb53abd7f955', $result['data']['id']);
     }
 }

@@ -24,6 +24,7 @@ use Divido\MerchantSDK\HttpClient\HttpClientWrapper;
  * Class Client
  *
  * @author Neil McGibbon <neil.mcgibbon@divido.com>
+ * @author Mike Lovely <mike.lovely@divido.com>
  * @copyright (c) 2018, Divido
  * @package Divido\MerchantSDK
  */
