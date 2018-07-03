@@ -15,6 +15,24 @@ use Divido\MerchantSDK\Models\Application;
  */
 trait ClientProxyTrait
 {
+    /**
+     * @return array
+     */
+    abstract protected function getHandlers();
+    abstract protected function setHandler(string $key,$value);
+
+    /**
+     * @return Handler
+     */
+    public function application_cancellations()
+    {
+        if (!array_key_exists('application_cancellations', $this->getHandlers())) {
+            $this->setHandler('application_cancellations', new Handler($this->httpClientWrapper));
+        }
+
+        return $this->getHandlers()['application_cancellations'];
+    }
+
     function getApplicationCancellationsByPage(ApiRequestOptions $options, Application $application)
     {
         $options->setPaginated(true);

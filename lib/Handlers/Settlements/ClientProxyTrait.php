@@ -14,6 +14,24 @@ use Divido\MerchantSDK\Handlers\ApiRequestOptions;
  */
 trait ClientProxyTrait
 {
+    /**
+     * @return array
+     */
+    abstract protected function getHandlers();
+    abstract protected function setHandler(string $key,$value);
+
+    /**
+     * @return Handler
+     */
+    public function settlements()
+    {
+        if (!array_key_exists('settlements', $this->getHandlers())) {
+            $this->setHandler('settlements', new Handler($this->httpClientWrapper));
+        }
+
+        return $this->getHandlers()['settlements'];
+    }
+
     function getSettlementsByPage(ApiRequestOptions $options)
     {
         $options->setPaginated(true);

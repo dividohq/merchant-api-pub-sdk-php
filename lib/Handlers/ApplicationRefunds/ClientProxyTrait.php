@@ -15,6 +15,24 @@ use Divido\MerchantSDK\Models\Application;
  */
 trait ClientProxyTrait
 {
+    /**
+     * @return array
+     */
+    abstract protected function getHandlers();
+    abstract protected function setHandler(string $key,$value);
+
+    /**
+     * @return Handler
+     */
+    public function application_refunds()
+    {
+        if (!array_key_exists('application_refunds', $this->getHandlers())) {
+            $this->setHandler('application_refunds', new Handler($this->httpClientWrapper));
+        }
+
+        return $this->getHandlers()['application_refunds'];
+    }
+
     function getApplicationRefundsByPage(ApiRequestOptions $options, Application $application)
     {
         $options->setPaginated(true);

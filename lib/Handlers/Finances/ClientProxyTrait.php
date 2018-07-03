@@ -14,6 +14,24 @@ use Divido\MerchantSDK\Handlers\ApiRequestOptions;
  */
 trait ClientProxyTrait
 {
+    /**
+     * @return array
+     */
+    abstract protected function getHandlers();
+    abstract protected function setHandler(string $key,$value);
+
+    /**
+     * @return Handler
+     */
+    public function finances()
+    {
+        if (!array_key_exists('finances', $this->getHandlers())) {
+            $this->setHandler('finances', new Handler($this->httpClientWrapper));
+        }
+
+        return $this->getHandlers()['finances'];
+    }
+
     function getPlansByPage(ApiRequestOptions $options)
     {
         $options->setPaginated(true);
