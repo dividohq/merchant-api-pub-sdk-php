@@ -3,6 +3,7 @@ namespace Divido\MerchantSDK\Test\Unit;
 
 use Divido\MerchantSDK\Client;
 use Divido\MerchantSDK\Environment;
+use Divido\MerchantSDK\Handlers\ApiRequestOptions;
 
 use Divido\MerchantSDK\HttpClient\GuzzleAdapter;
 use Divido\MerchantSDK\Response\ResponseWrapper;
@@ -24,7 +25,9 @@ class ApplicationsHandlerTest extends MerchantSDKTestCase
 
         $sdk = new Client('test_key', Environment::SANDBOX, new GuzzleAdapter($client));
 
-        $applications = $sdk->applications()->getApplicationsByPage(3);
+        $requestOptions = (new ApiRequestOptions())->setPage(3);
+
+        $applications = $sdk->getApplicationsByPage($requestOptions);
 
         self::assertInstanceOf(ResponseWrapper::class, $applications);
         self::assertCount(25, $applications->getResources());
@@ -56,7 +59,9 @@ class ApplicationsHandlerTest extends MerchantSDKTestCase
 
         $sdk = new Client('test_key', Environment::SANDBOX, new GuzzleAdapter($client));
 
-        $applications = $sdk->applications()->getAllApplications();
+        $requestOptions = (new ApiRequestOptions());
+
+        $applications = $sdk->getAllApplications($requestOptions);
 
         self::assertInstanceOf(ResponseWrapper::class, $applications);
         self::assertCount(35, $applications->getResources());
@@ -93,7 +98,9 @@ class ApplicationsHandlerTest extends MerchantSDKTestCase
 
         $sdk = new Client('test_key', Environment::SANDBOX, new GuzzleAdapter($client));
 
-        $applications = $sdk->applications()->yieldAllApplications();
+        $requestOptions = (new ApiRequestOptions());
+
+        $applications = $sdk->yieldAllApplications($requestOptions);
 
         self::assertInstanceOf(\Generator::class, $applications);
 
@@ -130,7 +137,9 @@ class ApplicationsHandlerTest extends MerchantSDKTestCase
         ], $history);
         $sdk = new Client('test_key', Environment::SANDBOX, new GuzzleAdapter($client));
 
-        $sdk->applications()->getApplicationsByPage(1, '-created_at');
+        $requestOptions = (new ApiRequestOptions())->setPage(1)->setSort('-created_at');
+
+        $sdk->getApplicationsByPage($requestOptions);
 
         self::assertCount(1, $history);
         self::assertSame('GET', $history[0]['request']->getMethod());

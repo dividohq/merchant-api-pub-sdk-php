@@ -3,6 +3,7 @@ namespace Divido\MerchantSDK\Test\Unit;
 
 use Divido\MerchantSDK\Client;
 use Divido\MerchantSDK\Environment;
+use Divido\MerchantSDK\Handlers\ApiRequestOptions;
 use Divido\MerchantSDK\HttpClient\GuzzleAdapter;
 use Divido\MerchantSDK\Models\Settlement;
 use Divido\MerchantSDK\Response\ResponseWrapper;
@@ -15,7 +16,7 @@ class SettlementsHandlerTest extends MerchantSDKTestCase
 
     private $settlementId = '6EC506EE-7919-11E8-A4CE-0242AC1E000B';
 
-    function test_GetSettlementsByPage_ReturnsSettlements()
+    function test_Rrrrrr_Sssss_GetSettlementsByPage_ReturnsSettlements()
     {
         $history = [];
 
@@ -25,7 +26,9 @@ class SettlementsHandlerTest extends MerchantSDKTestCase
 
         $sdk = new Client('test_key', Environment::SANDBOX, new GuzzleAdapter($client));
 
-        $settlements = $sdk->settlements()->getSettlementsByPage(1);
+        $requestOptions = (new ApiRequestOptions())->setPage(1);
+
+        $settlements = $sdk->getSettlementsByPage($requestOptions);
 
         self::assertInstanceOf(ResponseWrapper::class, $settlements);
         self::assertCount(4, $settlements->getResources());
@@ -44,7 +47,7 @@ class SettlementsHandlerTest extends MerchantSDKTestCase
         self::assertSame('1', $query['page']);
     }
 
-    function test_GetAllSettlements_ReturnsSettlements()
+    function test_Rrrrrr_Sssss_GetAllSettlements_ReturnsSettlements()
     {
         $history = [];
 
@@ -54,7 +57,9 @@ class SettlementsHandlerTest extends MerchantSDKTestCase
 
         $sdk = new Client('test_key', Environment::SANDBOX, new GuzzleAdapter($client));
 
-        $settlements = $sdk->settlements()->getAllSettlements();
+        $requestOptions = (new ApiRequestOptions());
+
+        $settlements = $sdk->getAllSettlements($requestOptions);
 
         self::assertInstanceOf(ResponseWrapper::class, $settlements);
         self::assertCount(4, $settlements->getResources());
@@ -73,7 +78,7 @@ class SettlementsHandlerTest extends MerchantSDKTestCase
         self::assertSame('1', $query['page']);
     }
 
-    function test_YieldAllSettlements_ReturnsFinanceGenerator()
+    function test_Rrrrrr_Sssss_YieldAllSettlements_ReturnsFinanceGenerator()
     {
         $history = [];
 
@@ -83,7 +88,9 @@ class SettlementsHandlerTest extends MerchantSDKTestCase
 
         $sdk = new Client('test_key', Environment::SANDBOX, new GuzzleAdapter($client));
 
-        $settlements = $sdk->settlements()->yieldAllSettlements();
+        $requestOptions = (new ApiRequestOptions());
+
+        $settlements = $sdk->yieldAllSettlements($requestOptions);
 
         self::assertInstanceOf(\Generator::class, $settlements);
 
@@ -106,7 +113,7 @@ class SettlementsHandlerTest extends MerchantSDKTestCase
         self::assertSame('1', $query['page']);
     }
 
-    function test_GetSettlementsByPage_WithSort_ReturnsSortedSettlements()
+    function test_Rrrrrr_Sssss_GetSettlementsByPage_WithSort_ReturnsSortedSettlements()
     {
         $history = [];
 
@@ -115,7 +122,9 @@ class SettlementsHandlerTest extends MerchantSDKTestCase
         ], $history);
         $sdk = new Client('test_key', Environment::SANDBOX, new GuzzleAdapter($client));
 
-        $sdk->settlements()->getSettlementsByPage(1, '-created_at');
+        $requestOptions = (new ApiRequestOptions())->setPage(1)->setSort('-created_at');
+
+        $sdk->getSettlementsByPage($requestOptions);
 
         self::assertCount(1, $history);
         self::assertSame('GET', $history[0]['request']->getMethod());
@@ -128,7 +137,7 @@ class SettlementsHandlerTest extends MerchantSDKTestCase
         self::assertSame('-created_at', $query['sort']);
     }
 
-    function test_GetSingleSettlement_ReturnsSingleSettlement()
+    function test_Rrrrrr_Sssss_GetSingleSettlement_ReturnsSingleSettlement()
     {
         $history = [];
 
@@ -137,9 +146,7 @@ class SettlementsHandlerTest extends MerchantSDKTestCase
         ], $history);
         $sdk = new Client('test_key', Environment::SANDBOX, new GuzzleAdapter($client));
 
-        $settlement = (new Settlement)->withId($this->settlementId);
-
-        $response = $sdk->settlements()->getSingleSettlement($settlement);
+        $response = $sdk->settlements()->getSingleSettlement($this->settlementId);
 
         self::assertCount(1, $history);
         self::assertSame('GET', $history[0]['request']->getMethod());

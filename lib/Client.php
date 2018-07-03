@@ -2,14 +2,21 @@
 
 namespace Divido\MerchantSDK;
 
+use Divido\MerchantSDK\Handlers\Applications\ClientProxyTrait as ApplicationsClientProxyTrait;
+use Divido\MerchantSDK\Handlers\Applications\Handler as ApplicationsHandler;
+use Divido\MerchantSDK\Handlers\ApplicationActivations\ClientProxyTrait as ApplicationActivationsClientProxyTrait;
 use Divido\MerchantSDK\Handlers\ApplicationActivations\Handler as ApplicationActivationsHandler;
-use Divido\MerchantSDK\Handlers\ApplicationsHandler;
-use Divido\MerchantSDK\Handlers\ApplicationCancellationsHandler;
-use Divido\MerchantSDK\Handlers\ApplicationDocumentsHandler;
-use Divido\MerchantSDK\Handlers\ApplicationRefundsHandler;
-use Divido\MerchantSDK\Handlers\ChannelsHandler;
-use Divido\MerchantSDK\Handlers\FinancesHandler;
-use Divido\MerchantSDK\Handlers\SettlementsHandler;
+use Divido\MerchantSDK\Handlers\ApplicationCancellations\ClientProxyTrait as ApplicationCancellationsClientProxyTrait;
+use Divido\MerchantSDK\Handlers\ApplicationCancellations\Handler as ApplicationCancellationsHandler;
+use Divido\MerchantSDK\Handlers\ApplicationDocuments\Handler as ApplicationDocumentsHandler;
+use Divido\MerchantSDK\Handlers\ApplicationRefunds\ClientProxyTrait as ApplicationRefundsClientProxyTrait;
+use Divido\MerchantSDK\Handlers\ApplicationRefunds\Handler as ApplicationRefundsHandler;
+use Divido\MerchantSDK\Handlers\Channels\ClientProxyTrait as ChannelsClientProxyTrait;
+use Divido\MerchantSDK\Handlers\Channels\Handler as ChannelsHandler;
+use Divido\MerchantSDK\Handlers\Finances\ClientProxyTrait as FinancesClientProxyTrait;
+use Divido\MerchantSDK\Handlers\Finances\Handler as FinancesHandler;
+use Divido\MerchantSDK\Handlers\Settlements\ClientProxyTrait as SettlementsClientProxyTrait;
+use Divido\MerchantSDK\Handlers\Settlements\Handler as SettlementsHandler;
 use Divido\MerchantSDK\HttpClient\GuzzleAdapter;
 use Divido\MerchantSDK\HttpClient\HttpClientWrapper;
 
@@ -22,8 +29,9 @@ use Divido\MerchantSDK\HttpClient\HttpClientWrapper;
  */
 class Client
 {
-
-    use Handlers\ApplicationActivations\ClientProxyTrait;
+    use ApplicationsClientProxyTrait, ApplicationActivationsClientProxyTrait, ApplicationCancellationsClientProxyTrait,
+        ApplicationRefundsClientProxyTrait, ChannelsClientProxyTrait, FinancesClientProxyTrait,
+        SettlementsClientProxyTrait;
 
     /**
      * The API environment to consume

@@ -1,0 +1,140 @@
+{
+  "meta": {
+    "count": 2,
+    "current_page": 1,
+    "first_item": 1,
+    "has_more_pages": true,
+    "last_item": 2,
+    "last_page": 2,
+    "per_page": 2,
+    "total": 3
+  },
+  "links": {
+    "self": "\/applications\/90a25b24-2f53-4c80-aba8-9787c68e4c1d\/refunds?page=1",
+    "next": "\/applications\/90a25b24-2f53-4c80-aba8-9787c68e4c1d\/refunds?page=2"
+  },
+  "data": [
+    {
+      "type": "refunds",
+      "id": "97ca1476-2c9c-4ca2-b4c6-1f41f2ecdf5b",
+      "amount": 80000,
+      "status": "FAILED",
+      "reference": "",
+      "comment": "",
+      "application": {
+        "id": "90a25b24-2f53-4c80-aba8-9787c68e4c1d",
+        "token": "0804ddf9283cffa8d59432fbf7b9edc3",
+        "finalised": 0,
+        "finalisation_required": 0,
+        "current_status": "AWAITING-ACTIVATION",
+        "lender_reference": "",
+        "lender_loan_reference": "",
+        "applicants": {
+          "firstName": "Ann",
+          "lastName": "Heselden",
+          "email": "parser@divido.com",
+          "phoneNumber": "02012312312"
+        },
+        "order_items": [
+          {
+            "sku": "",
+            "name": "Product",
+            "quantity": 1,
+            "price": 100000,
+            "vat": 0,
+            "unit": "",
+            "image": "",
+            "attributes": "1"
+          }
+        ],
+        "amounts": {
+          "activatable_amount": 0,
+          "activated_amount": 100000,
+          "cancelable_amount": 0,
+          "cancelled_amount": 0,
+          "original_credit_amount": 100000,
+          "current_credit_amount": 100000,
+          "deposit_amount": 0,
+          "monthly_payment_amount": 8333,
+          "purchase_price_amount": 100000,
+          "refundable_amount": 100000,
+          "refunded_amount": 0,
+          "total_repayable_amount": 100000
+        },
+        "metadata": [],
+        "activation_status": "AWAITING-ACTIVATION",
+        "deposit_status": "NO-DEPOSIT",
+        "merchant_reference": "",
+        "urls": {
+          "merchant_success_redirect_url": "",
+          "merchant_checkout_url": "",
+          "merchant_webhook_url": "",
+          "application_url": "https:\/\/application.dev.divido.com\/#\/token\/0804ddf9283cffa8d59432fbf7b9edc3"
+        },
+        "created_at": "2018-01-22T13:58:53+00:00",
+        "updated_at": "2018-01-22T18:45:16+00:00"
+      }
+    },
+    {
+      "type": "refunds",
+      "id": "69c08979-b727-407b-b449-6f03de02dd77",
+      "amount": 20000,
+      "status": "FAILED",
+      "reference": "",
+      "comment": "",
+      "application": {
+        "id": "90a25b24-2f53-4c80-aba8-9787c68e4c1d",
+        "token": "0804ddf9283cffa8d59432fbf7b9edc3",
+        "finalised": 0,
+        "finalisation_required": 0,
+        "current_status": "AWAITING-ACTIVATION",
+        "lender_reference": "",
+        "lender_loan_reference": "",
+        "applicants": {
+          "firstName": "Ann",
+          "lastName": "Heselden",
+          "email": "parser@divido.com",
+          "phoneNumber": "02012312312"
+        },
+        "order_items": [
+          {
+            "sku": "",
+            "name": "Product",
+            "quantity": 1,
+            "price": 100000,
+            "vat": 0,
+            "unit": "",
+            "image": "",
+            "attributes": "1"
+          }
+        ],
+        "amounts": {
+          "activatable_amount": 0,
+          "activated_amount": 100000,
+          "cancelable_amount": 0,
+          "cancelled_amount": 0,
+          "original_credit_amount": 100000,
+          "current_credit_amount": 100000,
+          "deposit_amount": 0,
+          "monthly_payment_amount": 8333,
+          "purchase_price_amount": 100000,
+          "refundable_amount": 100000,
+          "refunded_amount": 0,
+          "total_repayable_amount": 100000
+        },
+        "metadata": [],
+        "activation_status": "AWAITING-ACTIVATION",
+        "deposit_status": "NO-DEPOSIT",
+        "merchant_reference": "",
+        "urls": {
+          "merchant_success_redirect_url": "",
+          "merchant_checkout_url": "",
+          "merchant_webhook_url": "",
+          "application_url": "https:\/\/application.dev.divido.com\/#\/token\/0804ddf9283cffa8d59432fbf7b9edc3"
+        },
+        "created_at": "2018-01-22T13:58:53+00:00",
+        "updated_at": "2018-01-22T18:45:16+00:00"
+      }
+    }
+  ]
+}

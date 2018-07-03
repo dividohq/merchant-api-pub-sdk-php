@@ -1,11 +1,11 @@
 <?php
 
-namespace Divido\MerchantSDK\Handlers\ApplicationActivations;
+namespace Divido\MerchantSDK\Handlers\ApplicationCancellations;
 
 use Divido\MerchantSDK\Handlers\AbstractHttpHandler;
 use Divido\MerchantSDK\Handlers\ApiRequestOptions;
 use Divido\MerchantSDK\Models\Application;
-use Divido\MerchantSDK\Models\ApplicationActivation;
+use Divido\MerchantSDK\Models\ApplicationCancellation;
 use Divido\MerchantSDK\Response\ResponseWrapper;
 
 /**
@@ -18,38 +18,38 @@ use Divido\MerchantSDK\Response\ResponseWrapper;
 class Handler extends AbstractHttpHandler
 {
     /**
-     * Get application activations as a collection, either a specific page or all
+     * Get application cancellations as a collection, either a specific page or all
      *
      * @param ApiRequestOptions $options API Request options
      * @param Application $application
      * @return ResponseWrapper
      */
-    public function getApplicationActivations(ApiRequestOptions $options, Application $application)
+    public function getApplicationCancellations(ApiRequestOptions $options, Application $application)
     {
         if ($options->isPaginated() === false) {
-            return $this->getAllApplicationActivations($options, $application);
+            return $this->getAllApplicationCancellations($options, $application);
         }
 
-        return $this->getApplicationActivationsByPage($options, $application);
+        return $this->getApplicationCancellationsByPage($options, $application);
     }
 
     /**
-     * Yield application activations one at a time, either from a specific page or all
+     * Yield application cancellations one at a time, either from a specific page or all
      *
      * @param ApiRequestOptions $options API Request options
      * @param Application $application
      * @return \Generator
      */
-    public function yieldApplicationActivations(ApiRequestOptions $options, Application $application)
+    public function yieldApplicationCancellations(ApiRequestOptions $options, Application $application)
     {
         if ($options->isPaginated() === false) {
-            foreach ($this->yieldAllApplicationActivations($options, $application) as $activation) {
-                yield $activation;
+            foreach ($this->yieldAllApplicationCancellations($options, $application) as $cancellation) {
+                yield $cancellation;
             }
             return;
         }
 
-        $responseWrapper = $this->getApplicationActivationsByPage($options, $application);
+        $responseWrapper = $this->getApplicationCancellationsByPage($options, $application);
         foreach ($responseWrapper->getResources() as $resource) {
             yield $resource;
         }
@@ -62,19 +62,19 @@ class Handler extends AbstractHttpHandler
      * @param Application $application
      * @return \Generator
      */
-    protected function yieldAllApplicationActivations(ApiRequestOptions $options, Application $application)
+    protected function yieldAllApplicationCancellations(ApiRequestOptions $options, Application $application)
     {
-        foreach ($this->yieldFullResourceCollection('getApplicationActivationsByPage', $options, $application) as $resource) {
+        foreach ($this->yieldFullResourceCollection('getApplicationCancellationsByPage', $options, $application) as $resource) {
             yield $resource;
         }
     }
 
-    protected function getApplicationActivationsByPage(ApiRequestOptions $options, Application $application)
+    protected function getApplicationCancellationsByPage(ApiRequestOptions $options, Application $application)
     {
         $path = vsprintf('%s/%s/%s', [
             'applications',
             $application->getId(),
-            'activations',
+            'cancellations',
         ]);
 
         $query = [
@@ -88,7 +88,6 @@ class Handler extends AbstractHttpHandler
         return $parsed;
     }
 
-
     /**
      * Get all applications in a single array
      *
@@ -96,43 +95,41 @@ class Handler extends AbstractHttpHandler
      * @param Application $application
      * @return ResponseWrapper
      */
-    protected function getAllApplicationActivations(ApiRequestOptions $options, Application $application)
+    protected function getAllApplicationCancellations(ApiRequestOptions $options, Application $application)
     {
-        return $this->getFullResourceCollection('getApplicationActivationsByPage', $options, $application);
+        return $this->getFullResourceCollection('getApplicationCancellationsByPage', $options, $application);
     }
 
-
-
     /**
-     * Get single activation by id
+     * Get single cancellation by id
      *
      * @return ResponseWrapper
      */
-    public function getSingleApplicationActivation(Application $application, $activationId)
+    public function getSingleApplicationCancellation(Application $application, $cancellationId)
     {
         $path = vsprintf('%s/%s/%s/%s', [
             'applications',
             $application->getId(),
-            'activations',
-            $activationId,
+            'cancellations',
+            $cancellationId,
         ]);
 
         return $this->httpClientWrapper->request('get', $path);
     }
 
     /**
-     * Create an activation
+     * Create an cancellation
      *
      * @return ResponseWrapper
      */
-    public function createApplicationActivation(Application $application, ApplicationActivation $applicationActivation)
+    public function createApplicationCancellation(Application $application, ApplicationCancellation $applicationCancellation)
     {
         $path = vsprintf('%s/%s/%s', [
             'applications',
             $application->getId(),
-            'activations',
+            'cancellations',
         ]);
 
-        return $this->httpClientWrapper->request('post', $path, [], [], $applicationActivation->getJsonPayload());
+        return $this->httpClientWrapper->request('post', $path, [], [], $applicationCancellation->getJsonPayload());
     }
 }

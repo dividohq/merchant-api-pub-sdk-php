@@ -3,6 +3,7 @@ namespace Divido\MerchantSDK\Test\Unit;
 
 use Divido\MerchantSDK\Client;
 use Divido\MerchantSDK\Environment;
+use Divido\MerchantSDK\Handlers\ApiRequestOptions;
 
 use Divido\MerchantSDK\HttpClient\GuzzleAdapter;
 use Divido\MerchantSDK\Response\ResponseWrapper;
@@ -24,7 +25,9 @@ class FinancesHandlerTest extends MerchantSDKTestCase
 
         $sdk = new Client('test_key', Environment::SANDBOX, new GuzzleAdapter($client));
 
-        $plans = $sdk->finances()->getPlansByPage(3);
+        $requestOptions = (new ApiRequestOptions())->setPage(3);
+
+        $plans = $sdk->getPlansByPage($requestOptions);
 
         self::assertInstanceOf(ResponseWrapper::class, $plans);
         self::assertCount(4, $plans->getResources());
@@ -55,7 +58,9 @@ class FinancesHandlerTest extends MerchantSDKTestCase
 
         $sdk = new Client('test_key', Environment::SANDBOX, new GuzzleAdapter($client));
 
-        $plans = $sdk->finances()->getAllPlans();
+        $requestOptions = (new ApiRequestOptions());
+
+        $plans = $sdk->getAllPlans($requestOptions);
 
         self::assertInstanceOf(ResponseWrapper::class, $plans);
         self::assertCount(4, $plans->getResources());
@@ -86,7 +91,9 @@ class FinancesHandlerTest extends MerchantSDKTestCase
 
         $sdk = new Client('test_key', Environment::SANDBOX, new GuzzleAdapter($client));
 
-        $plans = $sdk->finances()->yieldAllPlans();
+        $requestOptions = (new ApiRequestOptions());
+
+        $plans = $sdk->yieldAllPlans($requestOptions);
 
         self::assertInstanceOf(\Generator::class, $plans);
 
@@ -120,7 +127,9 @@ class FinancesHandlerTest extends MerchantSDKTestCase
         ], $history);
         $sdk = new Client('test_key', Environment::SANDBOX, new GuzzleAdapter($client));
 
-        $sdk->finances()->getPlansByPage(1, '-created_at');
+        $requestOptions = (new ApiRequestOptions())->setPage(1)->setSort('-created_at');
+
+        $sdk->getPlansByPage($requestOptions);
 
         self::assertCount(1, $history);
         self::assertSame('GET', $history[0]['request']->getMethod());

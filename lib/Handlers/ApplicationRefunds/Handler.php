@@ -1,11 +1,11 @@
 <?php
 
-namespace Divido\MerchantSDK\Handlers\ApplicationActivations;
+namespace Divido\MerchantSDK\Handlers\ApplicationRefunds;
 
 use Divido\MerchantSDK\Handlers\AbstractHttpHandler;
 use Divido\MerchantSDK\Handlers\ApiRequestOptions;
 use Divido\MerchantSDK\Models\Application;
-use Divido\MerchantSDK\Models\ApplicationActivation;
+use Divido\MerchantSDK\Models\ApplicationRefund;
 use Divido\MerchantSDK\Response\ResponseWrapper;
 
 /**
@@ -18,38 +18,38 @@ use Divido\MerchantSDK\Response\ResponseWrapper;
 class Handler extends AbstractHttpHandler
 {
     /**
-     * Get application activations as a collection, either a specific page or all
+     * Get application refunds as a collection, either a specific page or all
      *
      * @param ApiRequestOptions $options API Request options
      * @param Application $application
      * @return ResponseWrapper
      */
-    public function getApplicationActivations(ApiRequestOptions $options, Application $application)
+    public function getApplicationRefunds(ApiRequestOptions $options, Application $application)
     {
         if ($options->isPaginated() === false) {
-            return $this->getAllApplicationActivations($options, $application);
+            return $this->getAllApplicationRefunds($options, $application);
         }
 
-        return $this->getApplicationActivationsByPage($options, $application);
+        return $this->getApplicationRefundsByPage($options, $application);
     }
 
     /**
-     * Yield application activations one at a time, either from a specific page or all
+     * Yield application refunds one at a time, either from a specific page or all
      *
      * @param ApiRequestOptions $options API Request options
      * @param Application $application
      * @return \Generator
      */
-    public function yieldApplicationActivations(ApiRequestOptions $options, Application $application)
+    public function yieldApplicationRefunds(ApiRequestOptions $options, Application $application)
     {
         if ($options->isPaginated() === false) {
-            foreach ($this->yieldAllApplicationActivations($options, $application) as $activation) {
-                yield $activation;
+            foreach ($this->yieldAllApplicationRefunds($options, $application) as $refund) {
+                yield $refund;
             }
             return;
         }
 
-        $responseWrapper = $this->getApplicationActivationsByPage($options, $application);
+        $responseWrapper = $this->getApplicationRefundsByPage($options, $application);
         foreach ($responseWrapper->getResources() as $resource) {
             yield $resource;
         }
@@ -62,19 +62,19 @@ class Handler extends AbstractHttpHandler
      * @param Application $application
      * @return \Generator
      */
-    protected function yieldAllApplicationActivations(ApiRequestOptions $options, Application $application)
+    protected function yieldAllApplicationRefunds(ApiRequestOptions $options, Application $application)
     {
-        foreach ($this->yieldFullResourceCollection('getApplicationActivationsByPage', $options, $application) as $resource) {
+        foreach ($this->yieldFullResourceCollection('getApplicationRefundsByPage', $options, $application) as $resource) {
             yield $resource;
         }
     }
 
-    protected function getApplicationActivationsByPage(ApiRequestOptions $options, Application $application)
+    protected function getApplicationRefundsByPage(ApiRequestOptions $options, Application $application)
     {
         $path = vsprintf('%s/%s/%s', [
             'applications',
             $application->getId(),
-            'activations',
+            'refunds',
         ]);
 
         $query = [
@@ -88,7 +88,6 @@ class Handler extends AbstractHttpHandler
         return $parsed;
     }
 
-
     /**
      * Get all applications in a single array
      *
@@ -96,43 +95,41 @@ class Handler extends AbstractHttpHandler
      * @param Application $application
      * @return ResponseWrapper
      */
-    protected function getAllApplicationActivations(ApiRequestOptions $options, Application $application)
+    protected function getAllApplicationRefunds(ApiRequestOptions $options, Application $application)
     {
-        return $this->getFullResourceCollection('getApplicationActivationsByPage', $options, $application);
+        return $this->getFullResourceCollection('getApplicationRefundsByPage', $options, $application);
     }
 
-
-
     /**
-     * Get single activation by id
+     * Get single refund by id
      *
      * @return ResponseWrapper
      */
-    public function getSingleApplicationActivation(Application $application, $activationId)
+    public function getSingleApplicationRefund(Application $application, $refundId)
     {
         $path = vsprintf('%s/%s/%s/%s', [
             'applications',
             $application->getId(),
-            'activations',
-            $activationId,
+            'refunds',
+            $refundId,
         ]);
 
         return $this->httpClientWrapper->request('get', $path);
     }
 
     /**
-     * Create an activation
+     * Create an refund
      *
      * @return ResponseWrapper
      */
-    public function createApplicationActivation(Application $application, ApplicationActivation $applicationActivation)
+    public function createApplicationRefund(Application $application, ApplicationRefund $applicationRefund)
     {
         $path = vsprintf('%s/%s/%s', [
             'applications',
             $application->getId(),
-            'activations',
+            'refunds',
         ]);
 
-        return $this->httpClientWrapper->request('post', $path, [], [], $applicationActivation->getJsonPayload());
+        return $this->httpClientWrapper->request('post', $path, [], [], $applicationRefund->getJsonPayload());
     }
 }

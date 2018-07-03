@@ -179,7 +179,9 @@ class ApplicationActivationsHandlerTest extends MerchantSDKTestCase
 
         $application = (new Application)->withId($this->applicationId);
 
-        $sdk->application_activations()->getApplicationActivationsByPage($application, 1, '-created_at');
+        $requestOptions = (new ApiRequestOptions())->setSort('-created_at');
+
+        $sdk->getApplicationActivationsByPage($requestOptions, $application);
 
         self::assertCount(1, $history);
         self::assertSame('GET', $history[0]['request']->getMethod());
@@ -229,7 +231,6 @@ class ApplicationActivationsHandlerTest extends MerchantSDKTestCase
 
         $application = (new Application)->withId($this->applicationId);
 
-        // THIS HAS ALL CHANGED!!!
         $activation = (new \Divido\MerchantSDK\Models\ApplicationActivation)
             ->withAmount(1000)
             ->withReference('D4M-njPjFRE-MxsB')

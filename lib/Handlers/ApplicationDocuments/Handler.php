@@ -1,10 +1,13 @@
 <?php
 
-namespace Divido\MerchantSDK\Handlers;
+namespace Divido\MerchantSDK\Handlers\ApplicationDocuments;
 
 use Divido\MerchantSDK\Models\Application;
 use Divido\MerchantSDK\Models\ApplicationDocument;
 use Divido\MerchantSDK\Response\ResponseWrapper;
+
+use Divido\MerchantSDK\Handlers\AbstractHttpHandler;
+use Divido\MerchantSDK\Handlers\ApiRequestOptions;
 
 /**
  * ApplicationDocumentsHandler Client
@@ -13,7 +16,7 @@ use Divido\MerchantSDK\Response\ResponseWrapper;
  * @copyright (c) 2018, Divido
  * @package Divido\MerchantSDK
  */
-class ApplicationDocumentsHandler extends AbstractHttpHandler
+class Handler extends AbstractHttpHandler
 {
     /**
      * Create a cancellation
@@ -28,7 +31,7 @@ class ApplicationDocumentsHandler extends AbstractHttpHandler
             'documents',
         ]);
 
-        return $this->httpClientWrapper->request('post', $path, [], ['Content-Type' => 'multipart/form-data'], $applicationDocument->getPayload());
+        return $this->httpClientWrapper->request('post', $path, [], ['Content-Type' => 'multipart/form-data'], $applicationDocument->getJsonPayload());
     }
 
     /**
@@ -38,7 +41,7 @@ class ApplicationDocumentsHandler extends AbstractHttpHandler
      */
     public function deleteApplicationDocument(Application $application, $applicationDocumentId)
     {
-        $path = vsprintf('%s/%s/%s/$s', [
+        $path = vsprintf('%s/%s/%s/%s', [
             'applications',
             $application->getId(),
             'documents',

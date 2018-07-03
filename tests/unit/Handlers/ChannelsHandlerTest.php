@@ -3,6 +3,7 @@ namespace Divido\MerchantSDK\Test\Unit;
 
 use Divido\MerchantSDK\Client;
 use Divido\MerchantSDK\Environment;
+use Divido\MerchantSDK\Handlers\ApiRequestOptions;
 
 use Divido\MerchantSDK\HttpClient\GuzzleAdapter;
 use Divido\MerchantSDK\Response\ResponseWrapper;
@@ -24,7 +25,9 @@ class ChannelsHandlerTest extends MerchantSDKTestCase
 
         $sdk = new Client('test_key', Environment::SANDBOX, new GuzzleAdapter($client));
 
-        $channels = $sdk->channels()->getChannelsByPage(1);
+        $requestOptions = (new ApiRequestOptions());
+
+        $channels = $sdk->getChannelsByPage($requestOptions);
 
         self::assertInstanceOf(ResponseWrapper::class, $channels);
         self::assertCount(2, $channels->getResources());
@@ -55,7 +58,9 @@ class ChannelsHandlerTest extends MerchantSDKTestCase
 
         $sdk = new Client('test_key', Environment::SANDBOX, new GuzzleAdapter($client));
 
-        $channels = $sdk->channels()->getAllChannels();
+        $requestOptions = (new ApiRequestOptions());
+
+        $channels = $sdk->getAllChannels($requestOptions);
 
         self::assertInstanceOf(ResponseWrapper::class, $channels);
         self::assertCount(2, $channels->getResources());
@@ -86,7 +91,9 @@ class ChannelsHandlerTest extends MerchantSDKTestCase
 
         $sdk = new Client('test_key', Environment::SANDBOX, new GuzzleAdapter($client));
 
-        $channels = $sdk->channels()->yieldAllChannels();
+        $requestOptions = (new ApiRequestOptions());
+
+        $channels = $sdk->yieldAllChannels($requestOptions);
 
         self::assertInstanceOf(\Generator::class, $channels);
 
@@ -120,7 +127,9 @@ class ChannelsHandlerTest extends MerchantSDKTestCase
         ], $history);
         $sdk = new Client('test_key', Environment::SANDBOX, new GuzzleAdapter($client));
 
-        $sdk->channels()->getChannelsByPage(1, '-created_at');
+        $requestOptions = (new ApiRequestOptions())->setSort('-created_at');
+
+        $sdk->getChannelsByPage($requestOptions);
 
         self::assertCount(1, $history);
         self::assertSame('GET', $history[0]['request']->getMethod());
