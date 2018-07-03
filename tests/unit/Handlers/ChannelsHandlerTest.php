@@ -110,6 +110,43 @@ class ChannelsHandlerTest extends MerchantSDKTestCase
         self::assertSame('1', $query['page']);
     }
 
+    function test_YieldChannelsByPage_ReturnsChannelsGenerator()
+    {
+        $history = [];
+
+        $client = $this->getGuzzleStackedClient([
+            new Response(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/channels_page_1.json')),
+        ], $history);
+
+        $sdk = new Client('test_key', Environment::SANDBOX, new GuzzleAdapter($client));
+
+        $requestOptions = (new ApiRequestOptions())->setPage(2);
+
+        $channels = $sdk->yieldChannelsByPage($requestOptions);
+
+        self::assertInstanceOf(\Generator::class, $channels);
+
+        $channel = $channels->current();
+
+        // Bug?:
+        // Failed asserting that actual size 0 matches expected size 0
+        self::assertCount(2, $channels);
+
+        self::assertInternalType('object', $channel);
+        self::assertObjectHasAttribute('id', $channel);
+        self::assertSame('CF0A92CE9-4935-DC6F-DD0D-463EC9D654A1', $channel->id);
+
+        self::assertCount(1, $history);
+        self::assertSame('GET', $history[0]['request']->getMethod());
+        self::assertSame("/channels", $history[0]['request']->getUri()->getPath());
+
+        $query1 = [];
+        parse_str($history[0]['request']->getUri()->getQuery(), $query1);
+
+        self::assertArrayHasKey('page', $query1);
+        self::assertSame('2', $query1['page']);
+    }
+
     function test_GetChannelsByPage_WithSort_ReturnsSortedChannels()
     {
         $history = [];

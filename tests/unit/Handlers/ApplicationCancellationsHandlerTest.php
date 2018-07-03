@@ -129,6 +129,46 @@ class ApplicationCancellationsHandlerTest extends MerchantSDKTestCase
         self::assertSame('2', $query2['page']);
     }
 
+    function test_YieldApplicationCancellationsByPage_ReturnsApplicationCancellationsGenerator()
+    {
+        $history = [];
+
+        $client = $this->getGuzzleStackedClient([
+            new Response(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/application_cancellations_page_1.json')),
+            new Response(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/application_cancellations_page_2.json')),
+        ], $history);
+
+        $sdk = new Client('test_key', Environment::SANDBOX, new GuzzleAdapter($client));
+
+        $requestOptions = (new ApiRequestOptions())->setPage(2);
+
+        $application = (new Application)->withId($this->applicationId);
+
+        $cancellations = $sdk->yieldApplicationCancellationsByPage($requestOptions, $application);
+
+        self::assertInstanceOf(\Generator::class, $cancellations);
+
+        $cancellation = $cancellations->current();
+
+        // Bug?:
+        // Failed asserting that actual size 0 matches expected size 0
+        self::assertCount(2, $cancellations);
+
+        self::assertInternalType('object', $cancellation);
+        self::assertObjectHasAttribute('id', $cancellation);
+        self::assertSame('5d1b94f5-3a7f-4f70-be6e-bb53abd7f955', $cancellation->id);
+
+        self::assertCount(1, $history);
+        self::assertSame('GET', $history[0]['request']->getMethod());
+        self::assertSame("/applications/{$this->applicationId}/cancellations", $history[0]['request']->getUri()->getPath());
+
+        $query1 = [];
+        parse_str($history[0]['request']->getUri()->getQuery(), $query1);
+
+        self::assertArrayHasKey('page', $query1);
+        self::assertSame('2', $query1['page']);
+    }
+
     function test_GetApplicationCancellationsByPage_WithSort_ReturnsSortedApplicationCancellations()
     {
 

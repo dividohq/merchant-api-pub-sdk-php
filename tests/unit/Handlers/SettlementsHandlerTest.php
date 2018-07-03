@@ -16,7 +16,7 @@ class SettlementsHandlerTest extends MerchantSDKTestCase
 
     private $settlementId = '6EC506EE-7919-11E8-A4CE-0242AC1E000B';
 
-    function test_Rrrrrr_Sssss_GetSettlementsByPage_ReturnsSettlements()
+    function test_GetSettlementsByPage_ReturnsSettlements()
     {
         $history = [];
 
@@ -47,7 +47,7 @@ class SettlementsHandlerTest extends MerchantSDKTestCase
         self::assertSame('1', $query['page']);
     }
 
-    function test_Rrrrrr_Sssss_GetAllSettlements_ReturnsSettlements()
+    function test_GetAllSettlements_ReturnsSettlements()
     {
         $history = [];
 
@@ -78,7 +78,7 @@ class SettlementsHandlerTest extends MerchantSDKTestCase
         self::assertSame('1', $query['page']);
     }
 
-    function test_Rrrrrr_Sssss_YieldAllSettlements_ReturnsFinanceGenerator()
+    function test_YieldAllSettlements_ReturnsSettlementGenerator()
     {
         $history = [];
 
@@ -113,7 +113,44 @@ class SettlementsHandlerTest extends MerchantSDKTestCase
         self::assertSame('1', $query['page']);
     }
 
-    function test_Rrrrrr_Sssss_GetSettlementsByPage_WithSort_ReturnsSortedSettlements()
+    function test_YieldSettlementsByPage_ReturnsSettlementsGenerator()
+    {
+        $history = [];
+
+        $client = $this->getGuzzleStackedClient([
+            new Response(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/settlements_page_1.json')),
+        ], $history);
+
+        $sdk = new Client('test_key', Environment::SANDBOX, new GuzzleAdapter($client));
+
+        $requestOptions = (new ApiRequestOptions())->setPage(2);
+
+        $settlements = $sdk->yieldSettlementsByPage($requestOptions);
+
+        self::assertInstanceOf(\Generator::class, $settlements);
+
+        $settlement = $settlements->current();
+
+        // Bug?:
+        // Failed asserting that actual size 0 matches expected size 0
+        self::assertCount(4, $settlements);
+
+        self::assertInternalType('object', $settlement);
+        self::assertObjectHasAttribute('id', $settlement);
+        self::assertSame('6EC506EE-7919-11E8-A4CE-0242AC1E000B', $settlement->id);
+
+        self::assertCount(1, $history);
+        self::assertSame('GET', $history[0]['request']->getMethod());
+        self::assertSame("/settlements", $history[0]['request']->getUri()->getPath());
+
+        $query1 = [];
+        parse_str($history[0]['request']->getUri()->getQuery(), $query1);
+
+        self::assertArrayHasKey('page', $query1);
+        self::assertSame('2', $query1['page']);
+    }
+
+    function test_GetSettlementsByPage_WithSort_ReturnsSortedSettlements()
     {
         $history = [];
 
@@ -137,7 +174,7 @@ class SettlementsHandlerTest extends MerchantSDKTestCase
         self::assertSame('-created_at', $query['sort']);
     }
 
-    function test_Rrrrrr_Sssss_GetSingleSettlement_ReturnsSingleSettlement()
+    function test_GetSingleSettlement_ReturnsSingleSettlement()
     {
         $history = [];
 

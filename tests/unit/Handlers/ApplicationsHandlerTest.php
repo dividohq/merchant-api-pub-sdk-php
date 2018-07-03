@@ -119,6 +119,44 @@ class ApplicationsHandlerTest extends MerchantSDKTestCase
         self::assertSame('2', $query2['page']);
     }
 
+    function test_YieldApplicationsByPage_ReturnsApplicationsGenerator()
+    {
+        $history = [];
+
+        $client = $this->getGuzzleStackedClient([
+            new Response(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/applications_page_1.json')),
+            new Response(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/applications_page_2.json')),
+        ], $history);
+
+        $sdk = new Client('test_key', Environment::SANDBOX, new GuzzleAdapter($client));
+
+        $requestOptions = (new ApiRequestOptions())->setPage(2);
+
+        $applications = $sdk->yieldApplicationsByPage($requestOptions);
+
+        self::assertInstanceOf(\Generator::class, $applications);
+
+        $application = $applications->current();
+
+        // Bug?:
+        // Failed asserting that actual size 0 matches expected size 0
+        self::assertCount(25, $applications);
+
+        self::assertInternalType('object', $application);
+        self::assertObjectHasAttribute('id', $application);
+        self::assertSame('0074dd19-dbba-4d80-bdb7-c4a2176cb399', $application->id);
+
+        self::assertCount(1, $history);
+        self::assertSame('GET', $history[0]['request']->getMethod());
+        self::assertSame("/applications", $history[0]['request']->getUri()->getPath());
+
+        $query1 = [];
+        parse_str($history[0]['request']->getUri()->getQuery(), $query1);
+
+        self::assertArrayHasKey('page', $query1);
+        self::assertSame('2', $query1['page']);
+    }
+
     function test_GetApplicationsByPage_WithSort_ReturnsSortedApplications()
     {
         $history = [];

@@ -129,6 +129,46 @@ class ApplicationRefundsHandlerTest extends MerchantSDKTestCase
         self::assertSame('2', $query2['page']);
     }
 
+    function test_YieldApplicationRefundsByPage_ReturnsApplicationRefundsGenerator()
+    {
+        $history = [];
+
+        $client = $this->getGuzzleStackedClient([
+            new Response(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/application_refunds_page_1.json')),
+            new Response(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/application_refunds_page_2.json')),
+        ], $history);
+
+        $sdk = new Client('test_key', Environment::SANDBOX, new GuzzleAdapter($client));
+
+        $requestOptions = (new ApiRequestOptions())->setPage(2);
+
+        $application = (new Application)->withId($this->applicationId);
+
+        $refunds = $sdk->yieldApplicationRefundsByPage($requestOptions, $application);
+
+        self::assertInstanceOf(\Generator::class, $refunds);
+
+        $refund = $refunds->current();
+
+        // Bug?:
+        // Failed asserting that actual size 0 matches expected size 0
+        self::assertCount(2, $refunds);
+
+        self::assertInternalType('object', $refund);
+        self::assertObjectHasAttribute('id', $refund);
+        self::assertSame('97ca1476-2c9c-4ca2-b4c6-1f41f2ecdf5b', $refund->id);
+
+        self::assertCount(1, $history);
+        self::assertSame('GET', $history[0]['request']->getMethod());
+        self::assertSame("/applications/{$this->applicationId}/refunds", $history[0]['request']->getUri()->getPath());
+
+        $query1 = [];
+        parse_str($history[0]['request']->getUri()->getQuery(), $query1);
+
+        self::assertArrayHasKey('page', $query1);
+        self::assertSame('2', $query1['page']);
+    }
+
     function test_GetApplicationActivtionsByPage_WithSort_ReturnsSortedApplicationRefunds()
     {
         $history = [];

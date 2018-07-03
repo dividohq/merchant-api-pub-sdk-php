@@ -110,6 +110,43 @@ class FinancesHandlerTest extends MerchantSDKTestCase
         self::assertSame('1', $query['page']);
     }
 
+    function test_YieldFinancesByPage_ReturnsFinancesGenerator()
+    {
+        $history = [];
+
+        $client = $this->getGuzzleStackedClient([
+            new Response(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/finance_get_plans.json')),
+        ], $history);
+
+        $sdk = new Client('test_key', Environment::SANDBOX, new GuzzleAdapter($client));
+
+        $requestOptions = (new ApiRequestOptions())->setPage(2);
+
+        $plans = $sdk->yieldPlansByPage($requestOptions);
+
+        self::assertInstanceOf(\Generator::class, $plans);
+
+        $plan = $plans->current();
+
+        // Bug?:
+        // Failed asserting that actual size 0 matches expected size 0
+        self::assertCount(4, $plans);
+
+        self::assertInternalType('object', $plan);
+        self::assertObjectHasAttribute('id', $plan);
+        self::assertSame('F7485F0E5-202B-4879-4F00-154E109E7FE4', $plan->id);
+
+        self::assertCount(1, $history);
+        self::assertSame('GET', $history[0]['request']->getMethod());
+        self::assertSame("/finance-plans", $history[0]['request']->getUri()->getPath());
+
+        $query1 = [];
+        parse_str($history[0]['request']->getUri()->getQuery(), $query1);
+
+        self::assertArrayHasKey('page', $query1);
+        self::assertSame('2', $query1['page']);
+    }
+
     function test_GetFinancesByPage_WithSort_ReturnsSortedFinances()
     {
         $history = [];
@@ -134,5 +171,4 @@ class FinancesHandlerTest extends MerchantSDKTestCase
         self::assertSame('-created_at', $query['sort']);
 
     }
-
 }

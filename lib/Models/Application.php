@@ -184,19 +184,4 @@ class Application extends AbstractModel
 
         return $cloned;
     }
-
-    // public function getActivationsByPage($page)
-    // {
-    //     $this->handlers['applicationActivationHandler']->getActivationsByPage($this, $page);
-    // }
-
-    // protected function getMerchantChannelId()
-    // {
-
-    // }
-
-    // protected function withMerchantChannelId()
-    // {
-
-    // }
 }
