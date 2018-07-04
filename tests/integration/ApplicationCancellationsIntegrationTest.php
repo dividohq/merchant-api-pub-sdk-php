@@ -1,6 +1,6 @@
 <?php
 
-namespace Divido\MerchantSDK\Test\Unit;
+namespace Divido\MerchantSDK\Test\Integration;
 
 use Divido\MerchantSDK\Client;
 use Divido\MerchantSDK\Environment;
@@ -10,16 +10,17 @@ use Divido\MerchantSDK\HttpClient\GuzzleAdapter;
 use Divido\MerchantSDK\HttpClient\HttpClientWrapper;
 use Divido\MerchantSDK\Models\Application;
 use Divido\MerchantSDK\Response\ResponseWrapper;
+use Divido\MerchantSDK\Test\Unit\MerchantSDKTestCase;
 use GuzzleHttp\Psr7\Response;
 use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 
-class ApplicationCancellationsHandlerTest extends MerchantSDKTestCase
+class ApplicationCancellationsIntegrationTest extends MerchantSDKTestCase
 {
     use MockeryPHPUnitIntegration;
 
     private $applicationId = '53ad60ed-860d-4fa1-a497-03c1aea39f0a';
 
-    public function test_GetApplicationCancellations_ReturnsApplicationsCancellations()
+    public function test_GetApplicationCancellationsFromClient_ReturnsApplicationsCancellations()
     {
         $history = [];
 
@@ -27,15 +28,13 @@ class ApplicationCancellationsHandlerTest extends MerchantSDKTestCase
             new Response(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/application_cancellations_page_1.json')),
         ], $history);
 
-        $httpClientWrapper = new HttpClientWrapper(new GuzzleAdapter($client), '', '');
-
-        $handler = new Handler($httpClientWrapper);
+        $sdk = new Client('test_key', Environment::SANDBOX, new GuzzleAdapter($client));
 
         $application = (new Application)->withId($this->applicationId);
 
         $requestOptions = (new ApiRequestOptions())->setSort('-created_at');
 
-        $cancellations = $handler->getApplicationCancellations($requestOptions, $application);
+        $cancellations = $sdk->getApplicationCancellationsByPage($requestOptions, $application);
 
         self::assertInstanceOf(ResponseWrapper::class, $cancellations);
         self::assertCount(2, $cancellations->getResources());
@@ -54,7 +53,7 @@ class ApplicationCancellationsHandlerTest extends MerchantSDKTestCase
         self::assertArrayHasKey('page', $query);
     }
 
-    public function test_GetApplicationCancellationsByPage_ReturnsApplicationsCancellations()
+    public function test_GetApplicationCancellationsByPageFromClient_ReturnsApplicationsCancellations()
     {
         $history = [];
 
@@ -62,15 +61,13 @@ class ApplicationCancellationsHandlerTest extends MerchantSDKTestCase
             new Response(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/application_cancellations_page_1.json')),
         ], $history);
 
-        $httpClientWrapper = new HttpClientWrapper(new GuzzleAdapter($client), '', '');
-
-        $handler = new Handler($httpClientWrapper);
+        $sdk = new Client('test_key', Environment::SANDBOX, new GuzzleAdapter($client));
 
         $application = (new Application)->withId($this->applicationId);
 
         $requestOptions = (new ApiRequestOptions())->setSort('-created_at');
 
-        $cancellations = $handler->getApplicationCancellationsByPage($requestOptions, $application);
+        $cancellations = $sdk->getApplicationCancellationsByPage($requestOptions, $application);
 
         self::assertInstanceOf(ResponseWrapper::class, $cancellations);
         self::assertCount(2, $cancellations->getResources());
@@ -89,7 +86,7 @@ class ApplicationCancellationsHandlerTest extends MerchantSDKTestCase
         self::assertArrayHasKey('page', $query);
     }
 
-    public function test_GetAllApplicationCancellations_ReturnsAllApplicationCancellations()
+    public function test_GetAllApplicationCancellationsFromClient_ReturnsAllApplicationCancellations()
     {
         $history = [];
 
@@ -98,15 +95,13 @@ class ApplicationCancellationsHandlerTest extends MerchantSDKTestCase
             new Response(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/application_cancellations_page_2.json')),
         ], $history);
 
-        $httpClientWrapper = new HttpClientWrapper(new GuzzleAdapter($client), '', '');
-
-        $handler = new Handler($httpClientWrapper);
+        $sdk = new Client('test_key', Environment::SANDBOX, new GuzzleAdapter($client));
 
         $requestOptions = (new ApiRequestOptions())->setPaginated(false);
 
         $application = (new Application)->withId($this->applicationId);
 
-        $cancellations = $handler->getAllApplicationCancellations($requestOptions, $application);
+        $cancellations = $sdk->getAllApplicationCancellations($requestOptions, $application);
 
         self::assertInstanceOf(ResponseWrapper::class, $cancellations);
         self::assertCount(3, $cancellations->getResources());
@@ -130,7 +125,7 @@ class ApplicationCancellationsHandlerTest extends MerchantSDKTestCase
         self::assertSame('2', $query2['page']);
     }
 
-    public function test_YieldAllApplicationCancellations_ReturnsApplicationCancellationsGenerator()
+    public function test_YieldAllApplicationCancellationsFromClient_ReturnsApplicationCancellationsGenerator()
     {
         $history = [];
 
@@ -140,15 +135,13 @@ class ApplicationCancellationsHandlerTest extends MerchantSDKTestCase
         ], $history);
 
 
-        $httpClientWrapper = new HttpClientWrapper(new GuzzleAdapter($client), '', '');
-
-        $handler = new Handler($httpClientWrapper);
+        $sdk = new Client('test_key', Environment::SANDBOX, new GuzzleAdapter($client));
 
         $requestOptions = (new ApiRequestOptions());
 
         $application = (new Application)->withId($this->applicationId);
 
-        $cancellations = $handler->yieldAllApplicationCancellations($requestOptions, $application);
+        $cancellations = $sdk->yieldAllApplicationCancellations($requestOptions, $application);
 
         self::assertInstanceOf(\Generator::class, $cancellations);
 
@@ -174,7 +167,34 @@ class ApplicationCancellationsHandlerTest extends MerchantSDKTestCase
         self::assertSame('2', $query2['page']);
     }
 
-    public function test_YieldApplicationCancellationsByPage_ReturnsApplicationCancellationsGenerator()
+    public function test_GetApplicationCancellationsByPageFromClient_WithSort_ReturnsSortedApplicationCancellations()
+    {
+        $history = [];
+
+        $client = $this->getGuzzleStackedClient([
+            new Response(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/application_cancellations_page_1.json')),
+        ], $history);
+
+        $sdk = new Client('test_key', Environment::SANDBOX, new GuzzleAdapter($client));
+
+        $requestOptions = (new ApiRequestOptions())->setSort('-created_at');
+
+        $application = (new Application)->withId($this->applicationId);
+
+        $sdk->getApplicationCancellationsByPage($requestOptions, $application);
+
+        self::assertCount(1, $history);
+        self::assertSame('GET', $history[0]['request']->getMethod());
+        self::assertSame("/applications/{$this->applicationId}/cancellations", $history[0]['request']->getUri()->getPath());
+
+        $query = [];
+        parse_str($history[0]['request']->getUri()->getQuery(), $query);
+
+        self::assertArrayHasKey('sort', $query);
+        self::assertSame('-created_at', $query['sort']);
+    }
+
+    public function test_YieldApplicationCancellationsByPageFromClient_ReturnsApplicationCancellations()
     {
         $history = [];
 
@@ -183,23 +203,15 @@ class ApplicationCancellationsHandlerTest extends MerchantSDKTestCase
             new Response(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/application_cancellations_page_2.json')),
         ], $history);
 
+        $sdk = new Client('test_key', Environment::SANDBOX, new GuzzleAdapter($client));
 
-        $httpClientWrapper = new HttpClientWrapper(new GuzzleAdapter($client), '', '');
+        $requestOptions = (new ApiRequestOptions());
 
-        $handler = new Handler($httpClientWrapper);
-
-        $requestOptions = (new ApiRequestOptions())->setPage(2);
-
-        $application = (new Application)->withId($this->applicationId);
-
-        $cancellations = $handler->yieldApplicationCancellations($requestOptions, $application);
+        $cancellations = $sdk->yieldApplicationCancellationsByPage($requestOptions, $this->applicationId);
 
         self::assertInstanceOf(\Generator::class, $cancellations);
 
         $cancellation = $cancellations->current();
-
-        // Bug?:
-        // Failed asserting that actual size 0 matches expected size 0
         self::assertCount(2, $cancellations);
 
         self::assertInternalType('object', $cancellation);
@@ -214,103 +226,6 @@ class ApplicationCancellationsHandlerTest extends MerchantSDKTestCase
         parse_str($history[0]['request']->getUri()->getQuery(), $query1);
 
         self::assertArrayHasKey('page', $query1);
-        self::assertSame('2', $query1['page']);
-    }
-
-    public function test_GetApplicationCancellationsByPage_WithSort_ReturnsSortedApplicationCancellations()
-    {
-        $history = [];
-
-        $client = $this->getGuzzleStackedClient([
-            new Response(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/application_cancellations_page_1.json')),
-        ], $history);
-
-        $httpClientWrapper = new HttpClientWrapper(new GuzzleAdapter($client), '', '');
-
-        $handler = new Handler($httpClientWrapper);
-
-        $requestOptions = (new ApiRequestOptions())->setSort('-created_at');
-
-        $application = (new Application)->withId($this->applicationId);
-
-       $handler->getApplicationCancellationsByPage($requestOptions, $application);
-
-        self::assertCount(1, $history);
-        self::assertSame('GET', $history[0]['request']->getMethod());
-        self::assertSame("/applications/{$this->applicationId}/cancellations", $history[0]['request']->getUri()->getPath());
-
-        $query = [];
-        parse_str($history[0]['request']->getUri()->getQuery(), $query);
-
-        self::assertArrayHasKey('sort', $query);
-        self::assertSame('-created_at', $query['sort']);
-
-    }
-
-    public function test_GetSingleApplicationCancellation_ReturnsSingleApplicationCancellation()
-    {
-        $history = [];
-
-        $client = $this->getGuzzleStackedClient([
-            new Response(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/application_cancellations_get_one.json')),
-        ], $history);
-
-        $httpClientWrapper = new HttpClientWrapper(new GuzzleAdapter($client), '', '');
-
-        $handler = new Handler($httpClientWrapper);
-
-        $application = (new Application)->withId($this->applicationId);
-
-        $response = $handler->getSingleApplicationCancellation($application, '69c08979-b727-407b-b449-6f03de02dd77');
-
-        self::assertCount(1, $history);
-        self::assertSame('GET', $history[0]['request']->getMethod());
-        self::assertSame(
-            "/applications/{$this->applicationId}/cancellations/69c08979-b727-407b-b449-6f03de02dd77",
-            $history[0]['request']->getUri()->getPath()
-        );
-
-        $result = json_decode($response->getBody(), true);
-
-        self::assertSame('5d1b94f5-3a7f-4f70-be6e-bb53abd7f955', $result['data']['id']);
-    }
-
-    public function test_CreateApplicationCancellation_ReturnsNewlyCreatedApplicationCancellation()
-    {
-        $history = [];
-
-        $client = $this->getGuzzleStackedClient([
-            new Response(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/application_cancellations_get_one.json')),
-        ], $history);
-
-        $httpClientWrapper = new HttpClientWrapper(new GuzzleAdapter($client), '', '');
-
-        $handler = new Handler($httpClientWrapper);
-
-        $application = (new Application)->withId($this->applicationId);
-
-        $cancellation = (new \Divido\MerchantSDK\Models\ApplicationCancellation)
-            ->withAmount(1000)
-            ->withReference('D4M-njPjFRE-MxsB')
-            ->withComment('Item activated')
-            ->withOrderItems([
-                [
-                    'name' => 'Handbag',
-                    'quantity' => 1,
-                    'price' => 3000,
-                ],
-            ])
-            ->withDeliveryMethod('delivery')
-            ->withTrackingNumber('2m987-769m-27i');
-
-        $response = $handler->createApplicationCancellation($application, $cancellation);
-
-        self::assertCount(1, $history);
-        self::assertSame('POST', $history[0]['request']->getMethod());
-        self::assertSame("/applications/{$this->applicationId}/cancellations", $history[0]['request']->getUri()->getPath());
-
-        $result = json_decode($response->getBody(), true);
-
-        self::assertSame('5d1b94f5-3a7f-4f70-be6e-bb53abd7f955', $result['data']['id']);
+        self::assertSame('1', $query1['page']);
     }
 }

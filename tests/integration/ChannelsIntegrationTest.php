@@ -1,6 +1,6 @@
 <?php
 
-namespace Divido\MerchantSDK\Test\Unit;
+namespace Divido\MerchantSDK\Test\Integration;
 
 use Divido\MerchantSDK\Client;
 use Divido\MerchantSDK\Environment;
@@ -9,14 +9,15 @@ use Divido\MerchantSDK\Handlers\Channels\Handler;
 use Divido\MerchantSDK\HttpClient\HttpClientWrapper;
 use Divido\MerchantSDK\HttpClient\GuzzleAdapter;
 use Divido\MerchantSDK\Response\ResponseWrapper;
+use Divido\MerchantSDK\Test\Unit\MerchantSDKTestCase;
 use GuzzleHttp\Psr7\Response;
 use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 
-class ChannelsHandlerTest extends MerchantSDKTestCase
+class ChannelsIntegrationTest extends MerchantSDKTestCase
 {
     use MockeryPHPUnitIntegration;
 
-    public function test_GetChannels_ReturnsChannels()
+    public function test_GetChannelsFromClient_ReturnsChannels()
     {
         $history = [];
 
@@ -24,13 +25,11 @@ class ChannelsHandlerTest extends MerchantSDKTestCase
             new Response(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/channels_page_1.json')),
         ], $history);
 
-        $httpClientWrapper = new HttpClientWrapper(new GuzzleAdapter($client), '', '');
-
-        $handler = new Handler($httpClientWrapper);
+        $sdk = new Client('test_key', Environment::SANDBOX, new GuzzleAdapter($client));
 
         $requestOptions = (new ApiRequestOptions());
 
-        $channels = $handler->getChannels($requestOptions);
+        $channels = $sdk->getChannelsByPage($requestOptions);
 
         self::assertInstanceOf(ResponseWrapper::class, $channels);
         self::assertCount(2, $channels->getResources());
@@ -49,7 +48,7 @@ class ChannelsHandlerTest extends MerchantSDKTestCase
         self::assertSame('1', $query['page']);
     }
 
-    public function test_GetChannelsByPage_ReturnsChannels()
+    public function test_GetChannelsByPageFromClient_ReturnsChannels()
     {
         $history = [];
 
@@ -57,13 +56,11 @@ class ChannelsHandlerTest extends MerchantSDKTestCase
             new Response(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/channels_page_1.json')),
         ], $history);
 
-        $httpClientWrapper = new HttpClientWrapper(new GuzzleAdapter($client), '', '');
-
-        $handler = new Handler($httpClientWrapper);
+        $sdk = new Client('test_key', Environment::SANDBOX, new GuzzleAdapter($client));
 
         $requestOptions = (new ApiRequestOptions());
 
-        $channels = $handler->getChannelsByPage($requestOptions);
+        $channels = $sdk->getChannelsByPage($requestOptions);
 
         self::assertInstanceOf(ResponseWrapper::class, $channels);
         self::assertCount(2, $channels->getResources());
@@ -82,7 +79,7 @@ class ChannelsHandlerTest extends MerchantSDKTestCase
         self::assertSame('1', $query['page']);
     }
 
-    public function test_GetAllChannels_ReturnsChannels()
+    public function test_GetAllChannelsFromClient_ReturnsChannels()
     {
         $history = [];
 
@@ -90,13 +87,11 @@ class ChannelsHandlerTest extends MerchantSDKTestCase
             new Response(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/channels_page_1.json')),
         ], $history);
 
-        $httpClientWrapper = new HttpClientWrapper(new GuzzleAdapter($client), '', '');
-
-        $handler = new Handler($httpClientWrapper);
+        $sdk = new Client('test_key', Environment::SANDBOX, new GuzzleAdapter($client));
 
         $requestOptions = (new ApiRequestOptions());
 
-        $channels = $handler->getAllChannels($requestOptions);
+        $channels = $sdk->getAllChannels($requestOptions);
 
         self::assertInstanceOf(ResponseWrapper::class, $channels);
         self::assertCount(2, $channels->getResources());
@@ -115,7 +110,7 @@ class ChannelsHandlerTest extends MerchantSDKTestCase
         self::assertSame('1', $query['page']);
     }
 
-    public function test_YieldAllChannels_ReturnsFinanceGenerator()
+    public function test_YieldAllChannelsFromClient_ReturnsFinanceGenerator()
     {
         $history = [];
 
@@ -123,13 +118,11 @@ class ChannelsHandlerTest extends MerchantSDKTestCase
             new Response(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/channels_page_1.json')),
         ], $history);
 
-        $httpClientWrapper = new HttpClientWrapper(new GuzzleAdapter($client), '', '');
-
-        $handler = new Handler($httpClientWrapper);
+        $sdk = new Client('test_key', Environment::SANDBOX, new GuzzleAdapter($client));
 
         $requestOptions = (new ApiRequestOptions());
 
-        $channels = $handler->yieldAllChannels($requestOptions);
+        $channels = $sdk->yieldAllChannels($requestOptions);
 
         self::assertInstanceOf(\Generator::class, $channels);
 
@@ -152,7 +145,31 @@ class ChannelsHandlerTest extends MerchantSDKTestCase
         self::assertSame('1', $query['page']);
     }
 
-    public function test_YieldChannelsByPage_ReturnsChannelsGenerator()
+    public function test_GetChannelsByPageFromClient_WithSort_ReturnsSortedChannels()
+    {
+        $history = [];
+
+        $client = $this->getGuzzleStackedClient([
+            new Response(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/channels_page_1.json')),
+        ], $history);
+        $sdk = new Client('test_key', Environment::SANDBOX, new GuzzleAdapter($client));
+
+        $requestOptions = (new ApiRequestOptions())->setSort('-created_at');
+
+        $sdk->getChannelsByPage($requestOptions);
+
+        self::assertCount(1, $history);
+        self::assertSame('GET', $history[0]['request']->getMethod());
+        self::assertSame('/channels', $history[0]['request']->getUri()->getPath());
+
+        $query = [];
+        parse_str($history[0]['request']->getUri()->getQuery(), $query);
+
+        self::assertArrayHasKey('sort', $query);
+        self::assertSame('-created_at', $query['sort']);
+    }
+
+    public function test_YieldChannelsByPageFromClient_ReturnsChannels()
     {
         $history = [];
 
@@ -160,20 +177,15 @@ class ChannelsHandlerTest extends MerchantSDKTestCase
             new Response(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/channels_page_1.json')),
         ], $history);
 
-        $httpClientWrapper = new HttpClientWrapper(new GuzzleAdapter($client), '', '');
+        $sdk = new Client('test_key', Environment::SANDBOX, new GuzzleAdapter($client));
 
-        $handler = new Handler($httpClientWrapper);
+        $requestOptions = (new ApiRequestOptions());
 
-        $requestOptions = (new ApiRequestOptions())->setPage(2);
-
-        $channels = $handler->yieldChannels($requestOptions);
+        $channels = $sdk->yieldChannelsByPage($requestOptions);
 
         self::assertInstanceOf(\Generator::class, $channels);
 
         $channel = $channels->current();
-
-        // Bug?:
-        // Failed asserting that actual size 0 matches expected size 0
         self::assertCount(2, $channels);
 
         self::assertInternalType('object', $channel);
@@ -188,32 +200,6 @@ class ChannelsHandlerTest extends MerchantSDKTestCase
         parse_str($history[0]['request']->getUri()->getQuery(), $query1);
 
         self::assertArrayHasKey('page', $query1);
-        self::assertSame('2', $query1['page']);
-    }
-
-    public function test_GetChannelsByPage_WithSort_ReturnsSortedChannels()
-    {
-        $history = [];
-
-        $client = $this->getGuzzleStackedClient([
-            new Response(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/channels_page_1.json')),
-        ], $history);
-        $httpClientWrapper = new HttpClientWrapper(new GuzzleAdapter($client), '', '');
-
-        $handler = new Handler($httpClientWrapper);
-
-        $requestOptions = (new ApiRequestOptions())->setSort('-created_at');
-
-       $handler->getChannelsByPage($requestOptions);
-
-        self::assertCount(1, $history);
-        self::assertSame('GET', $history[0]['request']->getMethod());
-        self::assertSame('/channels', $history[0]['request']->getUri()->getPath());
-
-        $query = [];
-        parse_str($history[0]['request']->getUri()->getQuery(), $query);
-
-        self::assertArrayHasKey('sort', $query);
-        self::assertSame('-created_at', $query['sort']);
+        self::assertSame('1', $query1['page']);
     }
 }

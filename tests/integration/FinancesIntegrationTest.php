@@ -1,6 +1,6 @@
 <?php
 
-namespace Divido\MerchantSDK\Test\Unit;
+namespace Divido\MerchantSDK\Test\Integration;
 
 use Divido\MerchantSDK\Client;
 use Divido\MerchantSDK\Environment;
@@ -9,14 +9,15 @@ use Divido\MerchantSDK\Handlers\Finances\Handler;
 use Divido\MerchantSDK\HttpClient\HttpClientWrapper;
 use Divido\MerchantSDK\HttpClient\GuzzleAdapter;
 use Divido\MerchantSDK\Response\ResponseWrapper;
+use Divido\MerchantSDK\Test\Unit\MerchantSDKTestCase;
 use GuzzleHttp\Psr7\Response;
 use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 
-class FinancesHandlerTest extends MerchantSDKTestCase
+class FinancesIntegrationTest extends MerchantSDKTestCase
 {
     use MockeryPHPUnitIntegration;
 
-    public function test_GetFinances_ReturnsFinances()
+    public function test_GetFinancesFromClient_ReturnsFinances()
     {
         $history = [];
 
@@ -24,13 +25,11 @@ class FinancesHandlerTest extends MerchantSDKTestCase
             new Response(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/finance_get_plans.json')),
         ], $history);
 
-        $httpClientWrapper = new HttpClientWrapper(new GuzzleAdapter($client), '', '');
-
-        $handler = new Handler($httpClientWrapper);
+        $sdk = new Client('test_key', Environment::SANDBOX, new GuzzleAdapter($client));
 
         $requestOptions = (new ApiRequestOptions())->setPage(3);
 
-        $plans = $handler->getPlans($requestOptions);
+        $plans = $sdk->getPlansByPage($requestOptions);
 
         self::assertInstanceOf(ResponseWrapper::class, $plans);
         self::assertCount(4, $plans->getResources());
@@ -49,7 +48,7 @@ class FinancesHandlerTest extends MerchantSDKTestCase
         self::assertSame('3', $query['page']);
     }
 
-    public function test_GetFinancesByPage_ReturnsFinances()
+    public function test_GetFinancesByPageFromClient_ReturnsFinances()
     {
         $history = [];
 
@@ -57,13 +56,11 @@ class FinancesHandlerTest extends MerchantSDKTestCase
             new Response(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/finance_get_plans.json')),
         ], $history);
 
-        $httpClientWrapper = new HttpClientWrapper(new GuzzleAdapter($client), '', '');
-
-        $handler = new Handler($httpClientWrapper);
+        $sdk = new Client('test_key', Environment::SANDBOX, new GuzzleAdapter($client));
 
         $requestOptions = (new ApiRequestOptions())->setPage(3);
 
-        $plans = $handler->getPlansByPage($requestOptions);
+        $plans = $sdk->getPlansByPage($requestOptions);
 
         self::assertInstanceOf(ResponseWrapper::class, $plans);
         self::assertCount(4, $plans->getResources());
@@ -82,7 +79,7 @@ class FinancesHandlerTest extends MerchantSDKTestCase
         self::assertSame('3', $query['page']);
     }
 
-    public function test_GetAllFinances_ReturnsFinances()
+    public function test_GetAllFinancesFromClient_ReturnsFinances()
     {
         $history = [];
 
@@ -90,13 +87,11 @@ class FinancesHandlerTest extends MerchantSDKTestCase
             new Response(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/finance_get_plans.json')),
         ], $history);
 
-        $httpClientWrapper = new HttpClientWrapper(new GuzzleAdapter($client), '', '');
-
-        $handler = new Handler($httpClientWrapper);
+        $sdk = new Client('test_key', Environment::SANDBOX, new GuzzleAdapter($client));
 
         $requestOptions = (new ApiRequestOptions());
 
-        $plans = $handler->getAllPlans($requestOptions);
+        $plans = $sdk->getAllPlans($requestOptions);
 
         self::assertInstanceOf(ResponseWrapper::class, $plans);
         self::assertCount(4, $plans->getResources());
@@ -115,7 +110,7 @@ class FinancesHandlerTest extends MerchantSDKTestCase
         self::assertSame('1', $query['page']);
     }
 
-    public function test_YieldAllFinances_ReturnsFinanceGenerator()
+    public function test_YieldAllFinancesFromClient_ReturnsFinanceGenerator()
     {
         $history = [];
 
@@ -123,13 +118,11 @@ class FinancesHandlerTest extends MerchantSDKTestCase
             new Response(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/finance_get_plans.json')),
         ], $history);
 
-        $httpClientWrapper = new HttpClientWrapper(new GuzzleAdapter($client), '', '');
-
-        $handler = new Handler($httpClientWrapper);
+        $sdk = new Client('test_key', Environment::SANDBOX, new GuzzleAdapter($client));
 
         $requestOptions = (new ApiRequestOptions());
 
-        $plans = $handler->yieldAllPlans($requestOptions);
+        $plans = $sdk->yieldAllPlans($requestOptions);
 
         self::assertInstanceOf(\Generator::class, $plans);
 
@@ -152,7 +145,31 @@ class FinancesHandlerTest extends MerchantSDKTestCase
         self::assertSame('1', $query['page']);
     }
 
-    public function test_YieldFinancesByPage_ReturnsFinancesGenerator()
+    public function test_GetFinancesByPageFromClient_WithSort_ReturnsSortedFinances()
+    {
+        $history = [];
+
+        $client = $this->getGuzzleStackedClient([
+            new Response(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/finance_get_plans.json')),
+        ], $history);
+        $sdk = new Client('test_key', Environment::SANDBOX, new GuzzleAdapter($client));
+
+        $requestOptions = (new ApiRequestOptions())->setPage(1)->setSort('-created_at');
+
+        $sdk->getPlansByPage($requestOptions);
+
+        self::assertCount(1, $history);
+        self::assertSame('GET', $history[0]['request']->getMethod());
+        self::assertSame('/finance-plans', $history[0]['request']->getUri()->getPath());
+
+        $query = [];
+        parse_str($history[0]['request']->getUri()->getQuery(), $query);
+
+        self::assertArrayHasKey('sort', $query);
+        self::assertSame('-created_at', $query['sort']);
+    }
+
+    public function test_YieldPlansByPageFromClient_ReturnsPlans()
     {
         $history = [];
 
@@ -160,20 +177,15 @@ class FinancesHandlerTest extends MerchantSDKTestCase
             new Response(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/finance_get_plans.json')),
         ], $history);
 
-        $httpClientWrapper = new HttpClientWrapper(new GuzzleAdapter($client), '', '');
+        $sdk = new Client('test_key', Environment::SANDBOX, new GuzzleAdapter($client));
 
-        $handler = new Handler($httpClientWrapper);
+        $requestOptions = (new ApiRequestOptions());
 
-        $requestOptions = (new ApiRequestOptions())->setPage(2);
-
-        $plans = $handler->yieldPlans($requestOptions);
+        $plans = $sdk->yieldPlansByPage($requestOptions);
 
         self::assertInstanceOf(\Generator::class, $plans);
 
         $plan = $plans->current();
-
-        // Bug?:
-        // Failed asserting that actual size 0 matches expected size 0
         self::assertCount(4, $plans);
 
         self::assertInternalType('object', $plan);
@@ -188,33 +200,6 @@ class FinancesHandlerTest extends MerchantSDKTestCase
         parse_str($history[0]['request']->getUri()->getQuery(), $query1);
 
         self::assertArrayHasKey('page', $query1);
-        self::assertSame('2', $query1['page']);
-    }
-
-    public function test_GetFinancesByPage_WithSort_ReturnsSortedFinances()
-    {
-        $history = [];
-
-        $client = $this->getGuzzleStackedClient([
-            new Response(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/finance_get_plans.json')),
-        ], $history);
-        $httpClientWrapper = new HttpClientWrapper(new GuzzleAdapter($client), '', '');
-
-        $handler = new Handler($httpClientWrapper);
-
-        $requestOptions = (new ApiRequestOptions())->setPage(1)->setSort('-created_at');
-
-       $handler->getPlansByPage($requestOptions);
-
-        self::assertCount(1, $history);
-        self::assertSame('GET', $history[0]['request']->getMethod());
-        self::assertSame('/finance-plans', $history[0]['request']->getUri()->getPath());
-
-        $query = [];
-        parse_str($history[0]['request']->getUri()->getQuery(), $query);
-
-        self::assertArrayHasKey('sort', $query);
-        self::assertSame('-created_at', $query['sort']);
-
+        self::assertSame('1', $query1['page']);
     }
 }

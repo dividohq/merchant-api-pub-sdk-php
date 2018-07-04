@@ -208,7 +208,6 @@ class ApplicationActivationsHandlerTest extends MerchantSDKTestCase
 
         self::assertArrayHasKey('page', $query1);
         self::assertSame('1', $query1['page']);
-
     }
 
     public function test_GetApplicationActivtionsByPage_WithSort_ReturnsSortedApplicationActivations()

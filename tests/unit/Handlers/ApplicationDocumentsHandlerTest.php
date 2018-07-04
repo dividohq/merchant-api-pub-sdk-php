@@ -1,4 +1,5 @@
 <?php
+
 namespace Divido\MerchantSDK\Test\Unit;
 
 use Divido\MerchantSDK\Client;

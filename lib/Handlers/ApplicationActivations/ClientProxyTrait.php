@@ -33,28 +33,44 @@ trait ClientProxyTrait
         return $this->getHandlers()['application_activations'];
     }
 
-    public function getApplicationActivationsByPage(ApiRequestOptions $options, Application $application)
+    public function getApplicationActivationsByPage(ApiRequestOptions $options, $application)
     {
+        if (is_string($application)) {
+            $application = (new Application)->withId($application);
+        }
+
         $options->setPaginated(true);
         return $this->application_activations()->getApplicationActivations($options, $application);
     }
 
-    public function getAllApplicationActivations(ApiRequestOptions $options, Application $application)
+    public function getAllApplicationActivations(ApiRequestOptions $options, $application)
     {
+        if (is_string($application)) {
+            $application = (new Application)->withId($application);
+        }
+
         $options->setPaginated(false);
         return $this->application_activations()->getApplicationActivations($options, $application);
     }
 
-    public function yieldAllApplicationActivations(ApiRequestOptions $options, Application $application)
+    public function yieldAllApplicationActivations(ApiRequestOptions $options, $application)
     {
+        if (is_string($application)) {
+            $application = (new Application)->withId($application);
+        }
+
         $options->setPaginated(false);
         foreach ($this->application_activations()->yieldApplicationActivations($options, $application) as $activation) {
             yield $activation;
         }
     }
 
-    public function yieldApplicationActivationsByPage(ApiRequestOptions $options, Application $application)
+    public function yieldApplicationActivationsByPage(ApiRequestOptions $options, $application)
     {
+        if (is_string($application)) {
+            $application = (new Application)->withId($application);
+        }
+
         $options->setPaginated(true);
         foreach ($this->application_activations()->yieldApplicationActivations($options, $application) as $activation) {
             yield $activation;

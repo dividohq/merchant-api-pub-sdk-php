@@ -53,8 +53,12 @@ trait ClientProxyTrait
         }
     }
 
-    public function yieldApplicationRefundsByPage(ApiRequestOptions $options, Application $application)
+    public function yieldApplicationRefundsByPage(ApiRequestOptions $options, $application)
     {
+        if (is_string($application)) {
+            $application = (new Application)->withId($application);
+        }
+
         $options->setPaginated(true);
         foreach ($this->application_refunds()->yieldApplicationRefunds($options, $application) as $refund) {
             yield $refund;
