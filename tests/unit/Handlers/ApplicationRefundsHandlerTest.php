@@ -4,6 +4,8 @@ namespace Divido\MerchantSDK\Test\Unit;
 use Divido\MerchantSDK\Client;
 use Divido\MerchantSDK\Environment;
 use Divido\MerchantSDK\Handlers\ApiRequestOptions;
+use Divido\MerchantSDK\Handlers\ApplicationRefunds\Handler;
+use Divido\MerchantSDK\HttpClient\HttpClientWrapper;
 use Divido\MerchantSDK\HttpClient\GuzzleAdapter;
 use Divido\MerchantSDK\Models\Application;
 use Divido\MerchantSDK\Response\ResponseWrapper;
@@ -16,7 +18,7 @@ class ApplicationRefundsHandlerTest extends MerchantSDKTestCase
 
     private $applicationId = '90a25b24-2f53-4c80-aba8-9787c68e4c1d';
 
-    function test_GetApplicationRefundsByPage_ReturnsApplicationsRefunds()
+    public function test_GetApplicationRefunds_ReturnsApplicationsRefunds()
     {
         $history = [];
 
@@ -24,13 +26,15 @@ class ApplicationRefundsHandlerTest extends MerchantSDKTestCase
             new Response(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/application_refunds_page_1.json')),
         ], $history);
 
-        $sdk = new Client('test_key', Environment::SANDBOX, new GuzzleAdapter($client));
+        $httpClientWrapper = new HttpClientWrapper(new GuzzleAdapter($client), '', '');
+
+        $handler = new Handler($httpClientWrapper);
 
         $requestOptions = (new ApiRequestOptions());
 
         $application = (new Application)->withId($this->applicationId);
 
-        $refunds = $sdk->getApplicationRefundsByPage($requestOptions, $application);
+        $refunds = $handler->getApplicationRefunds($requestOptions, $application);
 
         self::assertInstanceOf(ResponseWrapper::class, $refunds);
         self::assertCount(2, $refunds->getResources());
@@ -49,7 +53,42 @@ class ApplicationRefundsHandlerTest extends MerchantSDKTestCase
         self::assertArrayHasKey('page', $query);
     }
 
-    function test_GetAllApplicationRefunds_ReturnsAllApplicationRefunds()
+    public function test_GetApplicationRefundsByPage_ReturnsApplicationsRefunds()
+    {
+        $history = [];
+
+        $client = $this->getGuzzleStackedClient([
+            new Response(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/application_refunds_page_1.json')),
+        ], $history);
+
+        $httpClientWrapper = new HttpClientWrapper(new GuzzleAdapter($client), '', '');
+
+        $handler = new Handler($httpClientWrapper);
+
+        $requestOptions = (new ApiRequestOptions());
+
+        $application = (new Application)->withId($this->applicationId);
+
+        $refunds = $handler->getApplicationRefundsByPage($requestOptions, $application);
+
+        self::assertInstanceOf(ResponseWrapper::class, $refunds);
+        self::assertCount(2, $refunds->getResources());
+
+        self::assertInternalType('object', $refunds->getResources()[0]);
+        self::assertObjectHasAttribute('id', $refunds->getResources()[0]);
+        self::assertSame('97ca1476-2c9c-4ca2-b4c6-1f41f2ecdf5b', $refunds->getResources()[0]->id);
+
+        self::assertCount(1, $history);
+        self::assertSame('GET', $history[0]['request']->getMethod());
+        self::assertSame("/applications/{$this->applicationId}/refunds", $history[0]['request']->getUri()->getPath());
+
+        $query = [];
+        parse_str($history[0]['request']->getUri()->getQuery(), $query);
+
+        self::assertArrayHasKey('page', $query);
+    }
+
+    public function test_GetAllApplicationRefunds_ReturnsAllApplicationRefunds()
     {
         $history = [];
 
@@ -58,13 +97,15 @@ class ApplicationRefundsHandlerTest extends MerchantSDKTestCase
             new Response(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/application_refunds_page_2.json')),
         ], $history);
 
-        $sdk = new Client('test_key', Environment::SANDBOX, new GuzzleAdapter($client));
+        $httpClientWrapper = new HttpClientWrapper(new GuzzleAdapter($client), '', '');
+
+        $handler = new Handler($httpClientWrapper);
 
         $requestOptions = (new ApiRequestOptions());
 
         $application = (new Application)->withId($this->applicationId);
 
-        $refunds = $sdk->getAllApplicationRefunds($requestOptions, $application);
+        $refunds = $handler->getAllApplicationRefunds($requestOptions, $application);
 
         self::assertInstanceOf(ResponseWrapper::class, $refunds);
         // self::assertCount(2, $refunds->getResources());
@@ -88,7 +129,7 @@ class ApplicationRefundsHandlerTest extends MerchantSDKTestCase
         self::assertSame('2', $query2['page']);
     }
 
-    function test_YieldAllApplicationRefunds_ReturnsApplicationRefundsGenerator()
+    public function test_YieldAllApplicationRefunds_ReturnsApplicationRefundsGenerator()
     {
         $history = [];
 
@@ -97,13 +138,15 @@ class ApplicationRefundsHandlerTest extends MerchantSDKTestCase
             new Response(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/application_refunds_page_2.json')),
         ], $history);
 
-        $sdk = new Client('test_key', Environment::SANDBOX, new GuzzleAdapter($client));
+        $httpClientWrapper = new HttpClientWrapper(new GuzzleAdapter($client), '', '');
+
+        $handler = new Handler($httpClientWrapper);
 
         $requestOptions = (new ApiRequestOptions())->setPage(2);
 
         $application = (new Application)->withId($this->applicationId);
 
-        $refunds = $sdk->yieldAllApplicationRefunds($requestOptions, $application);
+        $refunds = $handler->yieldAllApplicationRefunds($requestOptions, $application);
 
         self::assertInstanceOf(\Generator::class, $refunds);
 
@@ -129,7 +172,7 @@ class ApplicationRefundsHandlerTest extends MerchantSDKTestCase
         self::assertSame('2', $query2['page']);
     }
 
-    function test_YieldApplicationRefundsByPage_ReturnsApplicationRefundsGenerator()
+    public function test_YieldApplicationRefundsByPage_ReturnsApplicationRefundsGenerator()
     {
         $history = [];
 
@@ -138,13 +181,15 @@ class ApplicationRefundsHandlerTest extends MerchantSDKTestCase
             new Response(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/application_refunds_page_2.json')),
         ], $history);
 
-        $sdk = new Client('test_key', Environment::SANDBOX, new GuzzleAdapter($client));
+        $httpClientWrapper = new HttpClientWrapper(new GuzzleAdapter($client), '', '');
+
+        $handler = new Handler($httpClientWrapper);
 
         $requestOptions = (new ApiRequestOptions())->setPage(2);
 
         $application = (new Application)->withId($this->applicationId);
 
-        $refunds = $sdk->yieldApplicationRefundsByPage($requestOptions, $application);
+        $refunds = $handler->yieldApplicationRefunds($requestOptions, $application);
 
         self::assertInstanceOf(\Generator::class, $refunds);
 
@@ -169,7 +214,7 @@ class ApplicationRefundsHandlerTest extends MerchantSDKTestCase
         self::assertSame('2', $query1['page']);
     }
 
-    function test_GetApplicationActivtionsByPage_WithSort_ReturnsSortedApplicationRefunds()
+    public function test_GetApplicationActivtionsByPage_WithSort_ReturnsSortedApplicationRefunds()
     {
         $history = [];
 
@@ -177,13 +222,15 @@ class ApplicationRefundsHandlerTest extends MerchantSDKTestCase
             new Response(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/application_refunds_page_1.json')),
         ], $history);
 
-        $sdk = new Client('test_key', Environment::SANDBOX, new GuzzleAdapter($client));
+        $httpClientWrapper = new HttpClientWrapper(new GuzzleAdapter($client), '', '');
+
+        $handler = new Handler($httpClientWrapper);
 
         $requestOptions = (new ApiRequestOptions())->setSort('-created_at');
 
         $application = (new Application)->withId($this->applicationId);
 
-        $sdk->getApplicationRefundsByPage($requestOptions, $application);
+       $handler->getApplicationRefundsByPage($requestOptions, $application);
 
         self::assertCount(1, $history);
         self::assertSame('GET', $history[0]['request']->getMethod());
@@ -197,18 +244,20 @@ class ApplicationRefundsHandlerTest extends MerchantSDKTestCase
 
     }
 
-    function test_GetSingleApplicationRefund_ReturnsSingleApplicationRefund()
+    public function test_GetSingleApplicationRefund_ReturnsSingleApplicationRefund()
     {
         $history = [];
 
         $client = $this->getGuzzleStackedClient([
             new Response(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/application_refunds_get_one.json')),
         ], $history);
-        $sdk = new Client('test_key', Environment::SANDBOX, new GuzzleAdapter($client));
+        $httpClientWrapper = new HttpClientWrapper(new GuzzleAdapter($client), '', '');
+
+        $handler = new Handler($httpClientWrapper);
 
         $application = (new Application)->withId($this->applicationId);
 
-        $response = $sdk->application_refunds()->getSingleApplicationRefund($application, '26d56518-e4a0-4d33-9415-be3c8d6c2661');
+        $response = $handler->getSingleApplicationRefund($application, '26d56518-e4a0-4d33-9415-be3c8d6c2661');
 
         self::assertCount(1, $history);
         self::assertSame('GET', $history[0]['request']->getMethod());
@@ -222,14 +271,16 @@ class ApplicationRefundsHandlerTest extends MerchantSDKTestCase
         self::assertSame('26d56518-e4a0-4d33-9415-be3c8d6c2661', $result['data']['id']);
     }
 
-    function test_CreateApplicationRefund_ReturnsNewlyCreatedApplicationRefund()
+    public function test_CreateApplicationRefund_ReturnsNewlyCreatedApplicationRefund()
     {
         $history = [];
 
         $client = $this->getGuzzleStackedClient([
             new Response(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/application_refunds_get_one.json')),
         ], $history);
-        $sdk = new Client('test_key', Environment::SANDBOX, new GuzzleAdapter($client));
+        $httpClientWrapper = new HttpClientWrapper(new GuzzleAdapter($client), '', '');
+
+        $handler = new Handler($httpClientWrapper);
 
         $application = (new Application)->withId($this->applicationId);
 
@@ -247,7 +298,7 @@ class ApplicationRefundsHandlerTest extends MerchantSDKTestCase
             ->withDeliveryMethod('delivery')
             ->withTrackingNumber('2m987-769m-27i');
 
-        $response = $sdk->application_refunds()->createApplicationRefund($application, $refund);
+        $response = $handler->createApplicationRefund($application, $refund);
 
         self::assertCount(1, $history);
         self::assertSame('POST', $history[0]['request']->getMethod());

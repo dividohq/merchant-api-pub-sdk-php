@@ -32,19 +32,19 @@ trait ClientProxyTrait
         return $this->getHandlers()['settlements'];
     }
 
-    function getSettlementsByPage(ApiRequestOptions $options)
+    public function getSettlementsByPage(ApiRequestOptions $options)
     {
         $options->setPaginated(true);
         return $this->settlements()->getSettlements($options);
     }
 
-    function getAllSettlements(ApiRequestOptions $options)
+    public function getAllSettlements(ApiRequestOptions $options)
     {
         $options->setPaginated(false);
         return $this->settlements()->getSettlements($options);
     }
 
-    function yieldAllSettlements(ApiRequestOptions $options)
+    public function yieldAllSettlements(ApiRequestOptions $options)
     {
         $options->setPaginated(false);
         foreach ($this->settlements()->yieldSettlements($options) as $settlement) {
@@ -52,7 +52,7 @@ trait ClientProxyTrait
         }
     }
 
-    function yieldSettlementsByPage(ApiRequestOptions $options)
+    public function yieldSettlementsByPage(ApiRequestOptions $options)
     {
         $options->setPaginated(true);
         foreach ($this->settlements()->yieldSettlements($options) as $settlement) {

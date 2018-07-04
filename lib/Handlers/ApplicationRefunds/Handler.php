@@ -62,7 +62,7 @@ class Handler extends AbstractHttpHandler
      * @param Application $application
      * @return \Generator
      */
-    protected function yieldAllApplicationRefunds(ApiRequestOptions $options, Application $application)
+    public function yieldAllApplicationRefunds(ApiRequestOptions $options, Application $application)
     {
         foreach ($this->yieldFullResourceCollection('getApplicationRefundsByPage', $options, $application) as $resource) {
             yield $resource;
@@ -75,7 +75,7 @@ class Handler extends AbstractHttpHandler
      * @param ApiRequestOptions $options API Request options
      * @return \ResponseWrapper
      */
-    protected function getApplicationRefundsByPage(ApiRequestOptions $options, Application $application)
+    public function getApplicationRefundsByPage(ApiRequestOptions $options, Application $application)
     {
         $path = vsprintf('%s/%s/%s', [
             'applications',
@@ -101,7 +101,7 @@ class Handler extends AbstractHttpHandler
      * @param Application $application
      * @return ResponseWrapper
      */
-    protected function getAllApplicationRefunds(ApiRequestOptions $options, Application $application)
+    public function getAllApplicationRefunds(ApiRequestOptions $options, Application $application)
     {
         return $this->getFullResourceCollection('getApplicationRefundsByPage', $options, $application);
     }

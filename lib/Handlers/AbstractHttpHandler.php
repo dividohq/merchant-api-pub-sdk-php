@@ -20,7 +20,7 @@ abstract class AbstractHttpHandler
         $this->httpClientWrapper = $httpClientWrapper;
     }
 
-    protected function parseJsonApiResourceResponse(ResponseInterface $response)
+    public function parseJsonApiResourceResponse(ResponseInterface $response)
     {
         $json = json_decode($response->getBody()->getContents());
 

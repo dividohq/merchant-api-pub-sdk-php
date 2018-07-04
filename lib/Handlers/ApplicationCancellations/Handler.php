@@ -62,7 +62,7 @@ class Handler extends AbstractHttpHandler
      * @param Application $application
      * @return \Generator
      */
-    protected function yieldAllApplicationCancellations(ApiRequestOptions $options, Application $application)
+    public function yieldAllApplicationCancellations(ApiRequestOptions $options, Application $application)
     {
         foreach ($this->yieldFullResourceCollection('getApplicationCancellationsByPage', $options, $application) as $resource) {
             yield $resource;
@@ -76,7 +76,7 @@ class Handler extends AbstractHttpHandler
      * @param Application $application
      * @return \ResponseWrapper
      */
-    protected function getApplicationCancellationsByPage(ApiRequestOptions $options, Application $application)
+    public function getApplicationCancellationsByPage(ApiRequestOptions $options, Application $application)
     {
         $path = vsprintf('%s/%s/%s', [
             'applications',
@@ -102,7 +102,7 @@ class Handler extends AbstractHttpHandler
      * @param Application $application
      * @return ResponseWrapper
      */
-    protected function getAllApplicationCancellations(ApiRequestOptions $options, Application $application)
+    public function getAllApplicationCancellations(ApiRequestOptions $options, Application $application)
     {
         return $this->getFullResourceCollection('getApplicationCancellationsByPage', $options, $application);
     }

@@ -33,19 +33,19 @@ trait ClientProxyTrait
         return $this->getHandlers()['application_cancellations'];
     }
 
-    function getApplicationCancellationsByPage(ApiRequestOptions $options, Application $application)
+    public function getApplicationCancellationsByPage(ApiRequestOptions $options, Application $application)
     {
         $options->setPaginated(true);
         return $this->application_cancellations()->getApplicationCancellations($options, $application);
     }
 
-    function getAllApplicationCancellations(ApiRequestOptions $options, Application $application)
+    public function getAllApplicationCancellations(ApiRequestOptions $options, Application $application)
     {
         $options->setPaginated(false);
         return $this->application_cancellations()->getApplicationCancellations($options, $application);
     }
 
-    function yieldAllApplicationCancellations(ApiRequestOptions $options, Application $application)
+    public function yieldAllApplicationCancellations(ApiRequestOptions $options, Application $application)
     {
         $options->setPaginated(false);
         foreach ($this->application_cancellations()->yieldApplicationCancellations($options, $application) as $cancellation) {
@@ -53,7 +53,7 @@ trait ClientProxyTrait
         }
     }
 
-    function yieldApplicationCancellationsByPage(ApiRequestOptions $options, Application $application)
+    public function yieldApplicationCancellationsByPage(ApiRequestOptions $options, Application $application)
     {
         $options->setPaginated(true);
         foreach ($this->application_cancellations()->yieldApplicationCancellations($options, $application) as $cancellation) {

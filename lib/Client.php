@@ -71,24 +71,6 @@ class Client
         return $this->environment;
     }
 
-
-
-    /**
-     * Get the Documents methods handler
-     *
-     * @return ApplicationDocumentsHandler
-     * @throws \Exception
-     */
-    public function application_documents()
-    {
-        if (!array_key_exists('application_documents', $this->handlers)) {
-            $this->handlers['application_documents'] = new ApplicationDocumentsHandler($this->httpClientWrapper);
-        }
-
-        return $this->handlers['application_documents'];
-    }
-
-
     /**
      * @return array
      */

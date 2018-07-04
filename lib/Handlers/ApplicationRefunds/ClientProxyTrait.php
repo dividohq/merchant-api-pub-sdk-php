@@ -33,19 +33,19 @@ trait ClientProxyTrait
         return $this->getHandlers()['application_refunds'];
     }
 
-    function getApplicationRefundsByPage(ApiRequestOptions $options, Application $application)
+    public function getApplicationRefundsByPage(ApiRequestOptions $options, Application $application)
     {
         $options->setPaginated(true);
         return $this->application_refunds()->getApplicationRefunds($options, $application);
     }
 
-    function getAllApplicationRefunds(ApiRequestOptions $options, Application $application)
+    public function getAllApplicationRefunds(ApiRequestOptions $options, Application $application)
     {
         $options->setPaginated(false);
         return $this->application_refunds()->getApplicationRefunds($options, $application);
     }
 
-    function yieldAllApplicationRefunds(ApiRequestOptions $options, Application $application)
+    public function yieldAllApplicationRefunds(ApiRequestOptions $options, Application $application)
     {
         $options->setPaginated(false);
         foreach ($this->application_refunds()->yieldApplicationRefunds($options, $application) as $refund) {
@@ -53,7 +53,7 @@ trait ClientProxyTrait
         }
     }
 
-    function yieldApplicationRefundsByPage(ApiRequestOptions $options, Application $application)
+    public function yieldApplicationRefundsByPage(ApiRequestOptions $options, Application $application)
     {
         $options->setPaginated(true);
         foreach ($this->application_refunds()->yieldApplicationRefunds($options, $application) as $refund) {

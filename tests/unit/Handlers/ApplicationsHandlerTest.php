@@ -4,6 +4,8 @@ namespace Divido\MerchantSDK\Test\Unit;
 use Divido\MerchantSDK\Client;
 use Divido\MerchantSDK\Environment;
 use Divido\MerchantSDK\Handlers\ApiRequestOptions;
+use Divido\MerchantSDK\Handlers\Applications\Handler;
+use Divido\MerchantSDK\HttpClient\HttpClientWrapper;
 use Divido\MerchantSDK\HttpClient\GuzzleAdapter;
 use Divido\MerchantSDK\Response\ResponseWrapper;
 use GuzzleHttp\Psr7\Response;
@@ -13,7 +15,7 @@ class ApplicationsHandlerTest extends MerchantSDKTestCase
 {
     use MockeryPHPUnitIntegration;
 
-    function test_GetApplicationsByPage_ReturnsApplications()
+    public function test_GetApplications_ReturnsApplications()
     {
         $history = [];
 
@@ -21,11 +23,13 @@ class ApplicationsHandlerTest extends MerchantSDKTestCase
             new Response(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/applications_page_1.json')),
         ], $history);
 
-        $sdk = new Client('test_key', Environment::SANDBOX, new GuzzleAdapter($client));
+        $httpClientWrapper = new HttpClientWrapper(new GuzzleAdapter($client), '', '');
+
+        $handler = new Handler($httpClientWrapper);
 
         $requestOptions = (new ApiRequestOptions())->setPage(3);
 
-        $applications = $sdk->getApplicationsByPage($requestOptions);
+        $applications = $handler->getApplications($requestOptions);
 
         self::assertInstanceOf(ResponseWrapper::class, $applications);
         self::assertCount(25, $applications->getResources());
@@ -44,7 +48,40 @@ class ApplicationsHandlerTest extends MerchantSDKTestCase
         self::assertSame('3', $query['page']);
     }
 
-    function test_GetAllApplications_ReturnsAllApplications()
+    public function test_GetApplicationsByPage_ReturnsApplications()
+    {
+        $history = [];
+
+        $client = $this->getGuzzleStackedClient([
+            new Response(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/applications_page_1.json')),
+        ], $history);
+
+        $httpClientWrapper = new HttpClientWrapper(new GuzzleAdapter($client), '', '');
+
+        $handler = new Handler($httpClientWrapper);
+
+        $requestOptions = (new ApiRequestOptions())->setPage(3);
+
+        $applications = $handler->getApplicationsByPage($requestOptions);
+
+        self::assertInstanceOf(ResponseWrapper::class, $applications);
+        self::assertCount(25, $applications->getResources());
+        self::assertInternalType('object', $applications->getResources()[0]);
+        self::assertObjectHasAttribute('id', $applications->getResources()[0]);
+        self::assertSame('0074dd19-dbba-4d80-bdb7-c4a2176cb399', $applications->getResources()[0]->id);
+
+        self::assertCount(1, $history);
+        self::assertSame('GET', $history[0]['request']->getMethod());
+        self::assertSame('/applications', $history[0]['request']->getUri()->getPath());
+
+        $query = [];
+        parse_str($history[0]['request']->getUri()->getQuery(), $query);
+
+        self::assertArrayHasKey('page', $query);
+        self::assertSame('3', $query['page']);
+    }
+
+    public function test_GetAllApplications_ReturnsAllApplications()
     {
         $history = [];
 
@@ -53,11 +90,13 @@ class ApplicationsHandlerTest extends MerchantSDKTestCase
             new Response(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/applications_page_2.json')),
         ], $history);
 
-        $sdk = new Client('test_key', Environment::SANDBOX, new GuzzleAdapter($client));
+        $httpClientWrapper = new HttpClientWrapper(new GuzzleAdapter($client), '', '');
+
+        $handler = new Handler($httpClientWrapper);
 
         $requestOptions = (new ApiRequestOptions());
 
-        $applications = $sdk->getAllApplications($requestOptions);
+        $applications = $handler->getAllApplications($requestOptions);
 
         self::assertInstanceOf(ResponseWrapper::class, $applications);
         self::assertCount(35, $applications->getResources());
@@ -81,7 +120,7 @@ class ApplicationsHandlerTest extends MerchantSDKTestCase
         self::assertSame('2', $query2['page']);
     }
 
-    function test_YieldAllApplications_ReturnsApplicationsGenerator()
+    public function test_YieldAllApplications_ReturnsApplicationsGenerator()
     {
         $history = [];
 
@@ -90,11 +129,13 @@ class ApplicationsHandlerTest extends MerchantSDKTestCase
             new Response(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/applications_page_2.json')),
         ], $history);
 
-        $sdk = new Client('test_key', Environment::SANDBOX, new GuzzleAdapter($client));
+        $httpClientWrapper = new HttpClientWrapper(new GuzzleAdapter($client), '', '');
+
+        $handler = new Handler($httpClientWrapper);
 
         $requestOptions = (new ApiRequestOptions());
 
-        $applications = $sdk->yieldAllApplications($requestOptions);
+        $applications = $handler->yieldAllApplications($requestOptions);
 
         self::assertInstanceOf(\Generator::class, $applications);
 
@@ -119,7 +160,7 @@ class ApplicationsHandlerTest extends MerchantSDKTestCase
         self::assertSame('2', $query2['page']);
     }
 
-    function test_YieldApplicationsByPage_ReturnsApplicationsGenerator()
+    public function test_YieldApplicationsByPage_ReturnsApplicationsGenerator()
     {
         $history = [];
 
@@ -128,11 +169,13 @@ class ApplicationsHandlerTest extends MerchantSDKTestCase
             new Response(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/applications_page_2.json')),
         ], $history);
 
-        $sdk = new Client('test_key', Environment::SANDBOX, new GuzzleAdapter($client));
+        $httpClientWrapper = new HttpClientWrapper(new GuzzleAdapter($client), '', '');
+
+        $handler = new Handler($httpClientWrapper);
 
         $requestOptions = (new ApiRequestOptions())->setPage(2);
 
-        $applications = $sdk->yieldApplicationsByPage($requestOptions);
+        $applications = $handler->yieldApplications($requestOptions);
 
         self::assertInstanceOf(\Generator::class, $applications);
 
@@ -157,18 +200,20 @@ class ApplicationsHandlerTest extends MerchantSDKTestCase
         self::assertSame('2', $query1['page']);
     }
 
-    function test_GetApplicationsByPage_WithSort_ReturnsSortedApplications()
+    public function test_GetApplicationsByPage_WithSort_ReturnsSortedApplications()
     {
         $history = [];
 
         $client = $this->getGuzzleStackedClient([
             new Response(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/applications_page_1.json')),
         ], $history);
-        $sdk = new Client('test_key', Environment::SANDBOX, new GuzzleAdapter($client));
+        $httpClientWrapper = new HttpClientWrapper(new GuzzleAdapter($client), '', '');
+
+        $handler = new Handler($httpClientWrapper);
 
         $requestOptions = (new ApiRequestOptions())->setPage(1)->setSort('-created_at');
 
-        $sdk->getApplicationsByPage($requestOptions);
+       $handler->getApplicationsByPage($requestOptions);
 
         self::assertCount(1, $history);
         self::assertSame('GET', $history[0]['request']->getMethod());
@@ -181,16 +226,18 @@ class ApplicationsHandlerTest extends MerchantSDKTestCase
         self::assertSame('-created_at', $query['sort']);
     }
 
-    function test_GetSingleApplication_ReturnsSingleApplication()
+    public function test_GetSingleApplication_ReturnsSingleApplication()
     {
         $history = [];
 
         $client = $this->getGuzzleStackedClient([
             new Response(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/applications_get_one.json')),
         ], $history);
-        $sdk = new Client('test_key', Environment::SANDBOX, new GuzzleAdapter($client));
+        $httpClientWrapper = new HttpClientWrapper(new GuzzleAdapter($client), '', '');
 
-        $response = $sdk->applications()->getSingleApplication('6985ef52-7d7c-457e-9a03-e98b648bf9b7');
+        $handler = new Handler($httpClientWrapper);
+
+        $response = $handler->getSingleApplication('6985ef52-7d7c-457e-9a03-e98b648bf9b7');
 
         self::assertCount(1, $history);
         self::assertSame('GET', $history[0]['request']->getMethod());
@@ -201,14 +248,16 @@ class ApplicationsHandlerTest extends MerchantSDKTestCase
         self::assertSame('6985ef52-7d7c-457e-9a03-e98b648bf9b7', $result['data']['id']);
     }
 
-    function test_CreateApplication_ReturnsNewlyCreatedApplication()
+    public function test_CreateApplication_ReturnsNewlyCreatedApplication()
     {
         $history = [];
 
         $client = $this->getGuzzleStackedClient([
             new Response(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/applications_get_one.json')),
         ], $history);
-        $sdk = new Client('test_key', Environment::SANDBOX, new GuzzleAdapter($client));
+        $httpClientWrapper = new HttpClientWrapper(new GuzzleAdapter($client), '', '');
+
+        $handler = new Handler($httpClientWrapper);
 
         $application = (new \Divido\MerchantSDK\Models\Application)
             ->withFinancePlanId('F335FED7A-A266-A8BF-960A-4CB56CC6DE6F')
@@ -231,7 +280,7 @@ class ApplicationsHandlerTest extends MerchantSDKTestCase
             ])
             ->withDepositAmount(10000);
 
-        $response = $sdk->applications()->createApplication($application);
+        $response = $handler->createApplication($application);
 
         self::assertCount(1, $history);
         self::assertSame('POST', $history[0]['request']->getMethod());
@@ -242,21 +291,23 @@ class ApplicationsHandlerTest extends MerchantSDKTestCase
         self::assertSame('6985ef52-7d7c-457e-9a03-e98b648bf9b7', $result['data']['id']);
     }
 
-    function test_UpdateApplication_ReturnsUpdatedApplication()
+    public function test_UpdateApplication_ReturnsUpdatedApplication()
     {
         $history = [];
 
         $client = $this->getGuzzleStackedClient([
             new Response(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/applications_get_one.json')),
         ], $history);
-        $sdk = new Client('test_key', Environment::SANDBOX, new GuzzleAdapter($client));
+        $httpClientWrapper = new HttpClientWrapper(new GuzzleAdapter($client), '', '');
+
+        $handler = new Handler($httpClientWrapper);
 
         $application = (new \Divido\MerchantSDK\Models\Application)
             ->withId('6985ef52-7d7c-457e-9a03-e98b648bf9b7')
             ->withFinancePlanId('F335FED7A-A266-A8BF-960A-4CB56CC6DE6F')
             ->withDepositAmount(10000);
 
-        $response = $sdk->applications()->updateApplication($application);
+        $response = $handler->updateApplication($application);
 
         self::assertCount(1, $history);
         self::assertSame('PATCH', $history[0]['request']->getMethod());

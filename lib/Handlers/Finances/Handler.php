@@ -58,7 +58,7 @@ class Handler extends AbstractHttpHandler
      * @param ApiRequestOptions $options API Request options
      * @return \Generator
      */
-    protected function yieldAllPlans(ApiRequestOptions $options)
+    public function yieldAllPlans(ApiRequestOptions $options)
     {
         foreach ($this->yieldFullResourceCollection('getPlansByPage', $options) as $resource) {
             yield $resource;
@@ -71,7 +71,7 @@ class Handler extends AbstractHttpHandler
      * @param ApiRequestOptions $options API Request options
      * @return \ResponseWrapper
      */
-    protected function getPlansByPage(ApiRequestOptions $options)
+    public function getPlansByPage(ApiRequestOptions $options)
     {
         $path = vsprintf('%s', [
             'finance-plans',
@@ -94,7 +94,7 @@ class Handler extends AbstractHttpHandler
      * @param ApiRequestOptions $options API Request options
      * @return ResponseWrapper
      */
-    protected function getAllPlans(ApiRequestOptions $options)
+    public function getAllPlans(ApiRequestOptions $options)
     {
         return $this->getFullResourceCollection('getPlansByPage', $options);
     }

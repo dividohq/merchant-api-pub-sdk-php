@@ -58,14 +58,14 @@ class Handler extends AbstractHttpHandler
      * @param ApiRequestOptions $options API Request options
      * @return \Generator
      */
-    protected function yieldAllSettlements(ApiRequestOptions $options)
+    public function yieldAllSettlements(ApiRequestOptions $options)
     {
         foreach ($this->yieldFullResourceCollection('getSettlementsByPage', $options) as $resource) {
             yield $resource;
         }
     }
 
-    protected function getSettlementsByPage(ApiRequestOptions $options)
+    public function getSettlementsByPage(ApiRequestOptions $options)
     {
         $path = vsprintf('%s', [
             'settlements',
@@ -88,7 +88,7 @@ class Handler extends AbstractHttpHandler
      * @param ApiRequestOptions $options API Request options
      * @return ResponseWrapper
      */
-    protected function getAllSettlements(ApiRequestOptions $options)
+    public function getAllSettlements(ApiRequestOptions $options)
     {
         return $this->getFullResourceCollection('getSettlementsByPage', $options);
     }

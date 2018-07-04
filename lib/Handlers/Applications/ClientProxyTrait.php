@@ -31,19 +31,19 @@ trait ClientProxyTrait
 
         return $this->getHandlers()['applications'];
     }
-    function getApplicationsByPage(ApiRequestOptions $options)
+    public function getApplicationsByPage(ApiRequestOptions $options)
     {
         $options->setPaginated(true);
         return $this->applications()->getApplications($options);
     }
 
-    function getAllApplications(ApiRequestOptions $options)
+    public function getAllApplications(ApiRequestOptions $options)
     {
         $options->setPaginated(false);
         return $this->applications()->getApplications($options);
     }
 
-    function yieldAllApplications(ApiRequestOptions $options)
+    public function yieldAllApplications(ApiRequestOptions $options)
     {
         $options->setPaginated(false);
         foreach ($this->applications()->yieldApplications($options) as $application) {
@@ -51,7 +51,7 @@ trait ClientProxyTrait
         }
     }
 
-    function yieldApplicationsByPage(ApiRequestOptions $options)
+    public function yieldApplicationsByPage(ApiRequestOptions $options)
     {
         $options->setPaginated(true);
         foreach ($this->applications()->yieldApplications($options) as $application) {

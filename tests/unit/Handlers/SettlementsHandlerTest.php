@@ -4,6 +4,8 @@ namespace Divido\MerchantSDK\Test\Unit;
 use Divido\MerchantSDK\Client;
 use Divido\MerchantSDK\Environment;
 use Divido\MerchantSDK\Handlers\ApiRequestOptions;
+use Divido\MerchantSDK\HttpClient\HttpClientWrapper;
+use Divido\MerchantSDK\Handlers\Settlements\Handler;
 use Divido\MerchantSDK\HttpClient\GuzzleAdapter;
 use Divido\MerchantSDK\Models\Settlement;
 use Divido\MerchantSDK\Response\ResponseWrapper;
@@ -16,7 +18,7 @@ class SettlementsHandlerTest extends MerchantSDKTestCase
 
     private $settlementId = '6EC506EE-7919-11E8-A4CE-0242AC1E000B';
 
-    function test_GetSettlementsByPage_ReturnsSettlements()
+    public function test_GetSettlements_ReturnsSettlements()
     {
         $history = [];
 
@@ -24,11 +26,13 @@ class SettlementsHandlerTest extends MerchantSDKTestCase
             new Response(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/settlements_page_1.json')),
         ], $history);
 
-        $sdk = new Client('test_key', Environment::SANDBOX, new GuzzleAdapter($client));
+        $httpClientWrapper = new HttpClientWrapper(new GuzzleAdapter($client), '', '');
+
+        $handler = new Handler($httpClientWrapper);
 
         $requestOptions = (new ApiRequestOptions())->setPage(1);
 
-        $settlements = $sdk->getSettlementsByPage($requestOptions);
+        $settlements = $handler->getSettlements($requestOptions);
 
         self::assertInstanceOf(ResponseWrapper::class, $settlements);
         self::assertCount(4, $settlements->getResources());
@@ -47,7 +51,7 @@ class SettlementsHandlerTest extends MerchantSDKTestCase
         self::assertSame('1', $query['page']);
     }
 
-    function test_GetAllSettlements_ReturnsSettlements()
+    public function test_GetSettlementsByPage_ReturnsSettlements()
     {
         $history = [];
 
@@ -55,11 +59,13 @@ class SettlementsHandlerTest extends MerchantSDKTestCase
             new Response(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/settlements_page_1.json')),
         ], $history);
 
-        $sdk = new Client('test_key', Environment::SANDBOX, new GuzzleAdapter($client));
+        $httpClientWrapper = new HttpClientWrapper(new GuzzleAdapter($client), '', '');
 
-        $requestOptions = (new ApiRequestOptions());
+        $handler = new Handler($httpClientWrapper);
 
-        $settlements = $sdk->getAllSettlements($requestOptions);
+        $requestOptions = (new ApiRequestOptions())->setPage(1);
+
+        $settlements = $handler->getSettlementsByPage($requestOptions);
 
         self::assertInstanceOf(ResponseWrapper::class, $settlements);
         self::assertCount(4, $settlements->getResources());
@@ -78,7 +84,7 @@ class SettlementsHandlerTest extends MerchantSDKTestCase
         self::assertSame('1', $query['page']);
     }
 
-    function test_YieldAllSettlements_ReturnsSettlementGenerator()
+    public function test_GetAllSettlements_ReturnsSettlements()
     {
         $history = [];
 
@@ -86,11 +92,46 @@ class SettlementsHandlerTest extends MerchantSDKTestCase
             new Response(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/settlements_page_1.json')),
         ], $history);
 
-        $sdk = new Client('test_key', Environment::SANDBOX, new GuzzleAdapter($client));
+        $httpClientWrapper = new HttpClientWrapper(new GuzzleAdapter($client), '', '');
+
+        $handler = new Handler($httpClientWrapper);
 
         $requestOptions = (new ApiRequestOptions());
 
-        $settlements = $sdk->yieldAllSettlements($requestOptions);
+        $settlements = $handler->getAllSettlements($requestOptions);
+
+        self::assertInstanceOf(ResponseWrapper::class, $settlements);
+        self::assertCount(4, $settlements->getResources());
+        self::assertInternalType('object', $settlements->getResources()[0]);
+        self::assertObjectHasAttribute('id', $settlements->getResources()[0]);
+        self::assertSame('6EC506EE-7919-11E8-A4CE-0242AC1E000B', $settlements->getResources()[0]->id);
+
+        self::assertCount(1, $history);
+        self::assertSame('GET', $history[0]['request']->getMethod());
+        self::assertSame('/settlements', $history[0]['request']->getUri()->getPath());
+
+        $query = [];
+        parse_str($history[0]['request']->getUri()->getQuery(), $query);
+
+        self::assertArrayHasKey('page', $query);
+        self::assertSame('1', $query['page']);
+    }
+
+    public function test_YieldAllSettlements_ReturnsSettlementGenerator()
+    {
+        $history = [];
+
+        $client = $this->getGuzzleStackedClient([
+            new Response(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/settlements_page_1.json')),
+        ], $history);
+
+        $httpClientWrapper = new HttpClientWrapper(new GuzzleAdapter($client), '', '');
+
+        $handler = new Handler($httpClientWrapper);
+
+        $requestOptions = (new ApiRequestOptions());
+
+        $settlements = $handler->yieldAllSettlements($requestOptions);
 
         self::assertInstanceOf(\Generator::class, $settlements);
 
@@ -113,7 +154,7 @@ class SettlementsHandlerTest extends MerchantSDKTestCase
         self::assertSame('1', $query['page']);
     }
 
-    function test_YieldSettlementsByPage_ReturnsSettlementsGenerator()
+    public function test_YieldSettlementsByPage_ReturnsSettlementsGenerator()
     {
         $history = [];
 
@@ -121,11 +162,13 @@ class SettlementsHandlerTest extends MerchantSDKTestCase
             new Response(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/settlements_page_1.json')),
         ], $history);
 
-        $sdk = new Client('test_key', Environment::SANDBOX, new GuzzleAdapter($client));
+        $httpClientWrapper = new HttpClientWrapper(new GuzzleAdapter($client), '', '');
+
+        $handler = new Handler($httpClientWrapper);
 
         $requestOptions = (new ApiRequestOptions())->setPage(2);
 
-        $settlements = $sdk->yieldSettlementsByPage($requestOptions);
+        $settlements = $handler->yieldSettlements($requestOptions);
 
         self::assertInstanceOf(\Generator::class, $settlements);
 
@@ -150,18 +193,20 @@ class SettlementsHandlerTest extends MerchantSDKTestCase
         self::assertSame('2', $query1['page']);
     }
 
-    function test_GetSettlementsByPage_WithSort_ReturnsSortedSettlements()
+    public function test_GetSettlementsByPage_WithSort_ReturnsSortedSettlements()
     {
         $history = [];
 
         $client = $this->getGuzzleStackedClient([
             new Response(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/settlements_page_1.json')),
         ], $history);
-        $sdk = new Client('test_key', Environment::SANDBOX, new GuzzleAdapter($client));
+        $httpClientWrapper = new HttpClientWrapper(new GuzzleAdapter($client), '', '');
+
+        $handler = new Handler($httpClientWrapper);
 
         $requestOptions = (new ApiRequestOptions())->setPage(1)->setSort('-created_at');
 
-        $sdk->getSettlementsByPage($requestOptions);
+       $handler->getSettlementsByPage($requestOptions);
 
         self::assertCount(1, $history);
         self::assertSame('GET', $history[0]['request']->getMethod());
@@ -174,16 +219,18 @@ class SettlementsHandlerTest extends MerchantSDKTestCase
         self::assertSame('-created_at', $query['sort']);
     }
 
-    function test_GetSingleSettlement_ReturnsSingleSettlement()
+    public function test_GetSingleSettlement_ReturnsSingleSettlement()
     {
         $history = [];
 
         $client = $this->getGuzzleStackedClient([
             new Response(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/settlements_get_one.json')),
         ], $history);
-        $sdk = new Client('test_key', Environment::SANDBOX, new GuzzleAdapter($client));
+        $httpClientWrapper = new HttpClientWrapper(new GuzzleAdapter($client), '', '');
 
-        $response = $sdk->settlements()->getSingleSettlement($this->settlementId);
+        $handler = new Handler($httpClientWrapper);
+
+        $response = $handler->getSingleSettlement($this->settlementId);
 
         self::assertCount(1, $history);
         self::assertSame('GET', $history[0]['request']->getMethod());

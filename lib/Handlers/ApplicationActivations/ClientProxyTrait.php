@@ -33,19 +33,19 @@ trait ClientProxyTrait
         return $this->getHandlers()['application_activations'];
     }
 
-    function getApplicationActivationsByPage(ApiRequestOptions $options, Application $application)
+    public function getApplicationActivationsByPage(ApiRequestOptions $options, Application $application)
     {
         $options->setPaginated(true);
         return $this->application_activations()->getApplicationActivations($options, $application);
     }
 
-    function getAllApplicationActivations(ApiRequestOptions $options, Application $application)
+    public function getAllApplicationActivations(ApiRequestOptions $options, Application $application)
     {
         $options->setPaginated(false);
         return $this->application_activations()->getApplicationActivations($options, $application);
     }
 
-    function yieldAllApplicationActivations(ApiRequestOptions $options, Application $application)
+    public function yieldAllApplicationActivations(ApiRequestOptions $options, Application $application)
     {
         $options->setPaginated(false);
         foreach ($this->application_activations()->yieldApplicationActivations($options, $application) as $activation) {
@@ -53,7 +53,7 @@ trait ClientProxyTrait
         }
     }
 
-    function yieldApplicationActivationsByPage(ApiRequestOptions $options, Application $application)
+    public function yieldApplicationActivationsByPage(ApiRequestOptions $options, Application $application)
     {
         $options->setPaginated(true);
         foreach ($this->application_activations()->yieldApplicationActivations($options, $application) as $activation) {

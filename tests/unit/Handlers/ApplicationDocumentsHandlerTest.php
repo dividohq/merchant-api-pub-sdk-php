@@ -4,7 +4,9 @@ namespace Divido\MerchantSDK\Test\Unit;
 use Divido\MerchantSDK\Client;
 use Divido\MerchantSDK\Environment;
 use Divido\MerchantSDK\HttpClient\GuzzleAdapter;
+use Divido\MerchantSDK\Handlers\ApplicationDocuments\Handler;
 use Divido\MerchantSDK\Models\Application;
+use Divido\MerchantSDK\HttpClient\HttpClientWrapper;
 use Divido\MerchantSDK\Models\ApplicationDocument;
 use Divido\MerchantSDK\Response\ResponseWrapper;
 use GuzzleHttp\Psr7\Response;
@@ -16,14 +18,16 @@ class ApplicationDocumentsHandlerTest extends MerchantSDKTestCase
 
     private $applicationId = '90a25b24-2f53-4c80-aba8-9787c68e4c1d';
 
-    function test_CreateApplicationDocument_ReturnsNewlyCreatedApplicationDocument()
+    public function test_CreateApplicationDocument_ReturnsNewlyCreatedApplicationDocument()
     {
         $history = [];
 
         $client = $this->getGuzzleStackedClient([
             new Response(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/application_documents_get_one.json')),
         ], $history);
-        $sdk = new Client('test_key', Environment::SANDBOX, new GuzzleAdapter($client));
+        $httpClientWrapper = new HttpClientWrapper(new GuzzleAdapter($client), '', '');
+
+        $handler = new Handler($httpClientWrapper);
 
         $application = (new Application)->withId($this->applicationId);
 
@@ -31,7 +35,7 @@ class ApplicationDocumentsHandlerTest extends MerchantSDKTestCase
 
         $document = (new \Divido\MerchantSDK\Models\ApplicationDocument)->withDocument($image);
 
-        $response = $sdk->application_documents()->createApplicationDocument($application, $document);
+        $response = $handler->createApplicationDocument($application, $document);
 
         self::assertCount(1, $history);
         self::assertSame('POST', $history[0]['request']->getMethod());
@@ -42,20 +46,22 @@ class ApplicationDocumentsHandlerTest extends MerchantSDKTestCase
         self::assertSame('7D827A60-7A07-11E8-BDD0-0242AC1E000B', $result['data']['id']);
     }
 
-    function test_DeleteApplicationDocument_ReturnsOkay()
+    public function test_DeleteApplicationDocument_ReturnsOkay()
     {
         $history = [];
 
         $client = $this->getGuzzleStackedClient([
             new Response(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/applications_get_one.json')),
         ], $history);
-        $sdk = new Client('test_key', Environment::SANDBOX, new GuzzleAdapter($client));
+        $httpClientWrapper = new HttpClientWrapper(new GuzzleAdapter($client), '', '');
+
+        $handler = new Handler($httpClientWrapper);
 
         $application = (new Application)->withId($this->applicationId);
 
         $documentId = 'qwerty-123456-typewriter-foo';
 
-        $response = $sdk->application_documents()->deleteApplicationDocument($application, $documentId);
+        $response = $handler->deleteApplicationDocument($application, $documentId);
 
         self::assertCount(1, $history);
         self::assertSame('DELETE', $history[0]['request']->getMethod());

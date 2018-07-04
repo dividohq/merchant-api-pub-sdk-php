@@ -59,7 +59,7 @@ class Handler extends AbstractHttpHandler
      * @param ApiRequestOptions $options API Request options
      * @return \Generator
      */
-    protected function yieldAllChannels(ApiRequestOptions $options)
+    public function yieldAllChannels(ApiRequestOptions $options)
     {
         foreach ($this->yieldFullResourceCollection('getChannelsByPage', $options) as $resource) {
             yield $resource;
@@ -72,7 +72,7 @@ class Handler extends AbstractHttpHandler
      * @param ApiRequestOptions $options API Request options
      * @return \ResponseWrapper
      */
-    protected function getChannelsByPage(ApiRequestOptions $options)
+    public function getChannelsByPage(ApiRequestOptions $options)
     {
         $path = vsprintf('%s', [
             'channels',
@@ -95,7 +95,7 @@ class Handler extends AbstractHttpHandler
      * @param ApiRequestOptions $options API Request options
      * @return ResponseWrapper
      */
-    protected function getAllChannels(ApiRequestOptions $options)
+    public function getAllChannels(ApiRequestOptions $options)
     {
         return $this->getFullResourceCollection('getChannelsByPage', $options);
     }

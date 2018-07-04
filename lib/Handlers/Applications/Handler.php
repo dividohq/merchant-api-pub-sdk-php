@@ -61,7 +61,7 @@ class Handler extends AbstractHttpHandler
      * @param Application $application
      * @return \Generator
      */
-    protected function yieldAllApplications(ApiRequestOptions $options)
+    public function yieldAllApplications(ApiRequestOptions $options)
     {
         foreach ($this->yieldFullResourceCollection('getApplicationsByPage', $options) as $resource) {
             yield $resource;
@@ -74,7 +74,7 @@ class Handler extends AbstractHttpHandler
      * @param ApiRequestOptions $options API Request options
      * @return \ResponseWrapper
      */
-    protected function getApplicationsByPage(ApiRequestOptions $options)
+    public function getApplicationsByPage(ApiRequestOptions $options)
     {
         $path = vsprintf('%s', [
             'applications',
@@ -98,7 +98,7 @@ class Handler extends AbstractHttpHandler
      * @param Application $application
      * @return ResponseWrapper
      */
-    protected function getAllApplications(ApiRequestOptions $options)
+    public function getAllApplications(ApiRequestOptions $options)
     {
         return $this->getFullResourceCollection('getApplicationsByPage', $options);
     }

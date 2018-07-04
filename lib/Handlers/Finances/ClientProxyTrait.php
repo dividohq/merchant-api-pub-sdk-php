@@ -32,19 +32,19 @@ trait ClientProxyTrait
         return $this->getHandlers()['finances'];
     }
 
-    function getPlansByPage(ApiRequestOptions $options)
+    public function getPlansByPage(ApiRequestOptions $options)
     {
         $options->setPaginated(true);
         return $this->finances()->getPlans($options);
     }
 
-    function getAllPlans(ApiRequestOptions $options)
+    public function getAllPlans(ApiRequestOptions $options)
     {
         $options->setPaginated(false);
         return $this->finances()->getPlans($options);
     }
 
-    function yieldAllPlans(ApiRequestOptions $options)
+    public function yieldAllPlans(ApiRequestOptions $options)
     {
         $options->setPaginated(false);
         foreach ($this->finances()->yieldPlans($options) as $finance) {
@@ -52,7 +52,7 @@ trait ClientProxyTrait
         }
     }
 
-    function yieldPlansByPage(ApiRequestOptions $options)
+    public function yieldPlansByPage(ApiRequestOptions $options)
     {
         $options->setPaginated(true);
         foreach ($this->finances()->yieldPlans($options) as $finance) {
