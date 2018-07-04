@@ -8,6 +8,14 @@ use Divido\MerchantSDK\Response\Metadata;
 use Divido\MerchantSDK\Response\ResponseWrapper;
 use Psr\Http\Message\ResponseInterface;
 
+/**
+ * Class AbstractHttpHandler
+ *
+ * @author Neil McGibbon <neil.mcgibbon@divido.com>
+ * @author Mike Lovely <mike.lovely@divido.com>
+ * @copyright (c) 2018, Divido
+ * @package Divido\MerchantSDK
+ */
 abstract class AbstractHttpHandler
 {
     /**
@@ -20,7 +28,7 @@ abstract class AbstractHttpHandler
         $this->httpClientWrapper = $httpClientWrapper;
     }
 
-    public function parseJsonApiResourceResponse(ResponseInterface $response)
+    public function parseResponse(ResponseInterface $response)
     {
         $json = json_decode($response->getBody()->getContents());
 

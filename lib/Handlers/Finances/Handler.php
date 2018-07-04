@@ -83,7 +83,7 @@ class Handler extends AbstractHttpHandler
         ];
 
         $response = $this->httpClientWrapper->request('get', $path, $query);
-        $parsed = $this->parseJsonApiResourceResponse($response);
+        $parsed = $this->parseResponse($response);
 
         return $parsed;
     }

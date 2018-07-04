@@ -6,7 +6,7 @@ use Divido\MerchantSDK\Handlers\ApiRequestOptions;
 use Divido\MerchantSDK\Models\Application;
 
 /**
- * ClientProxyTrait Client
+ * Trait ClientProxyTrait
  *
  * @author Neil McGibbon <neil.mcgibbon@divido.com>
  * @author Mike Lovely <mike.lovely@divido.com>
@@ -19,7 +19,11 @@ trait ClientProxyTrait
      * @return array
      */
     abstract protected function getHandlers();
-    abstract protected function setHandler(string $key,$value);
+
+    /**
+     * @return Handler
+     */
+    abstract protected function setHandler(string $key, $value);
 
     /**
      * @return Handler
@@ -33,6 +37,14 @@ trait ClientProxyTrait
         return $this->getHandlers()['application_activations'];
     }
 
+    /**
+     * Get application activations by page.
+     *
+     * @param ApiRequestOptions $options
+     * @param mixed $application
+     *
+     * @return ResponseWrapper
+     */
     public function getApplicationActivationsByPage(ApiRequestOptions $options, $application)
     {
         if (is_string($application)) {
@@ -43,6 +55,14 @@ trait ClientProxyTrait
         return $this->application_activations()->getApplicationActivations($options, $application);
     }
 
+    /**
+     * Get all application activations.
+     *
+     * @param ApiRequestOptions $options
+     * @param mixed $application
+     *
+     * @return ResponseWrapper
+     */
     public function getAllApplicationActivations(ApiRequestOptions $options, $application)
     {
         if (is_string($application)) {
@@ -53,6 +73,14 @@ trait ClientProxyTrait
         return $this->application_activations()->getApplicationActivations($options, $application);
     }
 
+    /**
+     * Yield all application activations.
+     *
+     * @param ApiRequestOptions $options
+     * @param mixed $application
+     *
+     * @return ResponseWrapper
+     */
     public function yieldAllApplicationActivations(ApiRequestOptions $options, $application)
     {
         if (is_string($application)) {
@@ -65,6 +93,14 @@ trait ClientProxyTrait
         }
     }
 
+    /**
+     * Yield application activations by page.
+     *
+     * @param ApiRequestOptions $options
+     * @param mixed $application
+     *
+     * @return ResponseWrapper
+     */
     public function yieldApplicationActivationsByPage(ApiRequestOptions $options, $application)
     {
         if (is_string($application)) {

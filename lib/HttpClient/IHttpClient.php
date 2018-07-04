@@ -48,5 +48,4 @@ interface IHttpClient
      * @return ResponseInterface The HTTP response (PSR implementation)
      */
     public function patch(UriInterface $url, array $headers = [], string $payload = '');
-
 }

@@ -5,7 +5,7 @@ namespace Divido\MerchantSDK\Handlers\Applications;
 use Divido\MerchantSDK\Handlers\ApiRequestOptions;
 
 /**
- * ClientProxyTrait Client
+ * Trait ClientProxyTrait
  *
  * @author Neil McGibbon <neil.mcgibbon@divido.com>
  * @author Mike Lovely <mike.lovely@divido.com>
@@ -18,7 +18,11 @@ trait ClientProxyTrait
      * @return array
      */
     abstract protected function getHandlers();
-    abstract protected function setHandler(string $key,$value);
+
+    /**
+     * @return Handler
+     */
+    abstract protected function setHandler(string $key, $value);
 
     /**
      * @return Handler
@@ -31,18 +35,40 @@ trait ClientProxyTrait
 
         return $this->getHandlers()['applications'];
     }
+
+    /**
+     * Get applications by page.
+     *
+     * @param ApiRequestOptions $options
+     *
+     * @return ResponseWrapper
+     */
     public function getApplicationsByPage(ApiRequestOptions $options)
     {
         $options->setPaginated(true);
         return $this->applications()->getApplications($options);
     }
 
+    /**
+     * Get all applications.
+     *
+     * @param ApiRequestOptions $options
+     *
+     * @return ResponseWrapper
+     */
     public function getAllApplications(ApiRequestOptions $options)
     {
         $options->setPaginated(false);
         return $this->applications()->getApplications($options);
     }
 
+    /**
+     * Yield all applications.
+     *
+     * @param ApiRequestOptions $options
+     *
+     * @return ResponseWrapper
+     */
     public function yieldAllApplications(ApiRequestOptions $options)
     {
         $options->setPaginated(false);
@@ -51,6 +77,13 @@ trait ClientProxyTrait
         }
     }
 
+    /**
+     * Yield applications by page.
+     *
+     * @param ApiRequestOptions $options
+     *
+     * @return ResponseWrapper
+     */
     public function yieldApplicationsByPage(ApiRequestOptions $options)
     {
         $options->setPaginated(true);

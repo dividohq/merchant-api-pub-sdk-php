@@ -5,7 +5,7 @@ namespace Divido\MerchantSDK\Handlers\Channels;
 use Divido\MerchantSDK\Handlers\ApiRequestOptions;
 
 /**
- * ClientProxyTrait Client
+ * Trait ClientProxyTrait
  *
  * @author Neil McGibbon <neil.mcgibbon@divido.com>
  * @author Mike Lovely <mike.lovely@divido.com>
@@ -18,7 +18,11 @@ trait ClientProxyTrait
      * @return array
      */
     abstract protected function getHandlers();
-    abstract protected function setHandler(string $key,$value);
+
+    /**
+     * @return Handler
+     */
+    abstract protected function setHandler(string $key, $value);
 
     /**
      * @return Handler
@@ -32,18 +36,39 @@ trait ClientProxyTrait
         return $this->getHandlers()['channels'];
     }
 
+    /**
+     * Get channels by page.
+     *
+     * @param ApiRequestOptions $options
+     *
+     * @return ResponseWrapper
+     */
     public function getChannelsByPage(ApiRequestOptions $options)
     {
         $options->setPaginated(true);
         return $this->channels()->getChannels($options);
     }
 
+    /**
+     * Get all channels.
+     *
+     * @param ApiRequestOptions $options
+     *
+     * @return ResponseWrapper
+     */
     public function getAllChannels(ApiRequestOptions $options)
     {
         $options->setPaginated(false);
         return $this->channels()->getChannels($options);
     }
 
+    /**
+     * Yield all channels.
+     *
+     * @param ApiRequestOptions $options
+     *
+     * @return ResponseWrapper
+     */
     public function yieldAllChannels(ApiRequestOptions $options)
     {
         $options->setPaginated(false);
@@ -52,6 +77,13 @@ trait ClientProxyTrait
         }
     }
 
+    /**
+     * Yield channels by page.
+     *
+     * @param ApiRequestOptions $options
+     *
+     * @return ResponseWrapper
+     */
     public function yieldChannelsByPage(ApiRequestOptions $options)
     {
         $options->setPaginated(true);

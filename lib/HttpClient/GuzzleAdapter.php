@@ -7,7 +7,14 @@ use GuzzleHttp\Psr7\Request;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\UriInterface;
 
-
+/**
+ * Class GuzzleAdapter
+ *
+ * @author Neil McGibbon <neil.mcgibbon@divido.com>
+ * @author Mike Lovely <mike.lovely@divido.com>
+ * @copyright (c) 2018, Divido
+ * @package Divido\MerchantSDK
+ */
 class GuzzleAdapter implements IHttpClient
 {
     /**

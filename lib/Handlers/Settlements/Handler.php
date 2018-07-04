@@ -4,7 +4,7 @@ namespace Divido\MerchantSDK\Handlers\Settlements;
 
 use Divido\MerchantSDK\Handlers\AbstractHttpHandler;
 use Divido\MerchantSDK\Handlers\ApiRequestOptions;
-use Divido\MerchantSDK\Models\Settlement;
+use Divido\MerchantSDK\Response\ResponseWrapper;
 
 /**
  * Class Handler
@@ -65,6 +65,12 @@ class Handler extends AbstractHttpHandler
         }
     }
 
+    /**
+     * Get settlements by page.
+     *
+     * @param ApiRequestOptions $options API Request options
+     * @return ResponseWrapper
+     */
     public function getSettlementsByPage(ApiRequestOptions $options)
     {
         $path = vsprintf('%s', [
@@ -77,7 +83,7 @@ class Handler extends AbstractHttpHandler
         ];
 
         $response = $this->httpClientWrapper->request('get', $path, $query);
-        $parsed = $this->parseJsonApiResourceResponse($response);
+        $parsed = $this->parseResponse($response);
 
         return $parsed;
     }

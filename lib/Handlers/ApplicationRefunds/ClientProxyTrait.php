@@ -6,7 +6,7 @@ use Divido\MerchantSDK\Handlers\ApiRequestOptions;
 use Divido\MerchantSDK\Models\Application;
 
 /**
- * ClientProxyTrait Client
+ * Trait ClientProxyTrait
  *
  * @author Neil McGibbon <neil.mcgibbon@divido.com>
  * @author Mike Lovely <mike.lovely@divido.com>
@@ -19,7 +19,11 @@ trait ClientProxyTrait
      * @return array
      */
     abstract protected function getHandlers();
-    abstract protected function setHandler(string $key,$value);
+
+    /**
+     * @return Handler
+     */
+    abstract protected function setHandler(string $key, $value);
 
     /**
      * @return Handler
@@ -33,26 +37,70 @@ trait ClientProxyTrait
         return $this->getHandlers()['application_refunds'];
     }
 
-    public function getApplicationRefundsByPage(ApiRequestOptions $options, Application $application)
+    /**
+     * Get application refunds by page.
+     *
+     * @param ApiRequestOptions $options
+     * @param mixed $application
+     *
+     * @return ResponseWrapper
+     */
+    public function getApplicationRefundsByPage(ApiRequestOptions $options, $application)
     {
+        if (is_string($application)) {
+            $application = (new Application)->withId($application);
+        }
+
         $options->setPaginated(true);
         return $this->application_refunds()->getApplicationRefunds($options, $application);
     }
 
-    public function getAllApplicationRefunds(ApiRequestOptions $options, Application $application)
+    /**
+     * Get all application refunds.
+     *
+     * @param ApiRequestOptions $options
+     * @param mixed $application
+     *
+     * @return ResponseWrapper
+     */
+    public function getAllApplicationRefunds(ApiRequestOptions $options, $application)
     {
+        if (is_string($application)) {
+            $application = (new Application)->withId($application);
+        }
+
         $options->setPaginated(false);
         return $this->application_refunds()->getApplicationRefunds($options, $application);
     }
 
-    public function yieldAllApplicationRefunds(ApiRequestOptions $options, Application $application)
+    /**
+     * Yield all application refunds.
+     *
+     * @param ApiRequestOptions $options
+     * @param mixed $application
+     *
+     * @return ResponseWrapper
+     */
+    public function yieldAllApplicationRefunds(ApiRequestOptions $options, $application)
     {
+        if (is_string($application)) {
+            $application = (new Application)->withId($application);
+        }
+
         $options->setPaginated(false);
         foreach ($this->application_refunds()->yieldApplicationRefunds($options, $application) as $refund) {
             yield $refund;
         }
     }
 
+    /**
+     * Yield application refunds by page.
+     *
+     * @param ApiRequestOptions $options
+     * @param mixed $application
+     *
+     * @return ResponseWrapper
+     */
     public function yieldApplicationRefundsByPage(ApiRequestOptions $options, $application)
     {
         if (is_string($application)) {

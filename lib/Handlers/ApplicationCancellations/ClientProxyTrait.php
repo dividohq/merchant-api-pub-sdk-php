@@ -6,7 +6,7 @@ use Divido\MerchantSDK\Handlers\ApiRequestOptions;
 use Divido\MerchantSDK\Models\Application;
 
 /**
- * ClientProxyTrait Client
+ * Trait ClientProxyTrait
  *
  * @author Neil McGibbon <neil.mcgibbon@divido.com>
  * @author Mike Lovely <mike.lovely@divido.com>
@@ -19,7 +19,11 @@ trait ClientProxyTrait
      * @return array
      */
     abstract protected function getHandlers();
-    abstract protected function setHandler(string $key,$value);
+
+    /**
+     * @return Handler
+     */
+    abstract protected function setHandler(string $key, $value);
 
     /**
      * @return Handler
@@ -33,26 +37,70 @@ trait ClientProxyTrait
         return $this->getHandlers()['application_cancellations'];
     }
 
-    public function getApplicationCancellationsByPage(ApiRequestOptions $options, Application $application)
+    /**
+     * Get application cancellations by page.
+     *
+     * @param ApiRequestOptions $options
+     * @param mixed $application
+     *
+     * @return ResponseWrapper
+     */
+    public function getApplicationCancellationsByPage(ApiRequestOptions $options, $application)
     {
+        if (is_string($application)) {
+            $application = (new Application)->withId($application);
+        }
+
         $options->setPaginated(true);
         return $this->application_cancellations()->getApplicationCancellations($options, $application);
     }
 
-    public function getAllApplicationCancellations(ApiRequestOptions $options, Application $application)
+    /**
+     * Get all application cancellations.
+     *
+     * @param ApiRequestOptions $options
+     * @param mixed $application
+     *
+     * @return ResponseWrapper
+     */
+    public function getAllApplicationCancellations(ApiRequestOptions $options, $application)
     {
+        if (is_string($application)) {
+            $application = (new Application)->withId($application);
+        }
+
         $options->setPaginated(false);
         return $this->application_cancellations()->getApplicationCancellations($options, $application);
     }
 
-    public function yieldAllApplicationCancellations(ApiRequestOptions $options, Application $application)
+    /**
+     * Yield all application cancellations.
+     *
+     * @param ApiRequestOptions $options
+     * @param mixed $application
+     *
+     * @return ResponseWrapper
+     */
+    public function yieldAllApplicationCancellations(ApiRequestOptions $options, $application)
     {
+        if (is_string($application)) {
+            $application = (new Application)->withId($application);
+        }
+
         $options->setPaginated(false);
         foreach ($this->application_cancellations()->yieldApplicationCancellations($options, $application) as $cancellation) {
             yield $cancellation;
         }
     }
 
+    /**
+     * Yield application cancellations by page.
+     *
+     * @param ApiRequestOptions $options
+     * @param mixed $application
+     *
+     * @return ResponseWrapper
+     */
     public function yieldApplicationCancellationsByPage(ApiRequestOptions $options, $application)
     {
         if (is_string($application)) {

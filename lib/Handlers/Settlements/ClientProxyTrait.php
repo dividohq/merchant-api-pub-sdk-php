@@ -5,7 +5,7 @@ namespace Divido\MerchantSDK\Handlers\Settlements;
 use Divido\MerchantSDK\Handlers\ApiRequestOptions;
 
 /**
- * ClientProxyTrait Client
+ * Trait ClientProxyTrait
  *
  * @author Neil McGibbon <neil.mcgibbon@divido.com>
  * @author Mike Lovely <mike.lovely@divido.com>
@@ -18,7 +18,11 @@ trait ClientProxyTrait
      * @return array
      */
     abstract protected function getHandlers();
-    abstract protected function setHandler(string $key,$value);
+
+    /**
+     * @return Handler
+     */
+    abstract protected function setHandler(string $key, $value);
 
     /**
      * @return Handler
@@ -32,18 +36,39 @@ trait ClientProxyTrait
         return $this->getHandlers()['settlements'];
     }
 
+    /**
+     * Get settlements by page.
+     *
+     * @param ApiRequestOptions $options
+     *
+     * @return ResponseWrapper
+     */
     public function getSettlementsByPage(ApiRequestOptions $options)
     {
         $options->setPaginated(true);
         return $this->settlements()->getSettlements($options);
     }
 
+    /**
+     * Get all settlements.
+     *
+     * @param ApiRequestOptions $options
+     *
+     * @return ResponseWrapper
+     */
     public function getAllSettlements(ApiRequestOptions $options)
     {
         $options->setPaginated(false);
         return $this->settlements()->getSettlements($options);
     }
 
+    /**
+     * Yield all settlements.
+     *
+     * @param ApiRequestOptions $options
+     *
+     * @return ResponseWrapper
+     */
     public function yieldAllSettlements(ApiRequestOptions $options)
     {
         $options->setPaginated(false);
@@ -52,6 +77,13 @@ trait ClientProxyTrait
         }
     }
 
+    /**
+     * Yield settlements by page.
+     *
+     * @param ApiRequestOptions $options
+     *
+     * @return ResponseWrapper
+     */
     public function yieldSettlementsByPage(ApiRequestOptions $options)
     {
         $options->setPaginated(true);

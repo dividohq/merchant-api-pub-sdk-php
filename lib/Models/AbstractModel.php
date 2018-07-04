@@ -4,6 +4,14 @@ namespace Divido\MerchantSDK\Models;
 
 use Divido\MerchantSDK\Helpers\Str;
 
+/**
+ * Class AbstractModel
+ *
+ * @author Neil McGibbon <neil.mcgibbon@divido.com>
+ * @author Mike Lovely <mike.lovely@divido.com>
+ * @copyright (c) 2018, Divido
+ * @package Divido\MerchantSDK
+ */
 abstract class AbstractModel
 {
     /**

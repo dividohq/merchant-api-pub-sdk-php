@@ -4,7 +4,6 @@ namespace Divido\MerchantSDK\Handlers\Channels;
 
 use Divido\MerchantSDK\Handlers\AbstractHttpHandler;
 use Divido\MerchantSDK\Handlers\ApiRequestOptions;
-use Divido\MerchantSDK\Models\Channel;
 use Divido\MerchantSDK\Response\ResponseWrapper;
 
 /**
@@ -84,7 +83,7 @@ class Handler extends AbstractHttpHandler
         ];
 
         $response = $this->httpClientWrapper->request('get', $path, $query);
-        $parsed = $this->parseJsonApiResourceResponse($response);
+        $parsed = $this->parseResponse($response);
 
         return $parsed;
     }
