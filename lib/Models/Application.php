@@ -63,7 +63,7 @@ class Application extends AbstractModel
     protected $depositPercentage;
 
     /**
-     * @var string
+     * @var array
      */
     protected $metadata;
 
@@ -111,7 +111,7 @@ class Application extends AbstractModel
      *
      * @return \Divido\MerchantSDK\Models\Application
      */
-    public function withId($id)
+    public function withId(string $id)
     {
         $cloned = clone $this;
 
@@ -127,7 +127,7 @@ class Application extends AbstractModel
      *
      * @return \Divido\MerchantSDK\Models\Application
      */
-    public function withMerchantChannelId($merchantChannelId)
+    public function withMerchantChannelId(string $merchantChannelId)
     {
         $cloned = clone $this;
 
@@ -143,7 +143,7 @@ class Application extends AbstractModel
      *
      * @return \Divido\MerchantSDK\Models\Application
      */
-    public function withFinancePlanId($financePlanId)
+    public function withFinancePlanId(string $financePlanId)
     {
         $cloned = clone $this;
 
@@ -159,7 +159,7 @@ class Application extends AbstractModel
      *
      * @return \Divido\MerchantSDK\Models\Application
      */
-    public function withCountryId($countryId)
+    public function withCountryId(string $countryId)
     {
         $cloned = clone $this;
 
@@ -175,7 +175,7 @@ class Application extends AbstractModel
      *
      * @return \Divido\MerchantSDK\Models\Application
      */
-    public function withCurrencyId($currencyId)
+    public function withCurrencyId(string $currencyId)
     {
         $cloned = clone $this;
 
@@ -191,7 +191,7 @@ class Application extends AbstractModel
      *
      * @return \Divido\MerchantSDK\Models\Application
      */
-    public function withLanguageId($languageId)
+    public function withLanguageId(string $languageId)
     {
         $cloned = clone $this;
 
@@ -203,11 +203,11 @@ class Application extends AbstractModel
     /**
      * With applicants.
      *
-     * @param string $applicants
+     * @param array $applicants
      *
      * @return \Divido\MerchantSDK\Models\Application
      */
-    public function withApplicants($applicants)
+    public function withApplicants(array $applicants)
     {
         $cloned = clone $this;
 
@@ -219,11 +219,11 @@ class Application extends AbstractModel
     /**
      * With order items.
      *
-     * @param string $orderItems
+     * @param array $orderItems
      *
      * @return \Divido\MerchantSDK\Models\Application
      */
-    public function withOrderItems($orderItems)
+    public function withOrderItems(array $orderItems)
     {
         $cloned = clone $this;
 
@@ -235,11 +235,11 @@ class Application extends AbstractModel
     /**
      * With deposit amount.
      *
-     * @param string $depositAmount
+     * @param int $depositAmount
      *
      * @return \Divido\MerchantSDK\Models\Application
      */
-    public function withDepositAmount($depositAmount)
+    public function withDepositAmount(int $depositAmount)
     {
         $cloned = clone $this;
 
@@ -251,11 +251,11 @@ class Application extends AbstractModel
     /**
      * With deposit percentage.
      *
-     * @param string $depositPercentage
+     * @param float $depositPercentage
      *
      * @return \Divido\MerchantSDK\Models\Application
      */
-    public function withDepositPercentage($depositPercentage)
+    public function withDepositPercentage(float $depositPercentage)
     {
         $cloned = clone $this;
 
@@ -267,11 +267,11 @@ class Application extends AbstractModel
     /**
      * With metadata.
      *
-     * @param string $metadata
+     * @param array $metadata
      *
      * @return \Divido\MerchantSDK\Models\Application
      */
-    public function withMetadata($metadata)
+    public function withMetadata(array $metadata)
     {
         $cloned = clone $this;
 
@@ -283,11 +283,11 @@ class Application extends AbstractModel
     /**
      * With finalisation required.
      *
-     * @param string $finalisationRequired
+     * @param bool $finalisationRequired
      *
      * @return \Divido\MerchantSDK\Models\Application
      */
-    public function withFinalisationRequired($finalisationRequired)
+    public function withFinalisationRequired(bool $finalisationRequired)
     {
         $cloned = clone $this;
 
@@ -303,7 +303,7 @@ class Application extends AbstractModel
      *
      * @return \Divido\MerchantSDK\Models\Application
      */
-    public function withMerchantReference($merchantReference)
+    public function withMerchantReference(string $merchantReference)
     {
         $cloned = clone $this;
 
@@ -319,7 +319,7 @@ class Application extends AbstractModel
      *
      * @return \Divido\MerchantSDK\Models\Application
      */
-    public function withMerchantRedirectUrl($merchantRedirectUrl)
+    public function withMerchantRedirectUrl(string $merchantRedirectUrl)
     {
         $cloned = clone $this;
 
@@ -335,7 +335,7 @@ class Application extends AbstractModel
      *
      * @return \Divido\MerchantSDK\Models\Application
      */
-    public function withMerchantCheckoutUrl($merchantCheckoutUrl)
+    public function withMerchantCheckoutUrl(string $merchantCheckoutUrl)
     {
         $cloned = clone $this;
 
@@ -351,7 +351,7 @@ class Application extends AbstractModel
      *
      * @return \Divido\MerchantSDK\Models\Application
      */
-    public function withMerchantResponseUrl($merchantResponseUrl)
+    public function withMerchantResponseUrl(string $merchantResponseUrl)
     {
         $cloned = clone $this;
 

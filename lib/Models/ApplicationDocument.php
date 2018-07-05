@@ -24,7 +24,7 @@ class ApplicationDocument extends AbstractModel
      *
      * @return \Divido\MerchantSDK\Models\ApplicationDocument
      */
-    public function withDocument($document)
+    public function withDocument(string $document)
     {
         $cloned = clone $this;
 

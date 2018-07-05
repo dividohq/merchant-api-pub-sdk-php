@@ -261,6 +261,9 @@ class ApplicationsHandlerTest extends MerchantSDKTestCase
         $handler = new Handler($httpClientWrapper);
 
         $application = (new \Divido\MerchantSDK\Models\Application)
+            ->withCountryId('GB')
+            ->withCurrencyId('GBP')
+            ->withLanguageId('EN')
             ->withFinancePlanId('F335FED7A-A266-A8BF-960A-4CB56CC6DE6F')
             ->withMerchantChannelId('C47B81C83-08A8-B05A-EBD3-B9CFA1D60A07')
             ->withApplicants([
@@ -279,7 +282,16 @@ class ApplicationsHandlerTest extends MerchantSDKTestCase
                     'price' => 50000,
                 ],
             ])
-            ->withDepositAmount(10000);
+            ->withDepositAmount(10000)
+            ->withDepositPercentage(0.02)
+            ->withFinalisationRequired(false)
+            ->withMerchantReference("foo-ref")
+            ->withMerchantRedirectUrl("foo-with-merchant-redirect-url")
+            ->withMerchantCheckoutUrl("foo-with-merchant-checkout-url")
+            ->withMerchantResponseUrl("foo-with-merchant-response-url")
+            ->withMetadata([
+                'foo' => 'bar',
+            ]);
 
         $response = $handler->createApplication($application);
 

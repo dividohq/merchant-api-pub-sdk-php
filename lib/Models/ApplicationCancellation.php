@@ -13,7 +13,7 @@ namespace Divido\MerchantSDK\Models;
 class ApplicationCancellation extends AbstractModel
 {
     /**
-     * @var string
+     * @var int
      */
     protected $amount;
 
@@ -45,11 +45,11 @@ class ApplicationCancellation extends AbstractModel
     /**
      * With amount.
      *
-     * @param string $amount
+     * @param int $amount
      *
      * @return \Divido\MerchantSDK\Models\ApplicationCancellation
      */
-    public function withAmount($amount)
+    public function withAmount(int $amount)
     {
         $cloned = clone $this;
 
@@ -65,7 +65,7 @@ class ApplicationCancellation extends AbstractModel
      *
      * @return \Divido\MerchantSDK\Models\ApplicationCancellation
      */
-    public function withReference($reference)
+    public function withReference(string $reference)
     {
         $cloned = clone $this;
 
@@ -81,7 +81,7 @@ class ApplicationCancellation extends AbstractModel
      *
      * @return \Divido\MerchantSDK\Models\ApplicationCancellation
      */
-    public function withComment($comment)
+    public function withComment(string $comment)
     {
         $cloned = clone $this;
 
@@ -97,7 +97,7 @@ class ApplicationCancellation extends AbstractModel
      *
      * @return \Divido\MerchantSDK\Models\ApplicationCancellation
      */
-    public function withOrderItems($orderItems)
+    public function withOrderItems(array $orderItems)
     {
         $cloned = clone $this;
 
@@ -113,7 +113,7 @@ class ApplicationCancellation extends AbstractModel
      *
      * @return \Divido\MerchantSDK\Models\ApplicationCancellation
      */
-    public function withDeliveryMethod($deliveryMethod)
+    public function withDeliveryMethod(string $deliveryMethod)
     {
         $cloned = clone $this;
 
@@ -129,7 +129,7 @@ class ApplicationCancellation extends AbstractModel
      *
      * @return \Divido\MerchantSDK\Models\ApplicationCancellation
      */
-    public function withTrackingNumber($trackingNumber)
+    public function withTrackingNumber(string $trackingNumber)
     {
         $cloned = clone $this;
 
