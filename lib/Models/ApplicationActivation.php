@@ -2,20 +2,53 @@
 
 namespace Divido\MerchantSDK\Models;
 
+/**
+ * Class ApplicationActivation
+ *
+ * @author Neil McGibbon <neil.mcgibbon@divido.com>
+ * @author Mike Lovely <mike.lovely@divido.com>
+ * @copyright (c) 2018, Divido
+ * @package Divido\MerchantSDK
+ */
 class ApplicationActivation extends AbstractModel
 {
+    /**
+     * @var string
+     */
     protected $amount;
 
+    /**
+     * @var string
+     */
     protected $reference;
 
+    /**
+     * @var string
+     */
     protected $comment;
 
+    /**
+     * @var array
+     */
     protected $orderItems = [];
 
+    /**
+     * @var string
+     */
     protected $deliveryMethod;
 
+    /**
+     * @var string
+     */
     protected $trackingNumber;
 
+    /**
+     * With amount.
+     *
+     * @param string $amount
+     *
+     * @return \Divido\MerchantSDK\Models\ApplicationActivation
+     */
     public function withAmount($amount)
     {
         $cloned = clone $this;
@@ -25,6 +58,13 @@ class ApplicationActivation extends AbstractModel
         return $cloned;
     }
 
+    /**
+     * With reference.
+     *
+     * @param string $reference
+     *
+     * @return \Divido\MerchantSDK\Models\ApplicationActivation
+     */
     public function withReference($reference)
     {
         $cloned = clone $this;
@@ -34,6 +74,13 @@ class ApplicationActivation extends AbstractModel
         return $cloned;
     }
 
+    /**
+     * With comment.
+     *
+     * @param string $comment
+     *
+     * @return \Divido\MerchantSDK\Models\ApplicationActivation
+     */
     public function withComment($comment)
     {
         $cloned = clone $this;
@@ -43,6 +90,13 @@ class ApplicationActivation extends AbstractModel
         return $cloned;
     }
 
+    /**
+     * With order items.
+     *
+     * @param array $orderItems
+     *
+     * @return \Divido\MerchantSDK\Models\ApplicationActivation
+     */
     public function withOrderItems($orderItems)
     {
         $cloned = clone $this;
@@ -52,6 +106,13 @@ class ApplicationActivation extends AbstractModel
         return $cloned;
     }
 
+    /**
+     * With delivery method.
+     *
+     * @param string $deliveryMethod
+     *
+     * @return \Divido\MerchantSDK\Models\ApplicationActivation
+     */
     public function withDeliveryMethod($deliveryMethod)
     {
         $cloned = clone $this;
@@ -61,6 +122,13 @@ class ApplicationActivation extends AbstractModel
         return $cloned;
     }
 
+    /**
+     * With tracking number.
+     *
+     * @param string $trackingNumber
+     *
+     * @return \Divido\MerchantSDK\Models\ApplicationActivation
+     */
     public function withTrackingNumber($trackingNumber)
     {
         $cloned = clone $this;
