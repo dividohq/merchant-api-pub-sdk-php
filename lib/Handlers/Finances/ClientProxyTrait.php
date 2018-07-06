@@ -25,6 +25,8 @@ trait ClientProxyTrait
     abstract protected function setHandler(string $key, $value);
 
     /**
+     * Connect to the finances handler.
+     *
      * @return Handler
      */
     public function finances()
@@ -40,7 +42,6 @@ trait ClientProxyTrait
      * Get plans by page.
      *
      * @param ApiRequestOptions $options
-     *
      * @return ResponseWrapper
      */
     public function getPlansByPage(ApiRequestOptions $options)
@@ -53,7 +54,6 @@ trait ClientProxyTrait
      * Get all plans.
      *
      * @param ApiRequestOptions $options
-     *
      * @return ResponseWrapper
      */
     public function getAllPlans(ApiRequestOptions $options)
@@ -66,7 +66,6 @@ trait ClientProxyTrait
      * Yield all plans.
      *
      * @param ApiRequestOptions $options
-     *
      * @return ResponseWrapper
      */
     public function yieldAllPlans(ApiRequestOptions $options)
@@ -81,7 +80,6 @@ trait ClientProxyTrait
      * Yield plans by page.
      *
      * @param ApiRequestOptions $options
-     *
      * @return ResponseWrapper
      */
     public function yieldPlansByPage(ApiRequestOptions $options)

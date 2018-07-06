@@ -21,7 +21,7 @@ class Handler extends AbstractHttpHandler
     /**
      * Get application refunds as a collection, either a specific page or all
      *
-     * @param ApiRequestOptions $options API Request options
+     * @param ApiRequestOptions $options
      * @param Application $application
      * @return ResponseWrapper
      */
@@ -37,7 +37,7 @@ class Handler extends AbstractHttpHandler
     /**
      * Yield application refunds one at a time, either from a specific page or all
      *
-     * @param ApiRequestOptions $options API Request options
+     * @param ApiRequestOptions $options
      * @param Application $application
      * @return \Generator
      */
@@ -59,7 +59,7 @@ class Handler extends AbstractHttpHandler
     /**
      * Get all refunds and yield one at a time using a generator
      *
-     * @param ApiRequestOptions $options API Request options
+     * @param ApiRequestOptions $options
      * @param Application $application
      * @return \Generator
      */
@@ -73,7 +73,8 @@ class Handler extends AbstractHttpHandler
     /**
      * Get all application refunds by page.
      *
-     * @param ApiRequestOptions $options API Request options
+     * @param ApiRequestOptions $options
+     * @param Application $application
      * @return \ResponseWrapper
      */
     public function getApplicationRefundsByPage(ApiRequestOptions $options, Application $application)
@@ -98,7 +99,7 @@ class Handler extends AbstractHttpHandler
     /**
      * Get all applications in a single array
      *
-     * @param ApiRequestOptions $options API Request options
+     * @param ApiRequestOptions $options
      * @param Application $application
      * @return ResponseWrapper
      */
@@ -110,6 +111,8 @@ class Handler extends AbstractHttpHandler
     /**
      * Get single refund by id
      *
+     * @param Application $application
+     * @param string $refundId
      * @return ResponseWrapper
      */
     public function getSingleApplicationRefund(Application $application, $refundId)
@@ -125,8 +128,10 @@ class Handler extends AbstractHttpHandler
     }
 
     /**
-     * Create an refund
+     * Create an application refund
      *
+     * @param Application $application
+     * @param ApplicationRefund $applicationRefund
      * @return ResponseWrapper
      */
     public function createApplicationRefund(Application $application, ApplicationRefund $applicationRefund)

@@ -20,8 +20,7 @@ class Handler extends AbstractHttpHandler
     /**
      * Get applications as a collection, either a specific page or all
      *
-     * @param ApiRequestOptions $options API Request options
-     * @param Application $application
+     * @param ApiRequestOptions $options
      * @return ResponseWrapper
      */
     public function getApplications(ApiRequestOptions $options)
@@ -36,8 +35,7 @@ class Handler extends AbstractHttpHandler
     /**
      * Yield applications one at a time, either from a specific page or all
      *
-     * @param ApiRequestOptions $options API Request options
-     * @param Application $application
+     * @param ApiRequestOptions $options
      * @return \Generator
      */
     public function yieldApplications(ApiRequestOptions $options)
@@ -58,8 +56,7 @@ class Handler extends AbstractHttpHandler
     /**
      * Get all applications and yield one at a time using a generator
      *
-     * @param ApiRequestOptions $options API Request options
-     * @param Application $application
+     * @param ApiRequestOptions $options
      * @return \Generator
      */
     public function yieldAllApplications(ApiRequestOptions $options)
@@ -72,7 +69,7 @@ class Handler extends AbstractHttpHandler
     /**
      * Get all applications by page.
      *
-     * @param ApiRequestOptions $options API Request options
+     * @param ApiRequestOptions $options
      * @return \ResponseWrapper
      */
     public function getApplicationsByPage(ApiRequestOptions $options)
@@ -95,8 +92,7 @@ class Handler extends AbstractHttpHandler
     /**
      * Get all applications in a single array
      *
-     * @param ApiRequestOptions $options API Request options
-     * @param Application $application
+     * @param ApiRequestOptions $options
      * @return ResponseWrapper
      */
     public function getAllApplications(ApiRequestOptions $options)
@@ -107,6 +103,7 @@ class Handler extends AbstractHttpHandler
     /**
      * Get single application by id
      *
+     * @param string $applicationId
      * @return ResponseWrapper
      */
     public function getSingleApplication($applicationId)
@@ -122,6 +119,7 @@ class Handler extends AbstractHttpHandler
     /**
      * Create an application
      *
+     * @param Application $application
      * @return ResponseWrapper
      */
     public function createApplication(Application $application)
@@ -136,6 +134,7 @@ class Handler extends AbstractHttpHandler
     /**
      * Update an application
      *
+     * @param Application $application
      * @return ResponseWrapper
      */
     public function updateApplication(Application $application)

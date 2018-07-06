@@ -13,6 +13,7 @@ namespace Divido\MerchantSDK;
 class Environment
 {
     const SANDBOX = "sandbox";
+
     const PRODUCTION = "production";
 
     const CONFIGURATION = [
@@ -21,7 +22,6 @@ class Environment
         ],
         'production' => [
             'base_uri' => 'https://foo.com',
-        ]
+        ],
     ];
-
 }

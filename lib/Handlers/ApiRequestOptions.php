@@ -27,7 +27,6 @@ class ApiRequestOptions
      */
     private $paginated = true;
 
-
     /**
      * ApiRequestOptions constructor.
      */

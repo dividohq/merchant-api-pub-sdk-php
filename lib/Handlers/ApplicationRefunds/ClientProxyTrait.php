@@ -26,6 +26,8 @@ trait ClientProxyTrait
     abstract protected function setHandler(string $key, $value);
 
     /**
+     * Connect to the application refunds handler.
+     *
      * @return Handler
      */
     public function application_refunds()

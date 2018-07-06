@@ -20,6 +20,8 @@ class Handler extends AbstractHttpHandler
     /**
      * Create a cancellation
      *
+     * @param Application $application
+     * @param ApplicationDocument $applicationDocument
      * @return ResponseWrapper
      */
     public function createApplicationDocument(Application $application, ApplicationDocument $applicationDocument)
@@ -36,6 +38,8 @@ class Handler extends AbstractHttpHandler
     /**
      * Create a cancellation
      *
+     * @param Application $application
+     * @param string $applicationDocumentId
      * @return ResponseWrapper
      */
     public function deleteApplicationDocument(Application $application, $applicationDocumentId)

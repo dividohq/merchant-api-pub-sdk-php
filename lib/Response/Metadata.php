@@ -1,9 +1,15 @@
 <?php
 
-
 namespace Divido\MerchantSDK\Response;
 
-
+/**
+ * Class Metadata
+ *
+ * @author Neil McGibbon <neil.mcgibbon@divido.com>
+ * @author Mike Lovely <mike.lovely@divido.com>
+ * @copyright (c) 2018, Divido
+ * @package Divido\MerchantSDK
+ */
 class Metadata
 {
     /**
@@ -26,6 +32,14 @@ class Metadata
      */
     private $totalResourceCount;
 
+    /**
+     * Metadata constructor.
+     *
+     * @param int $page
+     * @param int $totalPages
+     * @param int $resourcesPerPage
+     * @param int $totalResourceCount
+     */
     public function __construct($page = null, $totalPages = null, $resourcesPerPage = null, $totalResourceCount = null)
     {
         $this->page = $page;
@@ -35,6 +49,8 @@ class Metadata
     }
 
     /**
+     * Returns the requested page
+     *
      * @return int
      */
     public function getPage()
@@ -43,6 +59,8 @@ class Metadata
     }
 
     /**
+     * Set the page
+     *
      * @param int $page
      * @return Metadata
      */
@@ -53,6 +71,8 @@ class Metadata
     }
 
     /**
+     * Returns the total pages
+     *
      * @return int
      */
     public function getTotalPages()
@@ -61,6 +81,8 @@ class Metadata
     }
 
     /**
+     * Set the total pages
+     *
      * @param int $totalPages
      * @return Metadata
      */
@@ -71,6 +93,8 @@ class Metadata
     }
 
     /**
+     * Returns the resources per page
+     *
      * @return int
      */
     public function getResourcesPerPage()
@@ -79,6 +103,8 @@ class Metadata
     }
 
     /**
+     * Set the resources per page
+     *
      * @param int $resourcesPerPage
      * @return Metadata
      */
@@ -89,6 +115,8 @@ class Metadata
     }
 
     /**
+     * Returns the resources count
+     *
      * @return int
      */
     public function getTotalResourceCount()
@@ -97,6 +125,8 @@ class Metadata
     }
 
     /**
+     * Set the total resources count
+     *
      * @param int $totalResourceCount
      * @return Metadata
      */
@@ -105,6 +135,4 @@ class Metadata
         $this->totalResourceCount = $totalResourceCount;
         return $this;
     }
-
-
 }

@@ -1,11 +1,17 @@
 <?php
 
-
 namespace Divido\MerchantSDK\Response;
-
 
 use GuzzleHttp\Psr7\Response;
 
+/**
+ * Class ResponseWrapper
+ *
+ * @author Neil McGibbon <neil.mcgibbon@divido.com>
+ * @author Mike Lovely <mike.lovely@divido.com>
+ * @copyright (c) 2018, Divido
+ * @package Divido\MerchantSDK
+ */
 class ResponseWrapper
 {
     /**
@@ -23,6 +29,15 @@ class ResponseWrapper
      */
     private $rawResponse;
 
+    /**
+     * ResponseWrapper constructor.
+     *
+     * @param array $resources
+     * @param int $page
+     * @param int $totalPages
+     * @param int $resourcesPerPage
+     * @param int $totalResourceCount
+     */
     public function __construct($resources = [], $metadata = null, $rawResponse = null)
     {
         $this->resources = $resources;
@@ -31,6 +46,8 @@ class ResponseWrapper
     }
 
     /**
+     * Get resources.
+     *
      * @return array
      */
     public function getResources()
@@ -39,6 +56,8 @@ class ResponseWrapper
     }
 
     /**
+     * Set resources.
+     *
      * @param array $resources
      * @return ResponseWrapper
      */
@@ -49,6 +68,8 @@ class ResponseWrapper
     }
 
     /**
+     * Get metadata.
+     *
      * @return Metadata
      */
     public function getMetadata()
@@ -57,6 +78,8 @@ class ResponseWrapper
     }
 
     /**
+     * Set metadata.
+     *
      * @param Metadata $metadata
      * @return ResponseWrapper
      */
@@ -67,6 +90,8 @@ class ResponseWrapper
     }
 
     /**
+     * Get raw response.
+     *
      * @return Response
      */
     public function getRawResponse()
@@ -75,6 +100,8 @@ class ResponseWrapper
     }
 
     /**
+     * Set raw response.
+     *
      * @param Response $rawResponse
      * @return ResponseWrapper
      */
@@ -83,6 +110,4 @@ class ResponseWrapper
         $this->rawResponse = $rawResponse;
         return $this;
     }
-
-
 }

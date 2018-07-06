@@ -19,7 +19,7 @@ class Handler extends AbstractHttpHandler
     /**
      * Get plans as a collection, either a specific page or all
      *
-     * @param ApiRequestOptions $options API Request options
+     * @param ApiRequestOptions $options
      * @return ResponseWrapper
      */
     public function getPlans(ApiRequestOptions $options)
@@ -34,7 +34,7 @@ class Handler extends AbstractHttpHandler
     /**
      * Yield plans one at a time, either from a specific page or all
      *
-     * @param ApiRequestOptions $options API Request options
+     * @param ApiRequestOptions $options
      * @return \Generator
      */
     public function yieldPlans(ApiRequestOptions $options)
@@ -55,7 +55,7 @@ class Handler extends AbstractHttpHandler
     /**
      * Get all and yield one plan at a time using a generator
      *
-     * @param ApiRequestOptions $options API Request options
+     * @param ApiRequestOptions $options
      * @return \Generator
      */
     public function yieldAllPlans(ApiRequestOptions $options)
@@ -68,7 +68,7 @@ class Handler extends AbstractHttpHandler
     /**
      * Get all plans by page.
      *
-     * @param ApiRequestOptions $options API Request options
+     * @param ApiRequestOptions $options
      * @return \ResponseWrapper
      */
     public function getPlansByPage(ApiRequestOptions $options)
@@ -89,9 +89,9 @@ class Handler extends AbstractHttpHandler
     }
 
     /**
-     * Get all in a single array
+     * Get all plans in a single array
      *
-     * @param ApiRequestOptions $options API Request options
+     * @param ApiRequestOptions $options
      * @return ResponseWrapper
      */
     public function getAllPlans(ApiRequestOptions $options)

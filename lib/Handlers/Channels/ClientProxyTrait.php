@@ -25,6 +25,8 @@ trait ClientProxyTrait
     abstract protected function setHandler(string $key, $value);
 
     /**
+     * Connect to the channels handler.
+     *
      * @return Handler
      */
     public function channels()
@@ -40,7 +42,6 @@ trait ClientProxyTrait
      * Get channels by page.
      *
      * @param ApiRequestOptions $options
-     *
      * @return ResponseWrapper
      */
     public function getChannelsByPage(ApiRequestOptions $options)
@@ -53,7 +54,6 @@ trait ClientProxyTrait
      * Get all channels.
      *
      * @param ApiRequestOptions $options
-     *
      * @return ResponseWrapper
      */
     public function getAllChannels(ApiRequestOptions $options)
@@ -66,7 +66,6 @@ trait ClientProxyTrait
      * Yield all channels.
      *
      * @param ApiRequestOptions $options
-     *
      * @return ResponseWrapper
      */
     public function yieldAllChannels(ApiRequestOptions $options)
@@ -81,7 +80,6 @@ trait ClientProxyTrait
      * Yield channels by page.
      *
      * @param ApiRequestOptions $options
-     *
      * @return ResponseWrapper
      */
     public function yieldChannelsByPage(ApiRequestOptions $options)

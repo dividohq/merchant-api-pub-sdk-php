@@ -19,7 +19,7 @@ class Handler extends AbstractHttpHandler
     /**
      * Get channels as a collection, either a specific page or all
      *
-     * @param ApiRequestOptions $options API Request options
+     * @param ApiRequestOptions $options
      * @return ResponseWrapper
      */
     public function getChannels(ApiRequestOptions $options)
@@ -34,7 +34,7 @@ class Handler extends AbstractHttpHandler
     /**
      * Yield channels one at a time, either from a specific page or all
      *
-     * @param ApiRequestOptions $options API Request options
+     * @param ApiRequestOptions $options
      * @return \Generator
      */
     public function yieldChannels(ApiRequestOptions $options)
@@ -55,7 +55,7 @@ class Handler extends AbstractHttpHandler
     /**
      * Get all channels and yield one at a time using a generator
      *
-     * @param ApiRequestOptions $options API Request options
+     * @param ApiRequestOptions $options
      * @return \Generator
      */
     public function yieldAllChannels(ApiRequestOptions $options)
@@ -68,7 +68,7 @@ class Handler extends AbstractHttpHandler
     /**
      * Get all channels by page.
      *
-     * @param ApiRequestOptions $options API Request options
+     * @param ApiRequestOptions $options
      * @return \ResponseWrapper
      */
     public function getChannelsByPage(ApiRequestOptions $options)
@@ -91,7 +91,7 @@ class Handler extends AbstractHttpHandler
     /**
      * Get all channels in a single array
      *
-     * @param ApiRequestOptions $options API Request options
+     * @param ApiRequestOptions $options
      * @return ResponseWrapper
      */
     public function getAllChannels(ApiRequestOptions $options)

@@ -21,7 +21,7 @@ class Handler extends AbstractHttpHandler
     /**
      * Get application cancellations as a collection, either a specific page or all
      *
-     * @param ApiRequestOptions $options API Request options
+     * @param ApiRequestOptions $options
      * @param Application $application
      * @return ResponseWrapper
      */
@@ -37,7 +37,7 @@ class Handler extends AbstractHttpHandler
     /**
      * Yield application cancellations one at a time, either from a specific page or all
      *
-     * @param ApiRequestOptions $options API Request options
+     * @param ApiRequestOptions $options
      * @param Application $application
      * @return \Generator
      */
@@ -59,7 +59,7 @@ class Handler extends AbstractHttpHandler
     /**
      * Get all applications and yield one at a time using a generator
      *
-     * @param ApiRequestOptions $options API Request options
+     * @param ApiRequestOptions $options
      * @param Application $application
      * @return \Generator
      */
@@ -73,7 +73,7 @@ class Handler extends AbstractHttpHandler
     /**
      * Get all application cancellations by page.
      *
-     * @param ApiRequestOptions $options API Request options
+     * @param ApiRequestOptions $options
      * @param Application $application
      * @return \ResponseWrapper
      */
@@ -99,7 +99,7 @@ class Handler extends AbstractHttpHandler
     /**
      * Get all applications in a single array
      *
-     * @param ApiRequestOptions $options API Request options
+     * @param ApiRequestOptions $options
      * @param Application $application
      * @return ResponseWrapper
      */
@@ -111,6 +111,8 @@ class Handler extends AbstractHttpHandler
     /**
      * Get single application cancellation by id
      *
+     * @param Application $application
+     * @param string $cancellationId
      * @return ResponseWrapper
      */
     public function getSingleApplicationCancellation(Application $application, $cancellationId)
@@ -128,6 +130,8 @@ class Handler extends AbstractHttpHandler
     /**
      * Create an application cancellation.
      *
+     * @param Application $application
+     * @param ApplicationCancellation $applicationCancellation
      * @return ResponseWrapper
      */
     public function createApplicationCancellation(Application $application, ApplicationCancellation $applicationCancellation)

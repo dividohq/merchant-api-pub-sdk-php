@@ -24,7 +24,6 @@ class Client
     use Handlers\Finances\ClientProxyTrait;
     use Handlers\Settlements\ClientProxyTrait;
 
-
     /**
      * The API environment to consume
      *
@@ -46,6 +45,13 @@ class Client
      */
     private $httpClientWrapper;
 
+    /**
+     * Client constructor.
+     *
+     * @param string $apiKey
+     * @param string $environment
+     * @param mixed $httpClient
+     */
     final public function __construct(string $apiKey, $environment = Environment::SANDBOX, $httpClient = null)
     {
         $this->environment = $environment;
@@ -72,6 +78,8 @@ class Client
     }
 
     /**
+     * Get all the handlers as an array.
+     *
      * @return array
      */
     protected function getHandlers()
@@ -79,6 +87,11 @@ class Client
         return $this->handlers;
     }
 
+    /**
+     * Set a defined handler.
+     *
+     * @return array
+     */
     protected function setHandler(string $key, $value)
     {
         $this->handlers[$key] = $value;

@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Divido\MerchantSDK\Handlers;
 
 use Divido\MerchantSDK\HttpClient\HttpClientWrapper;
@@ -23,11 +22,23 @@ abstract class AbstractHttpHandler
      */
     protected $httpClientWrapper;
 
+    /**
+     * Create a new abstract http handler instance.
+     *
+     * @param HttpClientWrapper $httpClientWrapper
+     * @return void
+     */
     final public function __construct(HttpClientWrapper $httpClientWrapper)
     {
         $this->httpClientWrapper = $httpClientWrapper;
     }
 
+    /**
+     * Parse response
+     *
+     * @param ResponseInterface $response
+     * @return ResponseWrapper
+     */
     public function parseResponse(ResponseInterface $response)
     {
         $json = json_decode($response->getBody()->getContents());
@@ -54,6 +65,14 @@ abstract class AbstractHttpHandler
         return $httpResponseWrapper;
     }
 
+    /**
+     * Get the full resource collection.
+     *
+     * @param string $callback
+     * @param ApiRequestOptions $options
+     * @param mixed $args
+     * @return ResponseWrapper
+     */
     public function getFullResourceCollection($callback, ApiRequestOptions $options, ...$args)
     {
         $resources = [];
@@ -83,7 +102,10 @@ abstract class AbstractHttpHandler
     }
 
     /**
+     * Get the full resource collection.
+     *
      * @param $callback
+     * @param ApiRequestOptions $options
      * @param array $args
      * @return \Generator
      */

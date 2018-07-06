@@ -25,6 +25,8 @@ trait ClientProxyTrait
     abstract protected function setHandler(string $key, $value);
 
     /**
+     * Connect to the applications handler.
+     *
      * @return Handler
      */
     public function applications()

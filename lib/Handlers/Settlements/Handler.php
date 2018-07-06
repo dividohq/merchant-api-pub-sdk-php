@@ -19,7 +19,7 @@ class Handler extends AbstractHttpHandler
     /**
      * Get settlements as a collection, either a specific page or all
      *
-     * @param ApiRequestOptions $options API Request options
+     * @param ApiRequestOptions $options
      * @return ResponseWrapper
      */
     public function getSettlements(ApiRequestOptions $options)
@@ -34,7 +34,7 @@ class Handler extends AbstractHttpHandler
     /**
      * Yield settlements one at a time, either from a specific page or all
      *
-     * @param ApiRequestOptions $options API Request options
+     * @param ApiRequestOptions $options
      * @return \Generator
      */
     public function yieldSettlements(ApiRequestOptions $options)
@@ -55,7 +55,7 @@ class Handler extends AbstractHttpHandler
     /**
      * Get all and yield one plan at a time using a generator
      *
-     * @param ApiRequestOptions $options API Request options
+     * @param ApiRequestOptions $options
      * @return \Generator
      */
     public function yieldAllSettlements(ApiRequestOptions $options)
@@ -68,7 +68,7 @@ class Handler extends AbstractHttpHandler
     /**
      * Get settlements by page.
      *
-     * @param ApiRequestOptions $options API Request options
+     * @param ApiRequestOptions $options
      * @return ResponseWrapper
      */
     public function getSettlementsByPage(ApiRequestOptions $options)
@@ -91,7 +91,7 @@ class Handler extends AbstractHttpHandler
     /**
      * Get all in a single array
      *
-     * @param ApiRequestOptions $options API Request options
+     * @param ApiRequestOptions $options
      * @return ResponseWrapper
      */
     public function getAllSettlements(ApiRequestOptions $options)
