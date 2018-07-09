@@ -49,7 +49,7 @@ class ApplicationActivation extends AbstractModel
      *
      * @return \Divido\MerchantSDK\Models\ApplicationActivation
      */
-    public function withAmount(string $amount)
+    public function withAmount(int $amount)
     {
         $cloned = clone $this;
 

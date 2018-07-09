@@ -3,25 +3,63 @@
 
 ## Using the SDK
 
-### Get all applications (simple example)
+Start by create the Merchant SDK Client.
 
 ```php
 <?php
 
-// Create a Client
-$sdk = new \Divido\MerchantSDK\Client('test_key', \Divido\MerchantSDK\Environment::SANDBOX);
+$sdk = new \Divido\MerchantSDK\Client('test_cfabc123.querty098765merchantsdk12345', \Divido\MerchantSDK\Environment::SANDBOX);
 ```
 
+### Get all finance plans
+
 ```php
 <?php
 
-// Set any request options
+// Set any request options.
 $requestOptions = (new \Divido\MerchantSDK\Handlers\ApiRequestOptions());
+
+// Retrieve all finance plans for the merchant.
+$response = $sdk->getAllPlans($requestOptions);
 ```
+
+### Get all applications
 
 ```php
 <?php
+
+// Set any request options.
+$requestOptions = (new \Divido\MerchantSDK\Handlers\ApiRequestOptions());
 
 // Retrieve all applications for the merchant.
-$applications = $sdk->getAllApplications($requestOptions);
+$response = $sdk->getAllApplications($requestOptions);
+```
+
+### Activate an application
+
+```php
+<?php
+
+// First get the application you wish to create an activation for.
+$application = (new \Divido\MerchantSDK\Models\Application())
+    ->withId('application-id-goes-here');
+
+$items = [
+    [
+        'name' => 'Handbag',
+        'quantity' => 1,
+        'price' => 3000,
+    ],
+]
+
+$applicationActivation = (new \Divido\MerchantSDK\Models\ApplicationActivation())
+    ->withAmount(18000)
+    ->withReference('Order 235509678096')
+    ->withComment('Order was delivered to the customer.')
+    ->withOrderItems($items)
+    ->withDeliveryMethod('delivery')
+    ->withTrackingNumber('988gbqj182836');
+
+// Retrieve all applications for the merchant.
+$response = $sdk->createApplicationActivation($application $applicationActivation);
 ```
