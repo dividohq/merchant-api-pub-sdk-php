@@ -20,7 +20,10 @@ class ApplicationRefundsIntegrationTest extends MerchantSDKTestCase
 
     private $applicationId = '90a25b24-2f53-4c80-aba8-9787c68e4c1d';
 
-    public function test_GetApplicationRefundsFromClient_ReturnsApplicationsRefunds()
+    /**
+     * @dataProvider provider_test_GetApplicationRefundsFromClient_ReturnsApplicationsRefunds
+     */
+    public function test_GetApplicationRefundsFromClient_ReturnsApplicationsRefunds($applicationModelProvided)
     {
         $history = [];
 
@@ -32,7 +35,11 @@ class ApplicationRefundsIntegrationTest extends MerchantSDKTestCase
 
         $requestOptions = (new ApiRequestOptions());
 
-        $application = (new Application)->withId($this->applicationId);
+        if ($applicationModelProvided) {
+            $application = $this->applicationId;
+        } else {
+            $application = (new Application)->withId($this->applicationId);
+        }
 
         $refunds = $sdk->getApplicationRefundsByPage($requestOptions, $application);
 
@@ -86,7 +93,10 @@ class ApplicationRefundsIntegrationTest extends MerchantSDKTestCase
         self::assertArrayHasKey('page', $query);
     }
 
-    public function test_GetAllApplicationRefundsFromClient_ReturnsAllApplicationRefunds()
+    /**
+     * @dataProvider provider_test_GetApplicationRefundsFromClient_ReturnsApplicationsRefunds
+     */
+    public function test_GetAllApplicationRefundsFromClient_ReturnsAllApplicationRefunds($applicationModelProvided)
     {
         $history = [];
 
@@ -99,7 +109,11 @@ class ApplicationRefundsIntegrationTest extends MerchantSDKTestCase
 
         $requestOptions = (new ApiRequestOptions());
 
-        $application = (new Application)->withId($this->applicationId);
+        if ($applicationModelProvided) {
+            $application = $this->applicationId;
+        } else {
+            $application = (new Application)->withId($this->applicationId);
+        }
 
         $refunds = $sdk->getAllApplicationRefunds($requestOptions, $application);
 
@@ -226,5 +240,13 @@ class ApplicationRefundsIntegrationTest extends MerchantSDKTestCase
 
         self::assertArrayHasKey('page', $query1);
         self::assertSame('1', $query1['page']);
+    }
+
+    public function provider_test_GetApplicationRefundsFromClient_ReturnsApplicationsRefunds()
+    {
+        return [
+            [true],
+            [false],
+        ];
     }
 }

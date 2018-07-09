@@ -20,7 +20,10 @@ class ApplicationCancellationsIntegrationTest extends MerchantSDKTestCase
 
     private $applicationId = '53ad60ed-860d-4fa1-a497-03c1aea39f0a';
 
-    public function test_GetApplicationCancellationsFromClient_ReturnsApplicationsCancellations()
+    /**
+     * @dataProvider provider_test_GetApplicationCancellationsFromClient_ReturnsApplicationsCancellations
+     */
+    public function test_GetApplicationCancellationsFromClient_ReturnsApplicationsCancellations($applicationModelProvided)
     {
         $history = [];
 
@@ -30,7 +33,11 @@ class ApplicationCancellationsIntegrationTest extends MerchantSDKTestCase
 
         $sdk = new Client('test_key', Environment::SANDBOX, new GuzzleAdapter($client));
 
-        $application = (new Application)->withId($this->applicationId);
+        if ($applicationModelProvided) {
+            $application = $this->applicationId;
+        } else {
+            $application = (new Application)->withId($this->applicationId);
+        }
 
         $requestOptions = (new ApiRequestOptions())->setSort('-created_at');
 
@@ -51,6 +58,14 @@ class ApplicationCancellationsIntegrationTest extends MerchantSDKTestCase
         parse_str($history[0]['request']->getUri()->getQuery(), $query);
 
         self::assertArrayHasKey('page', $query);
+    }
+
+    public function provider_test_GetApplicationCancellationsFromClient_ReturnsApplicationsCancellations()
+    {
+        return [
+            [true],
+            [false],
+        ];
     }
 
     public function test_GetApplicationCancellationsByPageFromClient_ReturnsApplicationsCancellations()
@@ -86,7 +101,10 @@ class ApplicationCancellationsIntegrationTest extends MerchantSDKTestCase
         self::assertArrayHasKey('page', $query);
     }
 
-    public function test_GetAllApplicationCancellationsFromClient_ReturnsAllApplicationCancellations()
+    /**
+     * @dataProvider provider_test_GetAllApplicationCancellationsFromClient_ReturnsAllApplicationCancellations
+     */
+    public function test_GetAllApplicationCancellationsFromClient_ReturnsAllApplicationCancellations($applicationModelProvided)
     {
         $history = [];
 
@@ -99,7 +117,11 @@ class ApplicationCancellationsIntegrationTest extends MerchantSDKTestCase
 
         $requestOptions = (new ApiRequestOptions())->setPaginated(false);
 
-        $application = (new Application)->withId($this->applicationId);
+        if ($applicationModelProvided) {
+            $application = $this->applicationId;
+        } else {
+            $application = (new Application)->withId($this->applicationId);
+        }
 
         $cancellations = $sdk->getAllApplicationCancellations($requestOptions, $application);
 
@@ -123,6 +145,14 @@ class ApplicationCancellationsIntegrationTest extends MerchantSDKTestCase
         self::assertArrayHasKey('page', $query2);
         self::assertSame('1', $query1['page']);
         self::assertSame('2', $query2['page']);
+    }
+
+    public function provider_test_GetAllApplicationCancellationsFromClient_ReturnsAllApplicationCancellations()
+    {
+        return [
+            [true],
+            [false],
+        ];
     }
 
     public function test_YieldAllApplicationCancellationsFromClient_ReturnsApplicationCancellationsGenerator()

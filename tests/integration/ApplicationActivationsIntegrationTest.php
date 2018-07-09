@@ -18,7 +18,10 @@ class ApplicationActivationsIntegrationTest extends MerchantSDKTestCase
 
     private $applicationId = '90a25b24-2f53-4c80-aba8-9787c68e4c1d';
 
-    public function test_GetApplicationActivationsByPageFromClient_ReturnsApplicationActivationsByPage()
+    /**
+     * @dataProvider provider_test_GetApplicationActivationsByPageFromClient_ReturnsApplicationActivationsByPage
+     */
+    public function test_GetApplicationActivationsByPageFromClient_ReturnsApplicationActivationsByPage($applicationModelProvided)
     {
         $history = [];
 
@@ -30,7 +33,13 @@ class ApplicationActivationsIntegrationTest extends MerchantSDKTestCase
 
         $requestOptions = (new ApiRequestOptions());
 
-        $activations = $sdk->getApplicationActivationsByPage($requestOptions, $this->applicationId);
+        if ($applicationModelProvided) {
+            $application = $this->applicationId;
+        } else {
+            $application = (new Application)->withId($this->applicationId);
+        }
+
+        $activations = $sdk->getApplicationActivationsByPage($requestOptions, $application);
 
         self::assertInstanceOf(ResponseWrapper::class, $activations);
         self::assertCount(2, $activations->getResources());
@@ -47,6 +56,14 @@ class ApplicationActivationsIntegrationTest extends MerchantSDKTestCase
         parse_str($history[0]['request']->getUri()->getQuery(), $query);
 
         self::assertArrayHasKey('page', $query);
+    }
+
+    public function provider_test_GetApplicationActivationsByPageFromClient_ReturnsApplicationActivationsByPage()
+    {
+        return [
+            [true],
+            [false],
+        ];
     }
 
     public function test_GetApplicationActivationsFromClient_ReturnsApplicationActivations()
