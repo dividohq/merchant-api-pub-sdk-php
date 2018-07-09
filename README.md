@@ -39,6 +39,49 @@ $applications = $sdk->getAllApplications($requestOptions);
 $applications = $applications->getResources();
 ```
 
+### Create an application
+
+```php
+<?php
+
+// Create an appication model with the application data.
+$application = (new \Divido\MerchantSDK\Models\Application())
+    ->withCountryId('GB')
+    ->withCurrencyId('GBP')
+    ->withLanguageId('EN')
+    ->withFinancePlanId('F335FED7A-A266-8BF-960A-4CB56CC6DE6F')
+    ->withMerchantChannelId('C47B81C83-08A8-B5A-EBD3-B9CFA1D60A07')
+    ->withApplicants([
+        [
+            'firstName' => 'John',
+            'lastName' => 'Smith',
+            'phoneNumber' => '07512345678',
+            'email' => 'john.smith@example.com',
+        ],
+    ])
+    ->withOrderItems([
+        [
+            'name' => 'Sofa',
+            'quantity' => 1,
+            'price' => 50000,
+        ],
+    ])
+    ->withDepositAmount(10000)
+    ->withDepositPercentage(0.02)
+    ->withFinalisationRequired(false)
+    ->withMerchantReference("foo-ref")
+    ->withMerchantRedirectUrl("http://merchant-redirect-url.example.com")
+    ->withMerchantCheckoutUrl("http://merchant-checkout-url.example.com")
+    ->withMerchantResponseUrl("http://merchant-response-url.example.com")
+    ->withMetadata([
+        'foo' => 'bar',
+    ]);
+
+$response = $sdk->applications()->createApplication($application);
+
+$applicationResponseBody = $response->getBody()->getContents();
+```
+
 ### Activate an application
 
 ```php
