@@ -75,7 +75,7 @@ class Handler extends AbstractHttpHandler
      *
      * @param ApiRequestOptions $options
      * @param Application $application
-     * @return \ResponseWrapper
+     * @return ResponseWrapper
      */
     public function getApplicationRefundsByPage(ApiRequestOptions $options, Application $application)
     {
@@ -113,7 +113,7 @@ class Handler extends AbstractHttpHandler
      *
      * @param Application $application
      * @param string $refundId
-     * @return ResponseWrapper
+     * @return \GuzzleHttp\Psr7\Response
      */
     public function getSingleApplicationRefund(Application $application, $refundId)
     {
@@ -132,7 +132,7 @@ class Handler extends AbstractHttpHandler
      *
      * @param Application $application
      * @param ApplicationRefund $applicationRefund
-     * @return ResponseWrapper
+     * @return \GuzzleHttp\Psr7\Response
      */
     public function createApplicationRefund(Application $application, ApplicationRefund $applicationRefund)
     {

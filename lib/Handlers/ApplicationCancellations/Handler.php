@@ -75,7 +75,7 @@ class Handler extends AbstractHttpHandler
      *
      * @param ApiRequestOptions $options
      * @param Application $application
-     * @return \ResponseWrapper
+     * @return ResponseWrapper
      */
     public function getApplicationCancellationsByPage(ApiRequestOptions $options, Application $application)
     {
@@ -113,7 +113,7 @@ class Handler extends AbstractHttpHandler
      *
      * @param Application $application
      * @param string $cancellationId
-     * @return ResponseWrapper
+     * @return \GuzzleHttp\Psr7\Response
      */
     public function getSingleApplicationCancellation(Application $application, $cancellationId)
     {
@@ -132,7 +132,7 @@ class Handler extends AbstractHttpHandler
      *
      * @param Application $application
      * @param ApplicationCancellation $applicationCancellation
-     * @return ResponseWrapper
+     * @return \GuzzleHttp\Psr7\Response
      */
     public function createApplicationCancellation(Application $application, ApplicationCancellation $applicationCancellation)
     {

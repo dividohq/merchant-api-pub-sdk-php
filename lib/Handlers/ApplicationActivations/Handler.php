@@ -75,7 +75,7 @@ class Handler extends AbstractHttpHandler
      *
      * @param ApiRequestOptions $options
      * @param Application $application
-     * @return \ResponseWrapper
+     * @return ResponseWrapper
      */
     public function getApplicationActivationsByPage(ApiRequestOptions $options, Application $application)
     {
@@ -113,7 +113,7 @@ class Handler extends AbstractHttpHandler
      *
      * @param Application $application
      * @param string $activationId
-     * @return ResponseWrapper
+     * @return \GuzzleHttp\Psr7\Response
      */
     public function getSingleApplicationActivation(Application $application, $activationId)
     {
@@ -132,7 +132,7 @@ class Handler extends AbstractHttpHandler
      *
      * @param Application $application
      * @param ApplicationActivation $applicationActivation
-     * @return ResponseWrapper
+     * @return \GuzzleHttp\Psr7\Response
      */
     public function createApplicationActivation(Application $application, ApplicationActivation $applicationActivation)
     {

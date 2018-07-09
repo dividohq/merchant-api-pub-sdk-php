@@ -20,7 +20,9 @@ $sdk = new \Divido\MerchantSDK\Client('test_cfabc123.querty098765merchantsdk1234
 $requestOptions = (new \Divido\MerchantSDK\Handlers\ApiRequestOptions());
 
 // Retrieve all finance plans for the merchant.
-$response = $sdk->getAllPlans($requestOptions);
+$plans = $sdk->getAllPlans($requestOptions);
+
+$plans = $plans->getResources();
 ```
 
 ### Get all applications
@@ -32,7 +34,9 @@ $response = $sdk->getAllPlans($requestOptions);
 $requestOptions = (new \Divido\MerchantSDK\Handlers\ApiRequestOptions());
 
 // Retrieve all applications for the merchant.
-$response = $sdk->getAllApplications($requestOptions);
+$applications = $sdk->getAllApplications($requestOptions);
+
+$applications = $applications->getResources();
 ```
 
 ### Activate an application
@@ -50,7 +54,7 @@ $items = [
         'quantity' => 1,
         'price' => 3000,
     ],
-]
+];
 
 // Create a new application activation model.
 $applicationActivation = (new \Divido\MerchantSDK\Models\ApplicationActivation())
@@ -62,5 +66,7 @@ $applicationActivation = (new \Divido\MerchantSDK\Models\ApplicationActivation()
     ->withTrackingNumber('988gbqj182836');
 
 // Create a new activation for the application.
-$response = $sdk->createApplicationActivation($application $applicationActivation);
+$response = $sdk->application_activations()->createApplicationActivation($application, $applicationActivation);
+
+$activationResponseBody = $response->getBody()->getContents();
 ```

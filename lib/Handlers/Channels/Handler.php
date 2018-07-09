@@ -69,7 +69,7 @@ class Handler extends AbstractHttpHandler
      * Get all channels by page.
      *
      * @param ApiRequestOptions $options
-     * @return \ResponseWrapper
+     * @return ResponseWrapper
      */
     public function getChannelsByPage(ApiRequestOptions $options)
     {

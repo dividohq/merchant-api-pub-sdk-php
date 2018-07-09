@@ -69,7 +69,7 @@ class Handler extends AbstractHttpHandler
      * Get all plans by page.
      *
      * @param ApiRequestOptions $options
-     * @return \ResponseWrapper
+     * @return ResponseWrapper
      */
     public function getPlansByPage(ApiRequestOptions $options)
     {

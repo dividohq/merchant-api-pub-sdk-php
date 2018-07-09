@@ -22,7 +22,7 @@ class Handler extends AbstractHttpHandler
      *
      * @param Application $application
      * @param ApplicationDocument $applicationDocument
-     * @return ResponseWrapper
+     * @return \GuzzleHttp\Psr7\Response
      */
     public function createApplicationDocument(Application $application, ApplicationDocument $applicationDocument)
     {
@@ -40,7 +40,7 @@ class Handler extends AbstractHttpHandler
      *
      * @param Application $application
      * @param string $applicationDocumentId
-     * @return ResponseWrapper
+     * @return \GuzzleHttp\Psr7\Response
      */
     public function deleteApplicationDocument(Application $application, $applicationDocumentId)
     {

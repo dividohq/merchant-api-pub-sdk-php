@@ -70,7 +70,7 @@ class Handler extends AbstractHttpHandler
      * Get all applications by page.
      *
      * @param ApiRequestOptions $options
-     * @return \ResponseWrapper
+     * @return ResponseWrapper
      */
     public function getApplicationsByPage(ApiRequestOptions $options)
     {
@@ -104,7 +104,7 @@ class Handler extends AbstractHttpHandler
      * Get single application by id
      *
      * @param string $applicationId
-     * @return ResponseWrapper
+     * @return \GuzzleHttp\Psr7\Response
      */
     public function getSingleApplication($applicationId)
     {
@@ -120,7 +120,7 @@ class Handler extends AbstractHttpHandler
      * Create an application
      *
      * @param Application $application
-     * @return ResponseWrapper
+     * @return \GuzzleHttp\Psr7\Response
      */
     public function createApplication(Application $application)
     {
@@ -135,7 +135,7 @@ class Handler extends AbstractHttpHandler
      * Update an application
      *
      * @param Application $application
-     * @return ResponseWrapper
+     * @return \GuzzleHttp\Psr7\Response
      */
     public function updateApplication(Application $application)
     {
