@@ -52,6 +52,7 @@ $items = [
     ],
 ]
 
+// Create a new application activation model.
 $applicationActivation = (new \Divido\MerchantSDK\Models\ApplicationActivation())
     ->withAmount(18000)
     ->withReference('Order 235509678096')
@@ -60,6 +61,6 @@ $applicationActivation = (new \Divido\MerchantSDK\Models\ApplicationActivation()
     ->withDeliveryMethod('delivery')
     ->withTrackingNumber('988gbqj182836');
 
-// Retrieve all applications for the merchant.
+// Create a new activation for the application.
 $response = $sdk->createApplicationActivation($application $applicationActivation);
 ```
