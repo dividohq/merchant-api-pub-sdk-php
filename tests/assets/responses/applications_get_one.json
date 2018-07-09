@@ -1,0 +1,134 @@
+{
+  "data": {
+    "type": "applications",
+    "id": "6985ef52-7d7c-457e-9a03-e98b648bf9b7",
+    "token": "2ce8b260c0c8a83c95b1cecd23644005",
+    "finalised": 0,
+    "finalisation_required": 0,
+    "current_status": "ACCEPTED",
+    "lender_reference": "",
+    "lender_loan_reference": "",
+    "applicants": {
+      "firstName": "Ann",
+      "lastName": "Heselden",
+      "email": "victor.reyem@gmail.com",
+      "phoneNumber": "02012312312"
+    },
+    "order_items": [
+      {
+        "sku": "",
+        "name": "dsa",
+        "quantity": 1,
+        "price": 100000,
+        "vat": 0,
+        "unit": "",
+        "image": "",
+        "attributes": "1"
+      }
+    ],
+    "amounts": {
+      "activatable_amount": 90000,
+      "activated_amount": 0,
+      "cancelable_amount": 90000,
+      "cancelled_amount": 0,
+      "original_credit_amount": 90000,
+      "current_credit_amount": 90000,
+      "deposit_amount": 10000,
+      "monthly_payment_amount": 8333,
+      "purchase_price_amount": 100000,
+      "refundable_amount": 0,
+      "refunded_amount": 0,
+      "total_repayable_amount": 109995
+    },
+    "metadata": {
+      "foo-example-key": "bar-example-value"
+    },
+    "activation_status": "AWAITING-ACTIVATION",
+    "deposit_status": "UNPAID",
+    "merchant_reference": "D4M-njPjFRE-MxsB",
+    "urls": {
+      "merchant_success_redirect_url": "http:\/\/example.com",
+      "merchant_checkout_url": "http:\/\/example.com",
+      "merchant_webhook_url": "http:\/\/example.com",
+      "application_url": "https:\/\/application.dev.divido.com\/#\/token\/2ce8b260c0c8a83c95b1cecd23644005"
+    },
+    "created_at": "2018-05-01T13:19:31+00:00",
+    "updated_at": "2018-06-22T13:27:42+00:00",
+    "country": {
+      "id": "GB",
+      "name": "United Kingdom"
+    },
+    "currency": {
+      "id": "GBP",
+      "foreign_names": "[]"
+    },
+    "finance_plan": {
+      "id": "F7485F0E5-202B-4879-4F00-154E109E7FE4",
+      "agreement_duration_months": 12,
+      "deferral_period_months": 0,
+      "interest_rate_percentage": 0.199,
+      "deposit": {
+        "maximum_percentage": 0.5,
+        "minimum_percentage": 0.1
+      },
+      "credit_amount": {
+        "minimum_amount": 250,
+        "maximum_amount": null
+      },
+      "fees": {
+        "instalment_fee_amount": 0,
+        "setup_fee_amount": 0
+      },
+      "description": "[omni.f4][UK] Omni 12 months, 19.9%, 10% deposit, hosted signing",
+      "calculation_family": "d9401b9e8d7dbff9040fddf2b54f1d5b",
+      "lender_code": "49d3fdc2-5404-4c83-84be-b2f449550a7b"
+    },
+    "language": {
+      "id": "en",
+      "code": "en",
+      "name": "English"
+    },
+    "merchant": {
+      "id": "M5A3BC09A-972B-F8A1-F6FA-F3BF4DB8D0B5",
+      "name": "e2e-tests"
+    },
+    "merchant_channel": {
+      "id": "CF0A92CE9-4935-DC6F-DD0D-463EC9D654A1",
+      "active": 1,
+      "name": "[UK] Store",
+      "channel_type": "store"
+    },
+    "application_histories": [
+      {
+        "id": "bdc28e6d-4dbb-4855-bd22-a09ddfc445fe",
+        "history_type": "status",
+        "status": "ACCEPTED",
+        "user": "",
+        "subject": "",
+        "text": "",
+        "internal": 0,
+        "date": "2018-05-01T13:20:09+00:00"
+      },
+      {
+        "id": "cc6fb31b-0c43-4cfc-ae1a-85c914f4f8bc",
+        "history_type": "agreement",
+        "status": "",
+        "user": "",
+        "subject": "",
+        "text": "Ann Heselden added as signatory",
+        "internal": 0,
+        "date": "2018-05-01T13:20:08+00:00"
+      },
+      {
+        "id": "17ac9eb5-1644-4b90-a941-07b1fbcec204",
+        "history_type": "comment",
+        "status": "",
+        "user": "UAA42AC8E-BBBF-0E7B-E687-2A31BFACBF25",
+        "subject": "",
+        "text": "Proposal created by Filip Stefansson",
+        "internal": 0,
+        "date": "2018-05-01T13:19:31+00:00"
+      }
+    ]
+  }
+}

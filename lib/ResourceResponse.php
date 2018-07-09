@@ -6,14 +6,19 @@ namespace Divido\MerchantSDK;
  * Class ResourceResponse
  *
  * @author Neil McGibbon <neil.mcgibbon@divido.com>
+ * @author Mike Lovely <mike.lovely@divido.com>
  * @copyright (c) 2018, Divido
  * @package Divido\MerchantSDK
  */
 class ResourceResponse
 {
-
-    private $meta;
-
+    /**
+     * ResourceResponse constructor.
+     *
+     * @param string $apiKey
+     * @param string $environment
+     * @param mixed $httpClient
+     */
     final public function __construct(string $apiKey, $environment = Environment::SANDBOX, $httpClient = null)
     {
         $this->environment = $environment;
@@ -39,7 +44,6 @@ class ResourceResponse
         return $this->environment;
     }
 
-
     /**
      * Get the Finances method handler
      *
@@ -54,8 +58,4 @@ class ResourceResponse
 
         return $this->financesHandler;
     }
-
-
-
-
 }

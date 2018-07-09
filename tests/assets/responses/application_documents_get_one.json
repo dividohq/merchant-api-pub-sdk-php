@@ -1,0 +1,18 @@
+{
+  "data": {
+    "type": "documents",
+    "id": "7D827A60-7A07-11E8-BDD0-0242AC1E000B",
+    "category": "application",
+    "document": {
+      "id": "7D1D8C36-7A07-11E8-AD51-0242AC1E000B",
+      "pages": 1,
+      "status": "not_ready",
+      "document_type": "image/png",
+      "filename": "Screenshot at Mar 23 14-12-40.png",
+      "path": "dev/application/90a25b24-2f53-4c80-aba8-9787c68e4c1d/activation/",
+      "checksum": "20524bdadcba0dcd4eed6c5f8e561d96",
+      "bucket": "divido-documents",
+      "s3_key": "dev/application/90a25b24-2f53-4c80-aba8-9787c68e4c1d/activation/foo.png"
+    }
+  }
+}

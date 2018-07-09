@@ -1,8 +1,8 @@
 <?php
 
 namespace Divido\MerchantSDK;
-use Divido\MerchantSDK\Handlers\ApplicationsHandler;
-use Divido\MerchantSDK\Handlers\FinancesHandler;
+
+use Divido\MerchantSDK\Handlers\ApplicationDocuments\Handler as ApplicationDocumentsHandler;
 use Divido\MerchantSDK\HttpClient\GuzzleAdapter;
 use Divido\MerchantSDK\HttpClient\HttpClientWrapper;
 
@@ -10,11 +10,19 @@ use Divido\MerchantSDK\HttpClient\HttpClientWrapper;
  * Class Client
  *
  * @author Neil McGibbon <neil.mcgibbon@divido.com>
+ * @author Mike Lovely <mike.lovely@divido.com>
  * @copyright (c) 2018, Divido
  * @package Divido\MerchantSDK
  */
 class Client
 {
+    use Handlers\Applications\ClientProxyTrait;
+    use Handlers\ApplicationActivations\ClientProxyTrait;
+    use Handlers\ApplicationCancellations\ClientProxyTrait;
+    use Handlers\ApplicationRefunds\ClientProxyTrait;
+    use Handlers\Channels\ClientProxyTrait;
+    use Handlers\Finances\ClientProxyTrait;
+    use Handlers\Settlements\ClientProxyTrait;
 
     /**
      * The API environment to consume
@@ -37,7 +45,13 @@ class Client
      */
     private $httpClientWrapper;
 
-
+    /**
+     * Client constructor.
+     *
+     * @param string $apiKey
+     * @param string $environment
+     * @param mixed $httpClient
+     */
     final public function __construct(string $apiKey, $environment = Environment::SANDBOX, $httpClient = null)
     {
         $this->environment = $environment;
@@ -63,38 +77,23 @@ class Client
         return $this->environment;
     }
 
-
     /**
-     * Get the Finances method handler
+     * Get all the handlers as an array.
      *
-     * @return FinancesHandler
-     * @throws \Exception
+     * @return array
      */
-    public function finances()
+    protected function getHandlers()
     {
-        if (!array_key_exists('finances', $this->handlers)) {
-            $this->handlers['finances'] = new FinancesHandler($this->httpClientWrapper);
-        }
-
-        return $this->handlers['finances'];
+        return $this->handlers;
     }
 
     /**
-     * Get the Applications methods handler
+     * Set a defined handler.
      *
-     * @return ApplicationsHandler
-     * @throws \Exception
+     * @return array
      */
-    public function applications()
+    protected function setHandler(string $key, $value)
     {
-        if (!array_key_exists('applications', $this->handlers)) {
-            $this->handlers['applications'] = new ApplicationsHandler($this->httpClientWrapper);
-        }
-
-        return $this->handlers['applications'];
+        $this->handlers[$key] = $value;
     }
-
-
-
-
 }

@@ -1,0 +1,141 @@
+{
+  "meta": {
+    "count": 2,
+    "current_page": 1,
+    "first_item": 1,
+    "has_more_pages": true,
+    "last_item": 2,
+    "last_page": 2,
+    "per_page": 1,
+    "total": 2
+  },
+  "links": {
+    "self": "\/applications\/53ad60ed-860d-4fa1-a497-03c1aea39f0a\/cancellations?page=1"
+  },
+  "data": [
+    {
+      "type": "cancellations",
+      "id": "5d1b94f5-3a7f-4f70-be6e-bb53abd7f955",
+      "amount": 90000,
+      "status": "PENDING",
+      "data": [],
+      "reference": "",
+      "comment": "",
+      "application": {
+        "id": "53ad60ed-860d-4fa1-a497-03c1aea39f0a",
+        "token": "bd988757df10fb3dd9ae5f8feec4c184",
+        "finalised": 0,
+        "finalisation_required": 0,
+        "current_status": "AWAITING-CANCELLATION",
+        "lender_reference": "",
+        "lender_loan_reference": "",
+        "applicants": {
+          "firstName": "Te**",
+          "lastName": "Te******",
+          "email": "te**@divido.com",
+          "phoneNumber": "07*****7777"
+        },
+        "order_items": [
+          {
+            "sku": "",
+            "name": "test",
+            "quantity": 1,
+            "price": 100000,
+            "vat": 0,
+            "unit": "",
+            "image": "",
+            "attributes": "1"
+          }
+        ],
+        "amounts": {
+          "activatable_amount": 0,
+          "activated_amount": 0,
+          "cancelable_amount": 0,
+          "cancelled_amount": 90000,
+          "original_credit_amount": 90000,
+          "current_credit_amount": 0,
+          "deposit_amount": 10000,
+          "monthly_payment_amount": 8333,
+          "purchase_price_amount": 100000,
+          "refundable_amount": 0,
+          "refunded_amount": 0,
+          "total_repayable_amount": 109995
+        },
+        "metadata": [],
+        "activation_status": "AWAITING-ACTIVATION",
+        "deposit_status": "PAID-BY-CARD",
+        "merchant_reference": "",
+        "urls": {
+          "merchant_success_redirect_url": "",
+          "merchant_checkout_url": "",
+          "merchant_webhook_url": "",
+          "application_url": "https:\/\/application.dev.divido.com\/#\/token\/bd988757df10fb3dd9ae5f8feec4c184"
+        },
+        "created_at": "2018-02-07T12:57:44+00:00",
+        "updated_at": "2018-06-08T00:00:07+00:00"
+      }
+    },
+    {
+      "type": "cancellations",
+      "id": "5d1b94f5-3a7f-4f70-be6e-ab53abd7f950",
+      "amount": 90000,
+      "status": "PENDING",
+      "data": [],
+      "reference": "",
+      "comment": "",
+      "application": {
+        "id": "53ad60ed-860d-4fa1-a497-03c1aea39f0a",
+        "token": "bd988757df10fb3dd9ae5f8feec4c184",
+        "finalised": 0,
+        "finalisation_required": 0,
+        "current_status": "AWAITING-CANCELLATION",
+        "lender_reference": "",
+        "lender_loan_reference": "",
+        "applicants": {
+          "firstName": "Te**",
+          "lastName": "Te******",
+          "email": "te**@divido.com",
+          "phoneNumber": "07*****7777"
+        },
+        "order_items": [
+          {
+            "sku": "",
+            "name": "test",
+            "quantity": 1,
+            "price": 100000,
+            "vat": 0,
+            "unit": "",
+            "image": "",
+            "attributes": "1"
+          }
+        ],
+        "amounts": {
+          "activatable_amount": 0,
+          "activated_amount": 0,
+          "cancelable_amount": 0,
+          "cancelled_amount": 90000,
+          "original_credit_amount": 90000,
+          "current_credit_amount": 0,
+          "deposit_amount": 10000,
+          "monthly_payment_amount": 8333,
+          "purchase_price_amount": 100000,
+          "refundable_amount": 0,
+          "refunded_amount": 0,
+          "total_repayable_amount": 109995
+        },
+        "metadata": [],
+        "activation_status": "AWAITING-ACTIVATION",
+        "deposit_status": "PAID-BY-CARD",
+        "merchant_reference": "",
+        "urls": {
+          "merchant_success_redirect_url": "",
+          "merchant_checkout_url": "",
+          "merchant_webhook_url": "",
+          "application_url": "https:\/\/application.dev.divido.com\/#\/token\/bd988757df10fb3dd9ae5f8feec4c184"
+        },
+        "created_at": "2018-02-07T12:57:44+00:00",
+        "updated_at": "2018-06-08T00:00:07+00:00"
+      }
+    }
+  ]
+}

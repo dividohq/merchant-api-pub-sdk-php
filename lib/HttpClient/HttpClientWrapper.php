@@ -5,6 +5,14 @@ namespace Divido\MerchantSDK\HttpClient;
 
 use GuzzleHttp\Psr7\Uri;
 
+/**
+ * Class HttpClientWrapper
+ *
+ * @author Neil McGibbon <neil.mcgibbon@divido.com>
+ * @author Mike Lovely <mike.lovely@divido.com>
+ * @copyright (c) 2018, Divido
+ * @package Divido\MerchantSDK
+ */
 class HttpClientWrapper
 {
     /**
@@ -39,7 +47,6 @@ class HttpClientWrapper
         $this->baseUrl = $baseUrl;
         $this->apiKey = $apiKey;
     }
-
 
     /**
      * Send an HTTP request to the Merchant API
@@ -84,6 +91,5 @@ class HttpClientWrapper
                 throw new \InvalidArgumentException('Divido Merchant SDK does not support this HTTP method');
                 break;
         }
-
     }
 }

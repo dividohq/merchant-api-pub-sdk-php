@@ -1,0 +1,47 @@
+{
+  "meta": {
+    "count": 2,
+    "current_page": 1,
+    "first_item": 1,
+    "has_more_pages": false,
+    "last_item": 2,
+    "last_page": 1,
+    "per_page": 100,
+    "total": 2
+  },
+  "links": {
+    "self": "\/channels?page=1"
+  },
+  "data": [
+    {
+      "type": "merchant-channels",
+      "id": "CF0A92CE9-4935-DC6F-DD0D-463EC9D654A1",
+      "active": 1,
+      "name": "[UK] Store",
+      "channel_type": "store",
+      "currency": {
+        "id": "GBP",
+        "foreign_names": "[]"
+      },
+      "country": {
+        "id": "GB",
+        "name": "United Kingdom"
+      }
+    },
+    {
+      "type": "merchant-channels",
+      "id": "C20870FB9-1DE7-2220-7E9E-1F65A85A7048",
+      "active": 1,
+      "name": "[DE] Store",
+      "channel_type": "store",
+      "currency": {
+        "id": "EUR",
+        "foreign_names": "[]"
+      },
+      "country": {
+        "id": "DE",
+        "name": "Germany"
+      }
+    }
+  ]
+}
