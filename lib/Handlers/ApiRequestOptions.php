@@ -20,7 +20,12 @@ class ApiRequestOptions
     /**
      * @var string
      */
-    private $sort;
+    private $sort = '';
+
+    /**
+     * @var array
+     */
+    private $filters = [];
 
     /**
      * @var bool
@@ -68,6 +73,24 @@ class ApiRequestOptions
     public function setSort(string $sort)
     {
         $this->sort = $sort;
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getFilters()
+    {
+        return $this->filters;
+    }
+
+    /**
+     * @param array $filters
+     * @return ApiRequestOptions
+     */
+    public function setFilters(array $filters)
+    {
+        $this->filters = $filters;
         return $this;
     }
 

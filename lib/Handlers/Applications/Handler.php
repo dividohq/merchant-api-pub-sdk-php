@@ -81,6 +81,7 @@ class Handler extends AbstractHttpHandler
         $query = [
             'page' => $options->getPage(),
             'sort' => $options->getSort(),
+            'filter' => $options->getFilters(),
         ];
 
         $response = $this->httpClientWrapper->request('get', $path, $query);

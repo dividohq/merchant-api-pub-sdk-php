@@ -121,6 +121,39 @@ class ApplicationsHandlerTest extends MerchantSDKTestCase
         self::assertSame('2', $query2['page']);
     }
 
+    public function test_GetAllApplications_WithFilters_MakesApiCallWithFilters()
+    {
+        $history = [];
+
+        $client = $this->getGuzzleStackedClient([
+            new Response(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/applications_page_1.json')),
+            new Response(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/applications_page_2.json')),
+        ], $history);
+
+        $httpClientWrapper = new HttpClientWrapper(new GuzzleAdapter($client), '', '');
+
+        $handler = new Handler($httpClientWrapper);
+
+        $requestOptions = (new ApiRequestOptions())
+            ->setFilters([
+                'current_status' => 'deposit-paid',
+                'created_after' => '2015-01-01',
+            ]);
+
+        $applications = $handler->getAllApplications($requestOptions);
+
+        $data = [
+            'page' => 1,
+            'sort' => '',
+            'filter' => [
+                'current_status' => 'deposit-paid',
+                'created_after' => '2015-01-01',
+            ],
+        ];
+
+        self::assertSame(http_build_query($data), $history[0]['request']->getUri()->getQuery());
+    }
+
     public function test_YieldAllApplications_ReturnsApplicationsGenerator()
     {
         $history = [];
