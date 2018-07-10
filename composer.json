@@ -7,6 +7,12 @@
             "email": "code@neilmcgibbon.com"
         }
     ],
+    "repositories": [
+        {
+            "type": "vcs",
+            "url":  "git@github.com:DividoFinancialServices/php-error-lib.git"
+        }
+    ],
     "autoload": {
         "psr-4": {
             "Divido\\MerchantSDK\\": "lib/"
@@ -24,7 +30,8 @@
         "php": ">=7",
         "psr/log": "^1",
         "guzzlehttp/guzzle": "^6.2",
-        "enm/json-api-client": "^1.2"
+        "enm/json-api-client": "^1.2",
+        "divido/php-error-lib": "dev-master"
     },
     "require-dev": {
         "phpunit/phpunit": "^7",

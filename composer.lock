@@ -4,8 +4,46 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e91f91c081af6e4bb80da7796ef92bbf",
+    "content-hash": "9674f2ea080f378ab98a815b225ac49e",
     "packages": [
+        {
+            "name": "divido/php-error-lib",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:DividoFinancialServices/php-error-lib.git",
+                "reference": "1e63e84ca7f62b2284f67e7bc2321af6f7dc82c5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/DividoFinancialServices/php-error-lib/zipball/1e63e84ca7f62b2284f67e7bc2321af6f7dc82c5",
+                "reference": "1e63e84ca7f62b2284f67e7bc2321af6f7dc82c5",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Divido\\ErrorExceptions\\": "lib/"
+                }
+            },
+            "license": [
+                "WTFPL"
+            ],
+            "authors": [
+                {
+                    "name": "Neil McGibbon"
+                }
+            ],
+            "description": "Utility library for Divido APIs to render consistent error messages",
+            "support": {
+                "source": "https://github.com/DividoFinancialServices/php-error-lib/tree/master",
+                "issues": "https://github.com/DividoFinancialServices/php-error-lib/issues"
+            },
+            "time": "2018-06-05T00:51:36+00:00"
+        },
         {
             "name": "enm/json-api-client",
             "version": "1.2.0",
@@ -4864,7 +4902,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "divido/php-error-lib": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {

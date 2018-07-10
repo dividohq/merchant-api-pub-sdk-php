@@ -2,6 +2,7 @@
 
 namespace Divido\MerchantSDK\Handlers;
 
+use Divido\MerchantSDK\Exceptions\MerchantApiResponseException;
 use Divido\MerchantSDK\HttpClient\HttpClientWrapper;
 use Divido\MerchantSDK\Response\Metadata;
 use Divido\MerchantSDK\Response\ResponseWrapper;
@@ -43,26 +44,37 @@ abstract class AbstractHttpHandler
     {
         $json = json_decode($response->getBody()->getContents());
 
-        // Sanitise for single object resources
-        if (!is_array($json->data)) {
-            $json->data = [$json->data];
+        if (in_array($response->getStatusCode(), [200, 201])) {
+
+            // Sanitise for single object resources
+            if (!is_array($json->data)) {
+                $json->data = [$json->data];
+            }
+
+            // Rewind the response
+            $response->getBody()->rewind();
+
+            $httpResponseWrapper = new ResponseWrapper(
+                $json->data,
+                new Metadata(
+                    $json->meta->current_page,
+                    $json->meta->last_page,
+                    $json->meta->per_page,
+                    $json->meta->total
+                ),
+                $response
+            );
+
+            return $httpResponseWrapper;
         }
 
-        // Rewind the response
-        $response->getBody()->rewind();
+        $body = json_decode($response->getBody(), true);
 
-        $httpResponseWrapper = new ResponseWrapper(
-            $json->data,
-            new Metadata(
-                $json->meta->current_page,
-                $json->meta->last_page,
-                $json->meta->per_page,
-                $json->meta->total
-            ),
-            $response
-        );
+        $title = (string) $body['errors'][0]['title'];
+        $code = (int) $body['errors'][0]['code'];
+        $meta = (array) $body['errors'][0]['meta'];
 
-        return $httpResponseWrapper;
+        throw new MerchantApiResponseException($title, $code, $meta);
     }
 
     /**
@@ -91,6 +103,8 @@ abstract class AbstractHttpHandler
             $hasMorePages = $options->getPage() < $response->getMetadata()->getTotalPages();
             $options->setPage($options->getPage() + 1);
         }
+
+        // Throw another excpetions here?
 
         $httpResponseWrapper = new ResponseWrapper(
             $resources,
