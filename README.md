@@ -1,7 +1,7 @@
 
 # PHP Merchant SDK
 
-## Using the SDK
+## Basic SDK usage
 
 Start by create the Merchant SDK Client.
 
@@ -112,4 +112,89 @@ $applicationActivation = (new \Divido\MerchantSDK\Models\ApplicationActivation()
 $response = $sdk->application_activations()->createApplicationActivation($application, $applicationActivation);
 
 $activationResponseBody = $response->getBody()->getContents();
+```
+
+### Cancel an application
+
+```php
+<?php
+
+// First get the application you wish to create an cancellation for.
+$application = (new \Divido\MerchantSDK\Models\Application())
+    ->withId('application-id-goes-here');
+
+$items = [
+    [
+        'name' => 'Handbag',
+        'quantity' => 1,
+        'price' => 3000,
+    ],
+];
+
+// Create a new application cancellation model.
+$applicationCancellation = (new \Divido\MerchantSDK\Models\ApplicationCancellation())
+    ->withAmount(18000)
+    ->withReference('Order 235509678096')
+    ->withComment('As per customer request.')
+    ->withOrderItems($items)
+
+// Create a new cancellation for the application.
+$response = $sdk->application_cancellations()->createApplicationCancellation($application, $applicationCancellation);
+
+$cancellationResponseBody = $response->getBody()->getContents();
+```
+
+### Refund an application
+
+```php
+<?php
+
+// First get the application you wish to create a refund for.
+$application = (new \Divido\MerchantSDK\Models\Application())
+    ->withId('application-id-goes-here');
+
+$items = [
+    [
+        'name' => 'Handbag',
+        'quantity' => 1,
+        'price' => 3000,
+    ],
+];
+
+// Create a new application refund model.
+$applicationRefund = (new \Divido\MerchantSDK\Models\ApplicationRefund())
+    ->withAmount(18000)
+    ->withReference('Order 235509678096')
+    ->withComment('As per customer request.')
+    ->withOrderItems($items)
+
+// Create a new refund for the application.
+$response = $sdk->application_refunds()->createApplicationRefund($application, $applicationRefund);
+
+$refundResponseBody = $response->getBody()->getContents();
+```
+
+## Pagination, filtering and sorting
+
+You can use the following methods to do things like paginate, filter and/or sort the responses.
+
+```php
+<?php
+
+// Set any request options.
+$requestOptions = (new \Divido\MerchantSDK\Handlers\ApiRequestOptions())
+    // Set the page you'd like to retrieve (default page is 1)
+    ->setPage(2)
+    // Add an optional sort (method chaining also possible).
+    ->setSort('-amount')
+    // Filter responses by passing an array of arguments.
+    ->setFilters([
+        'current_status' => 'deposit-paid',
+        'created_after' => '2015-01-01',
+    ]);
+
+// Retrieve all applications for the merchant.
+$applications = $sdk->getApplicationsByPage($requestOptions);
+
+$applications = $applications->getResources();
 ```
