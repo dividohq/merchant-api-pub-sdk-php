@@ -31,7 +31,7 @@ trait ClientProxyTrait
      *
      * @return Handler
      */
-    public function application_refunds()
+    public function applicationRefunds()
     {
         if (!array_key_exists('application_refunds', $this->getHandlers())) {
             $this->setHandler('application_refunds', new Handler($this->httpClientWrapper));
@@ -55,7 +55,7 @@ trait ClientProxyTrait
         }
 
         $options->setPaginated(true);
-        return $this->application_refunds()->getApplicationRefunds($options, $application);
+        return $this->applicationRefunds()->getApplicationRefunds($options, $application);
     }
 
     /**
@@ -73,7 +73,7 @@ trait ClientProxyTrait
         }
 
         $options->setPaginated(false);
-        return $this->application_refunds()->getApplicationRefunds($options, $application);
+        return $this->applicationRefunds()->getApplicationRefunds($options, $application);
     }
 
     /**
@@ -91,7 +91,7 @@ trait ClientProxyTrait
         }
 
         $options->setPaginated(false);
-        foreach ($this->application_refunds()->yieldApplicationRefunds($options, $application) as $refund) {
+        foreach ($this->applicationRefunds()->yieldApplicationRefunds($options, $application) as $refund) {
             yield $refund;
         }
     }
@@ -111,7 +111,7 @@ trait ClientProxyTrait
         }
 
         $options->setPaginated(true);
-        foreach ($this->application_refunds()->yieldApplicationRefunds($options, $application) as $refund) {
+        foreach ($this->applicationRefunds()->yieldApplicationRefunds($options, $application) as $refund) {
             yield $refund;
         }
     }

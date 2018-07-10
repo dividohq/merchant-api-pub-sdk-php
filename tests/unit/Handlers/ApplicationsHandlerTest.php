@@ -134,21 +134,20 @@ class ApplicationsHandlerTest extends MerchantSDKTestCase
 
         $handler = new Handler($httpClientWrapper);
 
+        $filters = [
+            'current_status' => 'deposit-paid',
+            'created_after' => '2015-01-01',
+        ];
+
         $requestOptions = (new ApiRequestOptions())
-            ->setFilters([
-                'current_status' => 'deposit-paid',
-                'created_after' => '2015-01-01',
-            ]);
+            ->setFilters($filters);
 
         $applications = $handler->getAllApplications($requestOptions);
 
         $data = [
             'page' => 1,
-            'sort' => '',
-            'filter' => [
-                'current_status' => 'deposit-paid',
-                'created_after' => '2015-01-01',
-            ],
+            'sort' => null,
+            'filter' => $filters,
         ];
 
         self::assertSame(http_build_query($data), $history[0]['request']->getUri()->getQuery());

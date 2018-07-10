@@ -31,7 +31,7 @@ trait ClientProxyTrait
      *
      * @return Handler
      */
-    public function application_cancellations()
+    public function applicationCancellations()
     {
         if (!array_key_exists('application_cancellations', $this->getHandlers())) {
             $this->setHandler('application_cancellations', new Handler($this->httpClientWrapper));
@@ -55,7 +55,7 @@ trait ClientProxyTrait
         }
 
         $options->setPaginated(true);
-        return $this->application_cancellations()->getApplicationCancellations($options, $application);
+        return $this->applicationCancellations()->getApplicationCancellations($options, $application);
     }
 
     /**
@@ -73,7 +73,7 @@ trait ClientProxyTrait
         }
 
         $options->setPaginated(false);
-        return $this->application_cancellations()->getApplicationCancellations($options, $application);
+        return $this->applicationCancellations()->getApplicationCancellations($options, $application);
     }
 
     /**
@@ -91,7 +91,7 @@ trait ClientProxyTrait
         }
 
         $options->setPaginated(false);
-        foreach ($this->application_cancellations()->yieldApplicationCancellations($options, $application) as $cancellation) {
+        foreach ($this->applicationCancellations()->yieldApplicationCancellations($options, $application) as $cancellation) {
             yield $cancellation;
         }
     }
@@ -111,7 +111,7 @@ trait ClientProxyTrait
         }
 
         $options->setPaginated(true);
-        foreach ($this->application_cancellations()->yieldApplicationCancellations($options, $application) as $cancellation) {
+        foreach ($this->applicationCancellations()->yieldApplicationCancellations($options, $application) as $cancellation) {
             yield $cancellation;
         }
     }

@@ -20,7 +20,7 @@ class ApiRequestOptions
     /**
      * @var string
      */
-    private $sort = '';
+    private $sort;
 
     /**
      * @var array

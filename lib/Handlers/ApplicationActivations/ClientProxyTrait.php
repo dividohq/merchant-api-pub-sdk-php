@@ -31,7 +31,7 @@ trait ClientProxyTrait
      *
      * @return Handler
      */
-    public function application_activations()
+    public function applicationActivations()
     {
         if (!array_key_exists('application_activations', $this->getHandlers())) {
             $this->setHandler('application_activations', new Handler($this->httpClientWrapper));
@@ -55,7 +55,7 @@ trait ClientProxyTrait
         }
 
         $options->setPaginated(true);
-        return $this->application_activations()->getApplicationActivations($options, $application);
+        return $this->applicationActivations()->getApplicationActivations($options, $application);
     }
 
     /**
@@ -73,7 +73,7 @@ trait ClientProxyTrait
         }
 
         $options->setPaginated(false);
-        return $this->application_activations()->getApplicationActivations($options, $application);
+        return $this->applicationActivations()->getApplicationActivations($options, $application);
     }
 
     /**
@@ -91,7 +91,7 @@ trait ClientProxyTrait
         }
 
         $options->setPaginated(false);
-        foreach ($this->application_activations()->yieldApplicationActivations($options, $application) as $activation) {
+        foreach ($this->applicationActivations()->yieldApplicationActivations($options, $application) as $activation) {
             yield $activation;
         }
     }
@@ -111,7 +111,7 @@ trait ClientProxyTrait
         }
 
         $options->setPaginated(true);
-        foreach ($this->application_activations()->yieldApplicationActivations($options, $application) as $activation) {
+        foreach ($this->applicationActivations()->yieldApplicationActivations($options, $application) as $activation) {
             yield $activation;
         }
     }
