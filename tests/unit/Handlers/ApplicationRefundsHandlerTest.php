@@ -295,9 +295,7 @@ class ApplicationRefundsHandlerTest extends MerchantSDKTestCase
                     'quantity' => 1,
                     'price' => 3000,
                 ],
-            ])
-            ->withDeliveryMethod('delivery')
-            ->withTrackingNumber('2m987-769m-27i');
+            ]);
 
         $response = $handler->createApplicationRefund($application, $refund);
 

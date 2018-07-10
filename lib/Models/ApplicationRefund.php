@@ -33,16 +33,6 @@ class ApplicationRefund extends AbstractModel
     protected $orderItems = [];
 
     /**
-     * @var string
-     */
-    protected $deliveryMethod;
-
-    /**
-     * @var string
-     */
-    protected $trackingNumber;
-
-    /**
      * With amount.
      *
      * @param int $amount
@@ -102,38 +92,6 @@ class ApplicationRefund extends AbstractModel
         $cloned = clone $this;
 
         $cloned->orderItems = $orderItems;
-
-        return $cloned;
-    }
-
-    /**
-     * With delivery method.
-     *
-     * @param string $deliveryMethod
-     *
-     * @return \Divido\MerchantSDK\Models\ApplicationRefund
-     */
-    public function withDeliveryMethod(string $deliveryMethod)
-    {
-        $cloned = clone $this;
-
-        $cloned->deliveryMethod = $deliveryMethod;
-
-        return $cloned;
-    }
-
-    /**
-     * With tracking number.
-     *
-     * @param string $trackingNumber
-     *
-     * @return \Divido\MerchantSDK\Models\ApplicationRefund
-     */
-    public function withTrackingNumber(string $trackingNumber)
-    {
-        $cloned = clone $this;
-
-        $cloned->trackingNumber = $trackingNumber;
 
         return $cloned;
     }
