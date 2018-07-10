@@ -3,6 +3,7 @@
 namespace Divido\MerchantSDK\Handlers\Applications;
 
 use Divido\MerchantSDK\Handlers\ApiRequestOptions;
+use Divido\MerchantSDK\Response\ResponseWrapper;
 
 /**
  * Trait ClientProxyTrait
