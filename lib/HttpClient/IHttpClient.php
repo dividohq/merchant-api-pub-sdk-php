@@ -26,7 +26,7 @@ interface IHttpClient
      *
      * @return ResponseInterface The HTTP response (PSR implementation)
      */
-    public function post(UriInterface $url, array $headers = [], string $payload = '');
+    public function post(UriInterface $url, array $headers = [], $payload = '');
 
     /**
      * Submit an HTTP DELETE request
@@ -47,5 +47,5 @@ interface IHttpClient
      *
      * @return ResponseInterface The HTTP response (PSR implementation)
      */
-    public function patch(UriInterface $url, array $headers = [], string $payload = '');
+    public function patch(UriInterface $url, array $headers = [], $payload = '');
 }

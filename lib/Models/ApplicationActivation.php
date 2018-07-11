@@ -49,7 +49,7 @@ class ApplicationActivation extends AbstractModel
      *
      * @return \Divido\MerchantSDK\Models\ApplicationActivation
      */
-    public function withAmount(int $amount)
+    public function withAmount($amount)
     {
         $cloned = clone $this;
 
@@ -65,7 +65,7 @@ class ApplicationActivation extends AbstractModel
      *
      * @return \Divido\MerchantSDK\Models\ApplicationActivation
      */
-    public function withReference(string $reference)
+    public function withReference($reference)
     {
         $cloned = clone $this;
 
@@ -81,7 +81,7 @@ class ApplicationActivation extends AbstractModel
      *
      * @return \Divido\MerchantSDK\Models\ApplicationActivation
      */
-    public function withComment(string $comment)
+    public function withComment($comment)
     {
         $cloned = clone $this;
 
@@ -113,7 +113,7 @@ class ApplicationActivation extends AbstractModel
      *
      * @return \Divido\MerchantSDK\Models\ApplicationActivation
      */
-    public function withDeliveryMethod(string $deliveryMethod)
+    public function withDeliveryMethod($deliveryMethod)
     {
         $cloned = clone $this;
 
@@ -129,7 +129,7 @@ class ApplicationActivation extends AbstractModel
      *
      * @return \Divido\MerchantSDK\Models\ApplicationActivation
      */
-    public function withTrackingNumber(string $trackingNumber)
+    public function withTrackingNumber($trackingNumber)
     {
         $cloned = clone $this;
 

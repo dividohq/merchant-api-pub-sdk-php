@@ -52,7 +52,7 @@ class ApiRequestOptions
      * @param int $page
      * @return ApiRequestOptions
      */
-    public function setPage(int $page)
+    public function setPage($page)
     {
         $this->page = $page;
         return $this;
@@ -70,7 +70,7 @@ class ApiRequestOptions
      * @param string $sort
      * @return ApiRequestOptions
      */
-    public function setSort(string $sort)
+    public function setSort($sort)
     {
         $this->sort = $sort;
         return $this;
@@ -106,7 +106,7 @@ class ApiRequestOptions
      * @param bool $paginated
      * @return ApiRequestOptions
      */
-    public function setPaginated(bool $paginated)
+    public function setPaginated($paginated)
     {
         $this->paginated = $paginated;
         return $this;
