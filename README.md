@@ -70,9 +70,11 @@ $application = (new \Divido\MerchantSDK\Models\Application())
     ->withDepositPercentage(0.02)
     ->withFinalisationRequired(false)
     ->withMerchantReference("foo-ref")
-    ->withMerchantRedirectUrl("http://merchant-redirect-url.example.com")
-    ->withMerchantCheckoutUrl("http://merchant-checkout-url.example.com")
-    ->withMerchantResponseUrl("http://merchant-response-url.example.com")
+    ->withUrls([
+        'merchant_redirect_url' => 'http://merchant-redirect-url.example.com',
+        'merchant_checkout_url' => 'http://merchant-checkout-url.example.com',
+        'merchant_response_url' => 'http://merchant-response-url.example.com',
+    ])
     ->withMetadata([
         'foo' => 'bar',
     ]);

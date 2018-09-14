@@ -318,9 +318,11 @@ class ApplicationsHandlerTest extends MerchantSDKTestCase
             ->withDepositPercentage(0.02)
             ->withFinalisationRequired(false)
             ->withMerchantReference("foo-ref")
-            ->withMerchantRedirectUrl("foo-with-merchant-redirect-url")
-            ->withMerchantCheckoutUrl("foo-with-merchant-checkout-url")
-            ->withMerchantResponseUrl("foo-with-merchant-response-url")
+            ->withUrls([
+                'merchant_redirect_url' => 'foo-with-merchant-redirect-url',
+                'merchant_checkout_url' => 'foo-with-merchant-checkout-url',
+                'merchant_response_url' => 'foo-with-merchant-response-url',
+            ])
             ->withMetadata([
                 'foo' => 'bar',
             ]);
