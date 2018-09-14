@@ -48,6 +48,32 @@ class ApplicationsIntegrationTest extends MerchantSDKTestCase
         self::assertSame('3', $query['page']);
     }
 
+    public function test_GetApplicationsFromClient_WithInvalidRequest_ThrowsException()
+    {
+        $history = [];
+
+        $client = $this->getGuzzleStackedClient([
+            new Response(400, [], file_get_contents(APP_PATH . '/tests/assets/responses/applications_all_error.json')),
+        ], $history);
+
+        $sdk = new Client('test_key', Environment::SANDBOX, new GuzzleAdapter($client));
+
+        $requestOptions = new ApiRequestOptions();
+
+        try {
+            $sdk->getApplicationsByPage($requestOptions);
+        } catch (\Exception $e) {
+            $context = (object) [
+                'property' => 'sort',
+                'more' => 'Foo more',
+            ];
+
+            self::assertEquals($context, $e->getContext());
+
+            self::assertSame('payload property missing or invalid', $e->getMessage());
+        }
+    }
+
     public function test_GetApplicationsByPageFromClient_ReturnsApplications()
     {
         $history = [];

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e91f91c081af6e4bb80da7796ef92bbf",
+    "content-hash": "eadc690353d48dce61c496d5ee99767a",
     "packages": [
         {
             "name": "enm/json-api-client",
