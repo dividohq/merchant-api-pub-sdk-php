@@ -48,7 +48,7 @@ $applications = $applications->getResources();
 $application = (new \Divido\MerchantSDK\Models\Application())
     ->withCountryId('GB')
     ->withCurrencyId('GBP')
-    ->withLanguageId('EN')
+    ->withLanguageId('en')
     ->withFinancePlanId('F335FED7A-A266-8BF-960A-4CB56CC6DE6F')
     ->withMerchantChannelId('C47B81C83-08A8-B5A-EBD3-B9CFA1D60A07')
     ->withApplicants([
