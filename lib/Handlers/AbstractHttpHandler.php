@@ -44,7 +44,7 @@ abstract class AbstractHttpHandler
     {
         $json = json_decode($response->getBody()->getContents());
 
-        if (($json->error ?? false)) {
+        if (isset($json->error)) {
             throw new MerchantApiBadResponseException(
                 $json->message,
                 $json->code,
