@@ -24,7 +24,7 @@ class Environment
 
     const CONFIGURATION = [
         'dev' => [
-            'base_uri' => 'https://merchant.api.dev.divido.net',
+            'base_uri' => 'https://merchant-api.api.dev.divido.net',
         ],
         'testing' => [
             'base_uri' => 'https://merchant.api.testing.divido.net',

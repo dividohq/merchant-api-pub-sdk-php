@@ -78,19 +78,9 @@ class Application extends AbstractModel
     protected $merchantReference;
 
     /**
-     * @var string
+     * @var array
      */
-    protected $merchantRedirectUrl;
-
-    /**
-     * @var string
-     */
-    protected $merchantCheckoutUrl;
-
-    /**
-     * @var string
-     */
-    protected $merchantResponseUrl;
+    protected $urls;
 
     /**
      * Wet id.
@@ -313,49 +303,16 @@ class Application extends AbstractModel
     }
 
     /**
-     * With merchant redirect url.
      *
-     * @param string $merchantRedirectUrl
-     *
-     * @return \Divido\MerchantSDK\Models\Application
-     */
-    public function withMerchantRedirectUrl($merchantRedirectUrl)
-    {
-        $cloned = clone $this;
-
-        $cloned->merchantRedirectUrl = $merchantRedirectUrl;
-
-        return $cloned;
-    }
-
-    /**
-     * With merchant checkout url.
-     *
-     * @param string $merchantCheckoutUrl
+     * @param string $urls
      *
      * @return \Divido\MerchantSDK\Models\Application
      */
-    public function withMerchantCheckoutUrl($merchantCheckoutUrl)
+    public function withUrls(array $urls)
     {
         $cloned = clone $this;
 
-        $cloned->merchantCheckoutUrl = $merchantCheckoutUrl;
-
-        return $cloned;
-    }
-
-    /**
-     * With merchant response url.
-     *
-     * @param string $merchantResponseUrl
-     *
-     * @return \Divido\MerchantSDK\Models\Application
-     */
-    public function withMerchantResponseUrl($merchantResponseUrl)
-    {
-        $cloned = clone $this;
-
-        $cloned->merchantResponseUrl = $merchantResponseUrl;
+        $cloned->urls = $urls;
 
         return $cloned;
     }

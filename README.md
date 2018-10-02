@@ -48,7 +48,7 @@ $applications = $applications->getResources();
 $application = (new \Divido\MerchantSDK\Models\Application())
     ->withCountryId('GB')
     ->withCurrencyId('GBP')
-    ->withLanguageId('EN')
+    ->withLanguageId('en')
     ->withFinancePlanId('F335FED7A-A266-8BF-960A-4CB56CC6DE6F')
     ->withMerchantChannelId('C47B81C83-08A8-B5A-EBD3-B9CFA1D60A07')
     ->withApplicants([
@@ -70,9 +70,11 @@ $application = (new \Divido\MerchantSDK\Models\Application())
     ->withDepositPercentage(0.02)
     ->withFinalisationRequired(false)
     ->withMerchantReference("foo-ref")
-    ->withMerchantRedirectUrl("http://merchant-redirect-url.example.com")
-    ->withMerchantCheckoutUrl("http://merchant-checkout-url.example.com")
-    ->withMerchantResponseUrl("http://merchant-response-url.example.com")
+    ->withUrls([
+        'merchant_redirect_url' => 'http://merchant-redirect-url.example.com',
+        'merchant_checkout_url' => 'http://merchant-checkout-url.example.com',
+        'merchant_response_url' => 'http://merchant-response-url.example.com',
+    ])
     ->withMetadata([
         'foo' => 'bar',
     ]);
