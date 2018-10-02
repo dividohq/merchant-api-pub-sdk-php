@@ -101,7 +101,7 @@ class Application extends AbstractModel
      *
      * @return \Divido\MerchantSDK\Models\Application
      */
-    public function withId(string $id)
+    public function withId($id)
     {
         $cloned = clone $this;
 
@@ -117,7 +117,7 @@ class Application extends AbstractModel
      *
      * @return \Divido\MerchantSDK\Models\Application
      */
-    public function withMerchantChannelId(string $merchantChannelId)
+    public function withMerchantChannelId($merchantChannelId)
     {
         $cloned = clone $this;
 
@@ -133,7 +133,7 @@ class Application extends AbstractModel
      *
      * @return \Divido\MerchantSDK\Models\Application
      */
-    public function withFinancePlanId(string $financePlanId)
+    public function withFinancePlanId($financePlanId)
     {
         $cloned = clone $this;
 
@@ -149,7 +149,7 @@ class Application extends AbstractModel
      *
      * @return \Divido\MerchantSDK\Models\Application
      */
-    public function withCountryId(string $countryId)
+    public function withCountryId($countryId)
     {
         $cloned = clone $this;
 
@@ -165,7 +165,7 @@ class Application extends AbstractModel
      *
      * @return \Divido\MerchantSDK\Models\Application
      */
-    public function withCurrencyId(string $currencyId)
+    public function withCurrencyId($currencyId)
     {
         $cloned = clone $this;
 
@@ -181,7 +181,7 @@ class Application extends AbstractModel
      *
      * @return \Divido\MerchantSDK\Models\Application
      */
-    public function withLanguageId(string $languageId)
+    public function withLanguageId($languageId)
     {
         $cloned = clone $this;
 
@@ -229,7 +229,7 @@ class Application extends AbstractModel
      *
      * @return \Divido\MerchantSDK\Models\Application
      */
-    public function withDepositAmount(int $depositAmount)
+    public function withDepositAmount($depositAmount)
     {
         $cloned = clone $this;
 
@@ -245,7 +245,7 @@ class Application extends AbstractModel
      *
      * @return \Divido\MerchantSDK\Models\Application
      */
-    public function withDepositPercentage(float $depositPercentage)
+    public function withDepositPercentage($depositPercentage)
     {
         $cloned = clone $this;
 
@@ -277,7 +277,7 @@ class Application extends AbstractModel
      *
      * @return \Divido\MerchantSDK\Models\Application
      */
-    public function withFinalisationRequired(bool $finalisationRequired)
+    public function withFinalisationRequired($finalisationRequired)
     {
         $cloned = clone $this;
 
@@ -293,7 +293,7 @@ class Application extends AbstractModel
      *
      * @return \Divido\MerchantSDK\Models\Application
      */
-    public function withMerchantReference(string $merchantReference)
+    public function withMerchantReference($merchantReference)
     {
         $cloned = clone $this;
 
@@ -303,7 +303,6 @@ class Application extends AbstractModel
     }
 
     /**
-     * With urls.
      *
      * @param string $urls
      *

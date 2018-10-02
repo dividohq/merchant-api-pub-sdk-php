@@ -24,7 +24,7 @@ trait ClientProxyTrait
     /**
      * @return Handler
      */
-    abstract protected function setHandler(string $key, $value);
+    abstract protected function setHandler($key, $value);
 
     /**
      * Connect to the application cancellations handler.

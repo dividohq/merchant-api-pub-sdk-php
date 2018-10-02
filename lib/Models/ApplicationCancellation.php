@@ -39,7 +39,7 @@ class ApplicationCancellation extends AbstractModel
      *
      * @return \Divido\MerchantSDK\Models\ApplicationCancellation
      */
-    public function withAmount(int $amount)
+    public function withAmount($amount)
     {
         $cloned = clone $this;
 
@@ -55,7 +55,7 @@ class ApplicationCancellation extends AbstractModel
      *
      * @return \Divido\MerchantSDK\Models\ApplicationCancellation
      */
-    public function withReference(string $reference)
+    public function withReference($reference)
     {
         $cloned = clone $this;
 
@@ -71,7 +71,7 @@ class ApplicationCancellation extends AbstractModel
      *
      * @return \Divido\MerchantSDK\Models\ApplicationCancellation
      */
-    public function withComment(string $comment)
+    public function withComment($comment)
     {
         $cloned = clone $this;
 

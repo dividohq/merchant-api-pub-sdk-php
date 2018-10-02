@@ -2,7 +2,6 @@
 
 namespace Divido\MerchantSDK;
 
-use Divido\MerchantSDK\Handlers\ApplicationDocuments\Handler as ApplicationDocumentsHandler;
 use Divido\MerchantSDK\HttpClient\GuzzleAdapter;
 use Divido\MerchantSDK\HttpClient\HttpClientWrapper;
 
@@ -52,7 +51,7 @@ class Client
      * @param string $environment
      * @param mixed $httpClient
      */
-    final public function __construct(string $apiKey, $environment = Environment::SANDBOX, $httpClient = null)
+    final public function __construct($apiKey, $environment = Environment::SANDBOX, $httpClient = null)
     {
         $this->environment = $environment;
 
@@ -92,7 +91,7 @@ class Client
      *
      * @return array
      */
-    protected function setHandler(string $key, $value)
+    protected function setHandler($key, $value)
     {
         $this->handlers[$key] = $value;
     }

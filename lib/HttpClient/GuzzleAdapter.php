@@ -70,7 +70,7 @@ class GuzzleAdapter implements IHttpClient
      *
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public function post(UriInterface $url, array $headers = [], string $payload = '')
+    public function post(UriInterface $url, array $headers = [], $payload = '')
     {
         return $this->getClient()->send(
             new Request('POST', $url, $headers, $payload), [
@@ -109,7 +109,7 @@ class GuzzleAdapter implements IHttpClient
      *
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public function patch(UriInterface $url, array $headers = [], string $payload = '')
+    public function patch(UriInterface $url, array $headers = [], $payload = '')
     {
         return $this->getClient()->send(
             new Request('PATCH', $url, $headers, $payload), [

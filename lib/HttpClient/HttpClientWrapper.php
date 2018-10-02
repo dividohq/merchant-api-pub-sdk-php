@@ -41,7 +41,7 @@ class HttpClientWrapper
      * @param string $baseUrl
      * @param string $apiKey
      */
-    final public function __construct(IHttpClient $httpClient, string $baseUrl, string $apiKey)
+    final public function __construct(IHttpClient $httpClient, $baseUrl, $apiKey)
     {
         $this->httpClient = $httpClient;
         $this->baseUrl = $baseUrl;
@@ -61,7 +61,7 @@ class HttpClientWrapper
      *
      * @return \Psr\Http\Message\ResponseInterface The HTTP response
      */
-    public function request(string $method, string $path, array $query = [], array $headers = [], string $payload = '')
+    public function request($method, $path, array $query = [], array $headers = [], $payload = '')
     {
         // Add the header to each call
         $headers['X-Divido-Api-Key'] = $this->apiKey;
