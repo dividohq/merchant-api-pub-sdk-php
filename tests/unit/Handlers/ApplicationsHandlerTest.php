@@ -338,6 +338,28 @@ class ApplicationsHandlerTest extends MerchantSDKTestCase
         self::assertSame('6985ef52-7d7c-457e-9a03-e98b648bf9b7', $result['data']['id']);
     }
 
+    public function test_CreateApplication_WithHmac_ReturnsNewlyCreatedApplication()
+    {
+        $history = [];
+
+        $client = $this->getGuzzleStackedClient([
+            new Response(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/applications_get_one.json')),
+        ], $history);
+        $httpClientWrapper = new HttpClientWrapper(new GuzzleAdapter($client), '', '');
+
+        $handler = new Handler($httpClientWrapper);
+
+        $application = new \Divido\MerchantSDK\Models\Application();
+
+        $response = $handler->createApplication(
+            $application,
+            [],
+            ['X-Divido-Hmac-Sha256' => 'EkDuBPzoelFHGYEmF30hU31G2roTr4OFoxI9efPxjKY=']
+        );
+
+        self::assertSame('EkDuBPzoelFHGYEmF30hU31G2roTr4OFoxI9efPxjKY=', $history[0]['request']->getHeaderLine('X-Divido-Hmac-Sha256'));
+    }
+
     public function test_UpdateApplication_ReturnsUpdatedApplication()
     {
         $history = [];

@@ -123,13 +123,13 @@ class Handler extends AbstractHttpHandler
      * @param Application $application
      * @return \GuzzleHttp\Psr7\Response
      */
-    public function createApplication(Application $application)
+    public function createApplication(Application $application, array $query = [], array $headers = [])
     {
         $path = vsprintf('%s', [
             'applications',
         ]);
 
-        return $this->httpClientWrapper->request('post', $path, [], [], $application->getJsonPayload());
+        return $this->httpClientWrapper->request('post', $path, $query, $headers, $application->getJsonPayload());
     }
 
     /**
