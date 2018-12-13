@@ -22,6 +22,8 @@ class Environment
 
     const PRODUCTION = "production";
 
+    const LIVE = "production";
+
     const CONFIGURATION = [
         'dev' => [
             'base_uri' => 'https://merchant-api.api.dev.divido.net',
