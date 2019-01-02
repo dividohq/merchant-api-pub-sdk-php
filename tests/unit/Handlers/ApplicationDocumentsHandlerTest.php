@@ -4,10 +4,10 @@ namespace Divido\MerchantSDK\Test\Unit;
 
 use Divido\MerchantSDK\Client;
 use Divido\MerchantSDK\Environment;
-use Divido\MerchantSDK\HttpClient\GuzzleAdapter;
 use Divido\MerchantSDK\Handlers\ApplicationDocuments\Handler;
-use Divido\MerchantSDK\Models\Application;
+use Divido\MerchantSDK\Test\Stubs\HttpClient\GuzzleAdapter;
 use Divido\MerchantSDK\HttpClient\HttpClientWrapper;
+use Divido\MerchantSDK\Models\Application;
 use Divido\MerchantSDK\Models\ApplicationDocument;
 use Divido\MerchantSDK\Response\ResponseWrapper;
 use GuzzleHttp\Psr7\Response;

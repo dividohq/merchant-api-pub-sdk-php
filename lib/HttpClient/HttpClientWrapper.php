@@ -1,9 +1,6 @@
 <?php
 
-
 namespace Divido\MerchantSDK\HttpClient;
-
-use GuzzleHttp\Psr7\Uri;
 
 /**
  * Class HttpClientWrapper
@@ -74,7 +71,7 @@ class HttpClientWrapper
         $uri = new Uri($this->baseUrl . $path . (empty($query) ? '' : '?' . http_build_query($query, '', '&')));
 
         // Send request
-        switch($method) {
+        switch ($method) {
             case 'get':
                 return $this->httpClient->get($uri, $headers);
                 break;
