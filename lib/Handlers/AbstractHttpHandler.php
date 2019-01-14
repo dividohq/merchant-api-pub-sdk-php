@@ -3,6 +3,7 @@
 namespace Divido\MerchantSDK\Handlers;
 
 use Divido\MerchantSDK\Exceptions\MerchantApiBadResponseException;
+use Divido\MerchantSDK\HttpClient\HttpClientWrapper;
 use Divido\MerchantSDK\Response\Metadata;
 use Divido\MerchantSDK\Response\ResponseWrapper;
 use Psr\Http\Message\ResponseInterface;
@@ -28,7 +29,7 @@ abstract class AbstractHttpHandler
      * @param HttpClientWrapper $httpClientWrapper
      * @return void
      */
-    final public function __construct($httpClientWrapper)
+    final public function __construct(HttpClientWrapper $httpClientWrapper)
     {
         $this->httpClientWrapper = $httpClientWrapper;
     }
