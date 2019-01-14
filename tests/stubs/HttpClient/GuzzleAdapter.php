@@ -1,7 +1,8 @@
 <?php
 
-namespace Divido\MerchantSDK\HttpClient;
+namespace Divido\MerchantSDK\Test\Stubs\HttpClient;
 
+use Divido\MerchantSDK\HttpClient\IHttpClient;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Psr7\Request;
 use Psr\Http\Message\ResponseInterface;

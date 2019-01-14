@@ -7,7 +7,7 @@ use Divido\MerchantSDK\Environment;
 use Divido\MerchantSDK\Handlers\ApiRequestOptions;
 use Divido\MerchantSDK\Handlers\ApplicationRefunds\Handler;
 use Divido\MerchantSDK\HttpClient\HttpClientWrapper;
-use Divido\MerchantSDK\HttpClient\GuzzleAdapter;
+use Divido\MerchantSDK\Test\Stubs\HttpClient\GuzzleAdapter;
 use Divido\MerchantSDK\Models\Application;
 use Divido\MerchantSDK\Response\ResponseWrapper;
 use Divido\MerchantSDK\Test\Unit\MerchantSDKTestCase;
@@ -31,7 +31,13 @@ class ApplicationRefundsIntegrationTest extends MerchantSDKTestCase
             new Response(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/application_refunds_page_1.json')),
         ], $history);
 
-        $sdk = new Client('test_key', Environment::SANDBOX, new GuzzleAdapter($client));
+        $httpClientWrapper = new HttpClientWrapper(
+            new GuzzleAdapter($client),
+            Environment::CONFIGURATION[Environment::SANDBOX]['base_uri'],
+            'test_key'
+        );
+
+        $sdk = new Client($httpClientWrapper, Environment::SANDBOX);
 
         $requestOptions = (new ApiRequestOptions());
 
@@ -68,7 +74,13 @@ class ApplicationRefundsIntegrationTest extends MerchantSDKTestCase
             new Response(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/application_refunds_page_1.json')),
         ], $history);
 
-        $sdk = new Client('test_key', Environment::SANDBOX, new GuzzleAdapter($client));
+        $httpClientWrapper = new HttpClientWrapper(
+            new GuzzleAdapter($client),
+            Environment::CONFIGURATION[Environment::SANDBOX]['base_uri'],
+            'test_key'
+        );
+
+        $sdk = new Client($httpClientWrapper, Environment::SANDBOX);
 
         $requestOptions = (new ApiRequestOptions());
 
@@ -105,7 +117,13 @@ class ApplicationRefundsIntegrationTest extends MerchantSDKTestCase
             new Response(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/application_refunds_page_2.json')),
         ], $history);
 
-        $sdk = new Client('test_key', Environment::SANDBOX, new GuzzleAdapter($client));
+        $httpClientWrapper = new HttpClientWrapper(
+            new GuzzleAdapter($client),
+            Environment::CONFIGURATION[Environment::SANDBOX]['base_uri'],
+            'test_key'
+        );
+
+        $sdk = new Client($httpClientWrapper, Environment::SANDBOX);
 
         $requestOptions = (new ApiRequestOptions());
 
@@ -148,7 +166,13 @@ class ApplicationRefundsIntegrationTest extends MerchantSDKTestCase
             new Response(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/application_refunds_page_2.json')),
         ], $history);
 
-        $sdk = new Client('test_key', Environment::SANDBOX, new GuzzleAdapter($client));
+        $httpClientWrapper = new HttpClientWrapper(
+            new GuzzleAdapter($client),
+            Environment::CONFIGURATION[Environment::SANDBOX]['base_uri'],
+            'test_key'
+        );
+
+        $sdk = new Client($httpClientWrapper, Environment::SANDBOX);
 
         $requestOptions = (new ApiRequestOptions())->setPage(2);
 
@@ -188,7 +212,13 @@ class ApplicationRefundsIntegrationTest extends MerchantSDKTestCase
             new Response(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/application_refunds_page_1.json')),
         ], $history);
 
-        $sdk = new Client('test_key', Environment::SANDBOX, new GuzzleAdapter($client));
+        $httpClientWrapper = new HttpClientWrapper(
+            new GuzzleAdapter($client),
+            Environment::CONFIGURATION[Environment::SANDBOX]['base_uri'],
+            'test_key'
+        );
+
+        $sdk = new Client($httpClientWrapper, Environment::SANDBOX);
 
         $requestOptions = (new ApiRequestOptions())->setSort('-created_at');
 
@@ -216,7 +246,13 @@ class ApplicationRefundsIntegrationTest extends MerchantSDKTestCase
             new Response(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/application_refunds_page_2.json')),
         ], $history);
 
-        $sdk = new Client('test_key', Environment::SANDBOX, new GuzzleAdapter($client));
+        $httpClientWrapper = new HttpClientWrapper(
+            new GuzzleAdapter($client),
+            Environment::CONFIGURATION[Environment::SANDBOX]['base_uri'],
+            'test_key'
+        );
+
+        $sdk = new Client($httpClientWrapper, Environment::SANDBOX);
 
         $requestOptions = (new ApiRequestOptions());
 

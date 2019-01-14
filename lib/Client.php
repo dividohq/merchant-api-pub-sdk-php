@@ -2,9 +2,6 @@
 
 namespace Divido\MerchantSDK;
 
-use Divido\MerchantSDK\HttpClient\GuzzleAdapter;
-use Divido\MerchantSDK\HttpClient\HttpClientWrapper;
-
 /**
  * Class Client
  *
@@ -51,19 +48,11 @@ class Client
      * @param string $environment
      * @param mixed $httpClient
      */
-    final public function __construct($apiKey, $environment = Environment::SANDBOX, $httpClient = null)
+    final public function __construct($httpClientWrapper, $environment = Environment::SANDBOX)
     {
         $this->environment = $environment;
 
-        if ($httpClient === null) {
-            $httpClient = new GuzzleAdapter(new \GuzzleHttp\Client());
-        }
-
-        $this->httpClientWrapper = new HttpClientWrapper(
-            $httpClient,
-            Environment::CONFIGURATION[$environment]['base_uri'],
-            $apiKey
-        );
+        $this->httpClientWrapper = $httpClientWrapper;
     }
 
     /**
