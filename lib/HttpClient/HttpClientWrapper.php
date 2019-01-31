@@ -79,9 +79,11 @@ class HttpClientWrapper
                 return $this->httpClient->get($uri, $headers);
                 break;
             case 'post':
+                $headers['Content-Type'] = 'application/json';
                 return $this->httpClient->post($uri, $headers, $payload);
                 break;
             case 'patch':
+                $headers['Content-Type'] = 'application/json';
                 return $this->httpClient->patch($uri, $headers, $payload);
                 break;
             case 'delete':
