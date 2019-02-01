@@ -1,0 +1,10 @@
+{
+  "name": "divido-merchant-sdk",
+  "version": "2.0.0",
+  "scripts": {
+    "release": "standard-version"
+  },
+  "repository": "git@github.com:divido/merchant-api-pub-sdk-php.git",
+  "author": "Divido",
+  "license": "MIT"
+}
