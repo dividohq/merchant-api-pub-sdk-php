@@ -18,6 +18,7 @@ class Client
     use Handlers\ApplicationRefunds\ClientProxyTrait;
     use Handlers\Channels\ClientProxyTrait;
     use Handlers\Finances\ClientProxyTrait;
+    use Handlers\PlatformEnvironments\ClientProxyTrait;
     use Handlers\Settlements\ClientProxyTrait;
 
     /**
