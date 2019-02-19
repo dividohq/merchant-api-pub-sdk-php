@@ -26,16 +26,16 @@ class Environment
 
     const CONFIGURATION = [
         'dev' => [
-            'base_uri' => 'https://merchant-api.api.dev.divido.net',
+            'base_uri' => 'https://merchant-api-pub.api.dev.divido.net',
         ],
         'testing' => [
-            'base_uri' => 'https://merchant.api.testing.divido.net',
+            'base_uri' => 'https://merchant-api-pub.api.testing.divido.net',
         ],
         'sandbox' => [
             'base_uri' => 'https://merchant.api.sandbox.divido.net',
         ],
         'staging' => [
-            'base_uri' => 'https://merchant.api.staging.divido.net',
+            'base_uri' => 'https://merchant-api-pub.api.staging.divido.net',
         ],
         'production' => [
             'base_uri' => 'https://merchant.api.divido.com',
