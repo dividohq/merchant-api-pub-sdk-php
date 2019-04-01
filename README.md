@@ -112,7 +112,7 @@ $applicationActivation = (new \Divido\MerchantSDK\Models\ApplicationActivation()
     ->withTrackingNumber('988gbqj182836');
 
 // Create a new activation for the application.
-$response = $sdk->application_activations()->createApplicationActivation($application, $applicationActivation);
+$response = $sdk->applicationActivations()->createApplicationActivation($application, $applicationActivation);
 
 $activationResponseBody = $response->getBody()->getContents();
 ```
@@ -172,7 +172,7 @@ $applicationRefund = (new \Divido\MerchantSDK\Models\ApplicationRefund())
     ->withOrderItems($items)
 
 // Create a new refund for the application.
-$response = $sdk->application_refunds()->createApplicationRefund($application, $applicationRefund);
+$response = $sdk->applicationRefunds()->createApplicationRefund($application, $applicationRefund);
 
 $refundResponseBody = $response->getBody()->getContents();
 ```
