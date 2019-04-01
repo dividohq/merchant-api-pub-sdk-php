@@ -112,7 +112,7 @@ $applicationActivation = (new \Divido\MerchantSDK\Models\ApplicationActivation()
     ->withTrackingNumber('988gbqj182836');
 
 // Create a new activation for the application.
-$response = $sdk->application_activations()->createApplicationActivation($application, $applicationActivation);
+$response = $sdk->applicationActivations()->createApplicationActivation($application, $applicationActivation);
 
 $activationResponseBody = $response->getBody()->getContents();
 ```
@@ -142,7 +142,7 @@ $applicationCancellation = (new \Divido\MerchantSDK\Models\ApplicationCancellati
     ->withOrderItems($items)
 
 // Create a new cancellation for the application.
-$response = $sdk->application_cancellations()->createApplicationCancellation($application, $applicationCancellation);
+$response = $sdk->applicationCancellations()->createApplicationCancellation($application, $applicationCancellation);
 
 $cancellationResponseBody = $response->getBody()->getContents();
 ```
