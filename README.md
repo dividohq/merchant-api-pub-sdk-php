@@ -38,6 +38,13 @@ $applications = $sdk->getAllApplications($requestOptions);
 
 $applications = $applications->getResources();
 ```
+### Get Single Application
+
+```
+$application = $sdk->applications->getSingleApplication($applicationId);
+$result = json_decode($application->getBody(), true);
+
+```
 
 ### Create an application
 
