@@ -3,12 +3,28 @@
 
 ## Basic SDK usage
 
-Start by create the Merchant SDK Client.
+### Create a merchant sdk
 
 ```php
 <?php
 
-$sdk = new \Divido\MerchantSDK\Client('test_cfabc123.querty098765merchantsdk12345', \Divido\MerchantSDK\Environment::SANDBOX);
+// create a client
+$client = new \GuzzleHttp\Client();
+$httpClientWrapper = new \Divido\MerchantSDK\HttpClient\HttpClientWrapper(
+    new \Divido\MerchantSDKGuzzle6\GuzzleAdapter($client),
+    \Divido\MerchantSDK\Environment::CONFIGURATION[$env]['base_uri'],
+    'test_cfabc123.querty098765merchantsdk12345'
+);
+
+// find the environment
+$array = explode('_', 'test_cfabc123.querty098765merchantsdk12345');
+$identifier = strtoupper($array[0]);
+$env =  ('LIVE' == $identifier)
+    ? constant("Divido\MerchantSDK\Environment::PRODUCTION")
+    : constant("Divido\MerchantSDK\Environment::$identifier");
+
+// create the sdk
+$sdk = new \Divido\MerchantSDK\Client($httpClientWrapper, $env);
 ```
 
 ### Get all finance plans
@@ -146,7 +162,7 @@ $applicationCancellation = (new \Divido\MerchantSDK\Models\ApplicationCancellati
     ->withAmount(18000)
     ->withReference('Order 235509678096')
     ->withComment('As per customer request.')
-    ->withOrderItems($items)
+    ->withOrderItems($items);
 
 // Create a new cancellation for the application.
 $response = $sdk->applicationCancellations()->createApplicationCancellation($application, $applicationCancellation);
@@ -176,7 +192,7 @@ $applicationRefund = (new \Divido\MerchantSDK\Models\ApplicationRefund())
     ->withAmount(18000)
     ->withReference('Order 235509678096')
     ->withComment('As per customer request.')
-    ->withOrderItems($items)
+    ->withOrderItems($items);
 
 // Create a new refund for the application.
 $response = $sdk->applicationRefunds()->createApplicationRefund($application, $applicationRefund);
