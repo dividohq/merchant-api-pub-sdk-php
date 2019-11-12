@@ -70,16 +70,16 @@ $result = json_decode($application->getBody(), true);
 // Create an application model with the application data.
 $application = (new \Divido\MerchantSDK\Models\Application())
     ->withCountryId('GB')
-    ->withCurrencyId('GBP')
-    ->withLanguageId('en')
     ->withFinancePlanId('F335FED7A-A266-8BF-960A-4CB56CC6DE6F')
-    ->withMerchantChannelId('C47B81C83-08A8-B5A-EBD3-B9CFA1D60A07')
     ->withApplicants([
         [
             'firstName' => 'John',
             'lastName' => 'Smith',
             'phoneNumber' => '07512345678',
             'email' => 'john.smith@example.com',
+            'addresses' => [[
+                'text' => '115 High Street Westbury BA13 3BN'
+            ]]
         ],
     ])
     ->withOrderItems([
@@ -116,16 +116,16 @@ $applicationResponseBody = $response->getBody()->getContents();
 $application = (new \Divido\MerchantSDK\Models\Application())
     ->withId('73bb63bf-212a-4598-afb6-cb1449280914')
     ->withCountryId('GB')
-    ->withCurrencyId('GBP')
-    ->withLanguageId('en')
     ->withFinancePlanId('F335FED7A-A266-8BF-960A-4CB56CC6DE6F')
-    ->withMerchantChannelId('C47B81C83-08A8-B5A-EBD3-B9CFA1D60A07')
     ->withApplicants([
         [
             'firstName' => 'John',
             'lastName' => 'Smith',
             'phoneNumber' => '07512345678',
             'email' => 'john.smith@example.com',
+            'addresses' => [[
+                'text' => '115 High Street Westbury BA13 3BN'
+            ]]
         ],
     ])
     ->withOrderItems([
@@ -136,7 +136,6 @@ $application = (new \Divido\MerchantSDK\Models\Application())
         ],
     ])
     ->withDepositAmount(10000)
-    ->withDepositPercentage(0.02)
     ->withFinalisationRequired(false)
     ->withMerchantReference("foo-ref")
     ->withUrls([
