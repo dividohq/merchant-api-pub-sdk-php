@@ -102,7 +102,7 @@ $application = (new \Divido\MerchantSDK\Models\Application())
         'foo' => 'bar',
     ]);
 
-// Note: If creating an appliclation (credit request) on a merchant with a shared secret, you will have to pass in a correct hmac
+// Note: If creating an application (credit request) on a merchant with a shared secret, you will have to pass in a correct hmac
 $response = $sdk->applications()->createApplication($application, [], ['X-Divido-Hmac-Sha256' => 'EkDuBPzoelFHGYEmF30hU31G2roTr4OFoxI9efPxjKY=']);
 
 $applicationResponseBody = $response->getBody()->getContents();
