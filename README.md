@@ -8,7 +8,7 @@
 ```php
 <?php
 
-// create a client
+// create a client wrapper
 $client = new \GuzzleHttp\Client();
 $httpClientWrapper = new \Divido\MerchantSDK\HttpClient\HttpClientWrapper(
     new \Divido\MerchantSDKGuzzle6\GuzzleAdapter($client),
