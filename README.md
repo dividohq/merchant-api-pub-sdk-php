@@ -90,7 +90,6 @@ $application = (new \Divido\MerchantSDK\Models\Application())
         ],
     ])
     ->withDepositAmount(10000)
-    ->withDepositPercentage(0.02)
     ->withFinalisationRequired(false)
     ->withMerchantReference("foo-ref")
     ->withUrls([
