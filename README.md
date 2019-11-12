@@ -38,6 +38,13 @@ $applications = $sdk->getAllApplications($requestOptions);
 
 $applications = $applications->getResources();
 ```
+### Get Single Application
+
+```
+$application = $sdk->applications->getSingleApplication($applicationId);
+$result = json_decode($application->getBody(), true);
+
+```
 
 ### Create an application
 
@@ -172,7 +179,7 @@ $applicationRefund = (new \Divido\MerchantSDK\Models\ApplicationRefund())
     ->withOrderItems($items)
 
 // Create a new refund for the application.
-$response = $sdk->application_refunds()->createApplicationRefund($application, $applicationRefund);
+$response = $sdk->applicationRefunds()->createApplicationRefund($application, $applicationRefund);
 
 $refundResponseBody = $response->getBody()->getContents();
 ```
