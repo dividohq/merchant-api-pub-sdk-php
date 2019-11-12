@@ -67,7 +67,7 @@ $result = json_decode($application->getBody(), true);
 ```php
 <?php
 
-// Create an appication model with the application data.
+// Create an application model with the application data.
 $application = (new \Divido\MerchantSDK\Models\Application())
     ->withCountryId('GB')
     ->withCurrencyId('GBP')
@@ -104,6 +104,52 @@ $application = (new \Divido\MerchantSDK\Models\Application())
 
 // Note: If creating an appliclation (credit request) on a merchant with a shared secret, you will have to pass in a correct hmac
 $response = $sdk->applications()->createApplication($application, [], ['X-Divido-Hmac-Sha256' => 'EkDuBPzoelFHGYEmF30hU31G2roTr4OFoxI9efPxjKY=']);
+
+$applicationResponseBody = $response->getBody()->getContents();
+```
+### Update an application
+
+```php
+<?php
+
+// Create an application model with the application data.
+$application = (new \Divido\MerchantSDK\Models\Application())
+    ->withId('73bb63bf-212a-4598-afb6-cb1449280914')
+    ->withCountryId('GB')
+    ->withCurrencyId('GBP')
+    ->withLanguageId('en')
+    ->withFinancePlanId('F335FED7A-A266-8BF-960A-4CB56CC6DE6F')
+    ->withMerchantChannelId('C47B81C83-08A8-B5A-EBD3-B9CFA1D60A07')
+    ->withApplicants([
+        [
+            'firstName' => 'John',
+            'lastName' => 'Smith',
+            'phoneNumber' => '07512345678',
+            'email' => 'john.smith@example.com',
+        ],
+    ])
+    ->withOrderItems([
+        [
+            'name' => 'Sofa',
+            'quantity' => 1,
+            'price' => 50000,
+        ],
+    ])
+    ->withDepositAmount(10000)
+    ->withDepositPercentage(0.02)
+    ->withFinalisationRequired(false)
+    ->withMerchantReference("foo-ref")
+    ->withUrls([
+        'merchant_redirect_url' => 'http://merchant-redirect-url.example.com',
+        'merchant_checkout_url' => 'http://merchant-checkout-url.example.com',
+        'merchant_response_url' => 'http://merchant-response-url.example.com',
+    ])
+    ->withMetadata([
+        'foo' => 'bar',
+    ]);
+
+// Note: If creating an application (credit request) on a merchant with a shared secret, you will have to pass in a correct hmac
+$response = $sdk->applications()->updateApplication($application, [], ['X-Divido-Hmac-Sha256' => 'EkDuBPzoelFHGYEmF30hU31G2roTr4OFoxI9efPxjKY=']);
 
 $applicationResponseBody = $response->getBody()->getContents();
 ```
