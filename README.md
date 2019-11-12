@@ -8,6 +8,13 @@
 ```php
 <?php
 
+// find the environment
+$array = explode('_', 'test_cfabc123.querty098765merchantsdk12345');
+$identifier = strtoupper($array[0]);
+$env =  ('LIVE' == $identifier)
+    ? constant("Divido\MerchantSDK\Environment::PRODUCTION")
+    : constant("Divido\MerchantSDK\Environment::$identifier");
+
 // create a client wrapper
 $client = new \GuzzleHttp\Client();
 $httpClientWrapper = new \Divido\MerchantSDK\HttpClient\HttpClientWrapper(
@@ -15,13 +22,6 @@ $httpClientWrapper = new \Divido\MerchantSDK\HttpClient\HttpClientWrapper(
     \Divido\MerchantSDK\Environment::CONFIGURATION[$env]['base_uri'],
     'test_cfabc123.querty098765merchantsdk12345'
 );
-
-// find the environment
-$array = explode('_', 'test_cfabc123.querty098765merchantsdk12345');
-$identifier = strtoupper($array[0]);
-$env =  ('LIVE' == $identifier)
-    ? constant("Divido\MerchantSDK\Environment::PRODUCTION")
-    : constant("Divido\MerchantSDK\Environment::$identifier");
 
 // create the sdk
 $sdk = new \Divido\MerchantSDK\Client($httpClientWrapper, $env);
