@@ -1,6 +1,6 @@
 parameters:
   level: 1
-  autoload_files:
+  bootstrapFiles:
     - constants.php
   paths:
     - lib
