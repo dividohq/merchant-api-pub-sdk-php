@@ -2,6 +2,8 @@
 
 namespace Divido\MerchantSDK\HttpClient;
 
+use GuzzleHttp\Psr7\Uri;
+
 /**
  * Class HttpClientWrapper
  *
