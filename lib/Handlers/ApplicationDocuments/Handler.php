@@ -5,7 +5,7 @@ namespace Divido\MerchantSDK\Handlers\ApplicationDocuments;
 use Divido\MerchantSDK\Handlers\AbstractHttpHandler;
 use Divido\MerchantSDK\Models\Application;
 use Divido\MerchantSDK\Models\ApplicationDocument;
-use Divido\MerchantSDK\Response\ResponseWrapper;
+use Psr\Http\Message\ResponseInterface;
 
 /**
  * Class Handler
@@ -13,7 +13,6 @@ use Divido\MerchantSDK\Response\ResponseWrapper;
  * @author Neil McGibbon <neil.mcgibbon@divido.com>
  * @author Mike Lovely <mike.lovely@divido.com>
  * @copyright (c) 2018, Divido
- * @package Divido\MerchantSDK
  */
 class Handler extends AbstractHttpHandler
 {
@@ -22,7 +21,7 @@ class Handler extends AbstractHttpHandler
      *
      * @param Application $application
      * @param ApplicationDocument $applicationDocument
-     * @return \GuzzleHttp\Psr7\Response
+     * @return ResponseInterface
      */
     public function createApplicationDocument(Application $application, ApplicationDocument $applicationDocument)
     {
@@ -32,7 +31,7 @@ class Handler extends AbstractHttpHandler
             'documents',
         ]);
 
-        return $this->httpClientWrapper->request('post', $path, [], ['Content-Type' => 'multipart/form-data'], $applicationDocument->getJsonPayload());
+        return $this->wrapper->request('post', $path, [], ['Content-Type' => 'multipart/form-data'], $applicationDocument->getJsonPayload());
     }
 
     /**
@@ -40,7 +39,7 @@ class Handler extends AbstractHttpHandler
      *
      * @param Application $application
      * @param string $applicationDocumentId
-     * @return \GuzzleHttp\Psr7\Response
+     * @return ResponseInterface
      */
     public function deleteApplicationDocument(Application $application, $applicationDocumentId)
     {
@@ -51,6 +50,6 @@ class Handler extends AbstractHttpHandler
             $applicationDocumentId,
         ]);
 
-        return $this->httpClientWrapper->request('delete', $path);
+        return $this->wrapper->request('delete', $path);
     }
 }

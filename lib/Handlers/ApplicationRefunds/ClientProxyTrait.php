@@ -12,7 +12,6 @@ use Divido\MerchantSDK\Response\ResponseWrapper;
  * @author Neil McGibbon <neil.mcgibbon@divido.com>
  * @author Mike Lovely <mike.lovely@divido.com>
  * @copyright (c) 2018, Divido
- * @package Divido\MerchantSDK
  */
 trait ClientProxyTrait
 {
@@ -34,7 +33,7 @@ trait ClientProxyTrait
     public function applicationRefunds()
     {
         if (!array_key_exists('application_refunds', $this->getHandlers())) {
-            $this->setHandler('application_refunds', new Handler($this->httpClientWrapper));
+            $this->setHandler('application_refunds', new Handler($this->wrapper));
         }
 
         return $this->getHandlers()['application_refunds'];
@@ -55,6 +54,7 @@ trait ClientProxyTrait
         }
 
         $options->setPaginated(true);
+
         return $this->applicationRefunds()->getApplicationRefunds($options, $application);
     }
 
@@ -73,6 +73,7 @@ trait ClientProxyTrait
         }
 
         $options->setPaginated(false);
+
         return $this->applicationRefunds()->getApplicationRefunds($options, $application);
     }
 

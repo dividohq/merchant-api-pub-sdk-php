@@ -8,7 +8,6 @@ namespace Divido\MerchantSDK\Response;
  * @author Neil McGibbon <neil.mcgibbon@divido.com>
  * @author Mike Lovely <mike.lovely@divido.com>
  * @copyright (c) 2018, Divido
- * @package Divido\MerchantSDK
  */
 class Metadata
 {
@@ -67,6 +66,7 @@ class Metadata
     public function setPage(int $page)
     {
         $this->page = $page;
+
         return $this;
     }
 
@@ -89,6 +89,7 @@ class Metadata
     public function setTotalPages(int $totalPages)
     {
         $this->totalPages = $totalPages;
+
         return $this;
     }
 
@@ -111,6 +112,7 @@ class Metadata
     public function setResourcesPerPage(int $resourcesPerPage)
     {
         $this->resourcesPerPage = $resourcesPerPage;
+
         return $this;
     }
 
@@ -133,6 +135,7 @@ class Metadata
     public function setTotalResourceCount(int $totalResourceCount)
     {
         $this->totalResourceCount = $totalResourceCount;
+
         return $this;
     }
 }

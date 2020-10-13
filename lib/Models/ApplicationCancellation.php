@@ -8,7 +8,6 @@ namespace Divido\MerchantSDK\Models;
  * @author Neil McGibbon <neil.mcgibbon@divido.com>
  * @author Mike Lovely <mike.lovely@divido.com>
  * @copyright (c) 2018, Divido
- * @package Divido\MerchantSDK
  */
 class ApplicationCancellation extends AbstractModel
 {

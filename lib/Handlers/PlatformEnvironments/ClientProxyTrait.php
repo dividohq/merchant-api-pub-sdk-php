@@ -8,7 +8,6 @@ namespace Divido\MerchantSDK\Handlers\PlatformEnvironments;
  * @author Neil McGibbon <neil.mcgibbon@divido.com>
  * @author Mike Lovely <mike.lovely@divido.com>
  * @copyright (c) 2018, Divido
- * @package Divido\MerchantSDK
  */
 trait ClientProxyTrait
 {
@@ -30,7 +29,7 @@ trait ClientProxyTrait
     public function platformEnvironments()
     {
         if (!array_key_exists('platform_environments', $this->getHandlers())) {
-            $this->setHandler('platform_environments', new Handler($this->httpClientWrapper));
+            $this->setHandler('platform_environments', new Handler($this->wrapper));
         }
 
         return $this->getHandlers()['platform_environments'];
