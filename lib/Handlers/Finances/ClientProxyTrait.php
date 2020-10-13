@@ -32,7 +32,7 @@ trait ClientProxyTrait
     public function finances()
     {
         if (!array_key_exists('finances', $this->getHandlers())) {
-            $this->setHandler('finances', new Handler($this->httpClientWrapper));
+            $this->setHandler('finances', new Handler($this->wrapper));
         }
 
         return $this->getHandlers()['finances'];

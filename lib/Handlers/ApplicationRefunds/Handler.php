@@ -7,6 +7,7 @@ use Divido\MerchantSDK\Handlers\ApiRequestOptions;
 use Divido\MerchantSDK\Models\Application;
 use Divido\MerchantSDK\Models\ApplicationRefund;
 use Divido\MerchantSDK\Response\ResponseWrapper;
+use Psr\Http\Message\ResponseInterface;
 
 /**
  * Class Handler
@@ -90,7 +91,7 @@ class Handler extends AbstractHttpHandler
             'sort' => $options->getSort(),
         ];
 
-        $response = $this->httpClientWrapper->request('get', $path, $query);
+        $response = $this->wrapper->request('get', $path, $query);
         $parsed = $this->parseResponse($response);
 
         return $parsed;
@@ -113,7 +114,7 @@ class Handler extends AbstractHttpHandler
      *
      * @param Application $application
      * @param string $refundId
-     * @return \GuzzleHttp\Psr7\Response
+     * @return ResponseInterface
      */
     public function getSingleApplicationRefund(Application $application, $refundId)
     {
@@ -124,7 +125,7 @@ class Handler extends AbstractHttpHandler
             $refundId,
         ]);
 
-        return $this->httpClientWrapper->request('get', $path);
+        return $this->wrapper->request('get', $path);
     }
 
     /**
@@ -132,7 +133,7 @@ class Handler extends AbstractHttpHandler
      *
      * @param Application $application
      * @param ApplicationRefund $applicationRefund
-     * @return \GuzzleHttp\Psr7\Response
+     * @return ResponseInterface
      */
     public function createApplicationRefund(Application $application, ApplicationRefund $applicationRefund)
     {
@@ -142,6 +143,6 @@ class Handler extends AbstractHttpHandler
             'refunds',
         ]);
 
-        return $this->httpClientWrapper->request('post', $path, [], [], $applicationRefund->getJsonPayload());
+        return $this->wrapper->request('post', $path, [], [], $applicationRefund->getJsonPayload());
     }
 }

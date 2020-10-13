@@ -24,9 +24,8 @@ $env =  ('LIVE' == $identifier)
     : constant("Divido\MerchantSDK\Environment::$identifier");
 
 // create a client wrapper
-$client = new \GuzzleHttp\Client();
-$httpClientWrapper = new \Divido\MerchantSDK\HttpClient\HttpClientWrapper(
-    new \Divido\MerchantSDKGuzzle6\GuzzleAdapter($client),
+
+$httpClientWrapper = new \Divido\MerchantSDK\Wrappers\HttpWrapper(
     \Divido\MerchantSDK\Environment::CONFIGURATION[$env]['base_uri'],
     'test_cfabc123.querty098765merchantsdk12345'
 );
@@ -34,7 +33,6 @@ $httpClientWrapper = new \Divido\MerchantSDK\HttpClient\HttpClientWrapper(
 // create the sdk
 $sdk = new \Divido\MerchantSDK\Client($httpClientWrapper, $env);
 ```
-
 
 ### Create a merchant sdk (non-Divido tenant)
 
@@ -51,9 +49,8 @@ $env =  ('LIVE' == $identifier)
     : constant("Divido\MerchantSDK\Environment::$identifier");
 
 // create a client wrapper
-$client = new \GuzzleHttp\Client();
-$httpClientWrapper = new \Divido\MerchantSDK\HttpClient\HttpClientWrapper(
-    new \Divido\MerchantSDKGuzzle6\GuzzleAdapter($client),
+
+$httpClientWrapper = new \Divido\MerchantSDK\Wrappers\HttpWrapper(
     'TENANT_URI',
     'TENANT_API_KEY'
 );
@@ -91,7 +88,8 @@ $applications = $applications->getResources();
 ```
 ### Get Single Application
 
-```
+```php
+<?php
 $application = $sdk->applications->getSingleApplication($applicationId);
 $result = json_decode($application->getBody(), true);
 

@@ -2,6 +2,8 @@
 
 namespace Divido\MerchantSDK;
 
+use Divido\MerchantSDK\Wrappers\WrapperInterface;
+
 /**
  * Class Client
  *
@@ -36,24 +38,18 @@ class Client
     private $handlers = [];
 
     /**
-     * HTTP transport wrapper
-     *
-     * @var HttpClientWrapper
+     * @var WrapperInterface $wrapper
      */
-    private $httpClientWrapper;
+    private $wrapper;
 
     /**
-     * Client constructor.
-     *
-     * @param string $apiKey
+     * @param WrapperInterface $wrapper
      * @param string $environment
-     * @param mixed $httpClient
      */
-    final public function __construct($httpClientWrapper, $environment = Environment::SANDBOX)
+    final public function __construct(WrapperInterface $wrapper, $environment = Environment::SANDBOX)
     {
+        $this->wrapper = $wrapper;
         $this->environment = $environment;
-
-        $this->httpClientWrapper = $httpClientWrapper;
     }
 
     /**

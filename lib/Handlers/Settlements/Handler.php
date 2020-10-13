@@ -82,7 +82,7 @@ class Handler extends AbstractHttpHandler
             'sort' => $options->getSort(),
         ];
 
-        $response = $this->httpClientWrapper->request('get', $path, $query);
+        $response = $this->wrapper->request('get', $path, $query);
         $parsed = $this->parseResponse($response);
 
         return $parsed;
@@ -111,6 +111,6 @@ class Handler extends AbstractHttpHandler
             $settlementId,
         ]);
 
-        return $this->httpClientWrapper->request('get', $path);
+        return $this->wrapper->request('get', $path);
     }
 }

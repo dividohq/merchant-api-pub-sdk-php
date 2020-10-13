@@ -2,26 +2,31 @@
 
 namespace Divido\MerchantSDK\Test\Unit;
 
-use GuzzleHttp\Handler\MockHandler;
-use GuzzleHttp\HandlerStack;
-use GuzzleHttp\Middleware;
+use Http\Message\RequestFactory;
 use PHPUnit\Framework\TestCase;
+use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\StreamInterface;
 
 class MerchantSDKTestCase extends TestCase
 {
-    /**
-     * @param array $calls
-     * @param array $history
-     * @return \GuzzleHttp\Client
-     */
-    protected function getGuzzleStackedClient($calls = [], &$history = [])
+    protected function createResponseMock($status = 200, $headers = [], $body = null)
     {
-        $mockHandler = new MockHandler($calls);
-        $historyHandler = Middleware::history($history);
+        $stream = self::createMock(StreamInterface::class);
+        $stream->method('getContents')->willReturn($body);
 
-        $stack = HandlerStack::create($mockHandler);
-        $stack->push($historyHandler);
+        $response = self::createMock(ResponseInterface::class);
+        $response->method('getStatusCode')->willReturn($status);
+        $response->method('getBody')->willReturn($stream);
 
-        return new \GuzzleHttp\Client(['handler' => $stack,]);
+        return $response;
+    }
+
+    protected function createRequestFactory()
+    {
+        $requestFactory = self::createMock(RequestFactory::class);
+        $requestFactory->method('createRequest')->willReturn(self::createMock(RequestInterface::class));
+
+        return $requestFactory;
     }
 }

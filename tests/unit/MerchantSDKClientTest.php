@@ -4,31 +4,38 @@ namespace Divido\MerchantSDK\Test\Unit;
 
 use Divido\MerchantSDK\Client;
 use Divido\MerchantSDK\Environment;
-use Divido\MerchantSDK\Test\Stubs\HttpClient\GuzzleAdapter;
-use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
+use Divido\MerchantSDK\Wrappers\HttpWrapper;
+use Http\Message\RequestFactory;
+
 use PHPUnit\Framework\TestCase;
+use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseFactoryInterface;
 
 class MerchantSDKClientTest extends TestCase
 {
-    use MockeryPHPUnitIntegration;
-
     public function test_InstantiationWithoutEnvironment_UsesSandboxEnvironment()
     {
-        $mock_Client = \Mockery::spy(\GuzzleHttp\Client::class);
+        $httpClient = new \Http\Mock\Client(self::createMock(ResponseFactoryInterface::class));
 
-        $httpClient = new GuzzleAdapter($mock_Client);
+        $requestFactory = self::createMock(RequestFactory::class);
+        $requestFactory->method('createRequest')->willReturn(self::createMock(RequestInterface::class));
 
-        $sdk = new Client($httpClient);
+        $wrapper = new HttpWrapper('-merchant-api-pub-http-host-', 'divido', $httpClient, $requestFactory);
+
+        $sdk = new Client($wrapper);
         $this->assertSame(Environment::SANDBOX, $sdk->getEnvironment());
     }
 
     public function test_InstantiationWithEnvironment_UsesPassedEnvironment()
     {
-        $mock_Client = \Mockery::spy(\GuzzleHttp\Client::class);
+        $httpClient = new \Http\Mock\Client(self::createMock(ResponseFactoryInterface::class));
 
-        $httpClient = new GuzzleAdapter($mock_Client);
+        $requestFactory = self::createMock(RequestFactory::class);
+        $requestFactory->method('createRequest')->willReturn(self::createMock(RequestInterface::class));
 
-        $sdk = new Client($httpClient, Environment::PRODUCTION);
+        $wrapper = new HttpWrapper('-merchant-api-pub-http-host-', 'divido', $httpClient, $requestFactory);
+
+        $sdk = new Client($wrapper, Environment::PRODUCTION);
         $this->assertSame(Environment::PRODUCTION, $sdk->getEnvironment());
     }
 }

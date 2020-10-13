@@ -2,10 +2,9 @@
 
 namespace Divido\MerchantSDK\Handlers;
 
-use Divido\MerchantSDK\Exceptions\MerchantApiBadResponseException;
-use Divido\MerchantSDK\HttpClient\HttpClientWrapper;
 use Divido\MerchantSDK\Response\Metadata;
 use Divido\MerchantSDK\Response\ResponseWrapper;
+use Divido\MerchantSDK\Wrappers\WrapperInterface;
 use Psr\Http\Message\ResponseInterface;
 
 /**
@@ -18,19 +17,18 @@ use Psr\Http\Message\ResponseInterface;
 abstract class AbstractHttpHandler
 {
     /**
-     * @var HttpClientWrapper
+     * @var WrapperInterface
      */
-    protected $httpClientWrapper;
+    protected $wrapper;
 
     /**
      * Create a new abstract http handler instance.
      *
-     * @param HttpClientWrapper $httpClientWrapper
-     * @return void
+     * @param WrapperInterface $wrapper
      */
-    final public function __construct(HttpClientWrapper $httpClientWrapper)
+    final public function __construct(WrapperInterface $wrapper)
     {
-        $this->httpClientWrapper = $httpClientWrapper;
+        $this->wrapper = $wrapper;
     }
 
     /**
@@ -42,14 +40,6 @@ abstract class AbstractHttpHandler
     public function parseResponse(ResponseInterface $response)
     {
         $json = json_decode($response->getBody()->getContents());
-
-        if (isset($json->error)) {
-            throw new MerchantApiBadResponseException(
-                $json->message,
-                $json->code,
-                $json->context
-            );
-        }
 
         // Sanitise for single object resources
         if (!is_array($json->data)) {

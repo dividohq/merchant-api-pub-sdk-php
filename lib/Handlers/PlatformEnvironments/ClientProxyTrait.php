@@ -29,7 +29,7 @@ trait ClientProxyTrait
     public function platformEnvironments()
     {
         if (!array_key_exists('platform_environments', $this->getHandlers())) {
-            $this->setHandler('platform_environments', new Handler($this->httpClientWrapper));
+            $this->setHandler('platform_environments', new Handler($this->wrapper));
         }
 
         return $this->getHandlers()['platform_environments'];

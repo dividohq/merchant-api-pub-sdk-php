@@ -33,7 +33,7 @@ trait ClientProxyTrait
     public function applicationCancellations()
     {
         if (!array_key_exists('application_cancellations', $this->getHandlers())) {
-            $this->setHandler('application_cancellations', new Handler($this->httpClientWrapper));
+            $this->setHandler('application_cancellations', new Handler($this->wrapper));
         }
 
         return $this->getHandlers()['application_cancellations'];
