@@ -24,15 +24,22 @@ class ApplicationActivationsHandlerTest extends MerchantSDKTestCase
             ))
         );
 
+        $expectedUri = '-merchant-api-pub-http-host-' .
+            '/applications' .
+            '/90a25b24-2f53-4c80-aba8-9787c68e4c1d' .
+            '/activations' .
+            '?page=1&sort=-created_at';
         $requestFactory = self::createMock(RequestFactory::class);
-        $requestFactory->method('createRequest')->willReturn($this->createMock(RequestInterface::class));
+        $requestFactory->method('createRequest')
+            ->with('get', $expectedUri, ['X-Divido-Api-Key' => 'divido'], null)
+            ->willReturn(self::createMock(RequestInterface::class));
 
-        $wrapper = new HttpWrapper($httpClient, '-merchant-api-pub-http-host-', '', $requestFactory);
+        $wrapper = new HttpWrapper($httpClient, '-merchant-api-pub-http-host-', 'divido', $requestFactory);
 
-        $handler = new Handler($wrapper, 'divido');
+        $handler = new Handler($wrapper);
 
         $application = (new Application)->withId($this->applicationId);
-        $requestOptions = (new ApiRequestOptions());
+        $requestOptions = (new ApiRequestOptions())->setSort('-created_at');
 
         $activations = $handler->getApplicationActivations($requestOptions, $application);
 
@@ -54,11 +61,11 @@ class ApplicationActivationsHandlerTest extends MerchantSDKTestCase
         );
 
         $requestFactory = self::createMock(RequestFactory::class);
-        $requestFactory->method('createRequest')->willReturn($this->createMock(RequestInterface::class));
+        $requestFactory->method('createRequest')->willReturn(self::createMock(RequestInterface::class));
 
-        $wrapper = new HttpWrapper($httpClient, '-merchant-api-pub-http-host-', '', $requestFactory);
+        $wrapper = new HttpWrapper($httpClient, '-merchant-api-pub-http-host-', 'divido', $requestFactory);
 
-        $handler = new Handler($wrapper, 'divido');
+        $handler = new Handler($wrapper);
 
         $application = (new Application)->withId($this->applicationId);
         $requestOptions = (new ApiRequestOptions());
@@ -88,11 +95,11 @@ class ApplicationActivationsHandlerTest extends MerchantSDKTestCase
         );
 
         $requestFactory = self::createMock(RequestFactory::class);
-        $requestFactory->method('createRequest')->willReturn($this->createMock(RequestInterface::class));
+        $requestFactory->method('createRequest')->willReturn(self::createMock(RequestInterface::class));
 
-        $wrapper = new HttpWrapper($httpClient, '-merchant-api-pub-http-host-', '', $requestFactory);
+        $wrapper = new HttpWrapper($httpClient, '-merchant-api-pub-http-host-', 'divido', $requestFactory);
 
-        $handler = new Handler($wrapper, 'divido');
+        $handler = new Handler($wrapper);
 
         $application = (new Application)->withId($this->applicationId);
 
@@ -123,11 +130,11 @@ class ApplicationActivationsHandlerTest extends MerchantSDKTestCase
         );
 
         $requestFactory = self::createMock(RequestFactory::class);
-        $requestFactory->method('createRequest')->willReturn($this->createMock(RequestInterface::class));
+        $requestFactory->method('createRequest')->willReturn(self::createMock(RequestInterface::class));
 
-        $wrapper = new HttpWrapper($httpClient, '-merchant-api-pub-http-host-', '', $requestFactory);
+        $wrapper = new HttpWrapper($httpClient, '-merchant-api-pub-http-host-', 'divido', $requestFactory);
 
-        $handler = new Handler($wrapper, 'divido');
+        $handler = new Handler($wrapper);
 
         $application = (new Application)->withId($this->applicationId);
         $requestOptions = (new ApiRequestOptions())->setPaginated(false);
@@ -159,11 +166,11 @@ class ApplicationActivationsHandlerTest extends MerchantSDKTestCase
         );
 
         $requestFactory = self::createMock(RequestFactory::class);
-        $requestFactory->method('createRequest')->willReturn($this->createMock(RequestInterface::class));
+        $requestFactory->method('createRequest')->willReturn(self::createMock(RequestInterface::class));
 
-        $wrapper = new HttpWrapper($httpClient, '-merchant-api-pub-http-host-', '', $requestFactory);
+        $wrapper = new HttpWrapper($httpClient, '-merchant-api-pub-http-host-', 'divido', $requestFactory);
 
-        $handler = new Handler($wrapper, 'divido');
+        $handler = new Handler($wrapper);
 
         $application = (new Application)->withId($this->applicationId);
         $requestOptions = (new ApiRequestOptions())->setPaginated(true);
@@ -190,11 +197,11 @@ class ApplicationActivationsHandlerTest extends MerchantSDKTestCase
         );
 
         $requestFactory = self::createMock(RequestFactory::class);
-        $requestFactory->method('createRequest')->willReturn($this->createMock(RequestInterface::class));
+        $requestFactory->method('createRequest')->willReturn(self::createMock(RequestInterface::class));
 
-        $wrapper = new HttpWrapper($httpClient, '-merchant-api-pub-http-host-', '', $requestFactory);
+        $wrapper = new HttpWrapper($httpClient, '-merchant-api-pub-http-host-', 'divido', $requestFactory);
 
-        $handler = new Handler($wrapper, 'divido');
+        $handler = new Handler($wrapper);
 
         $application = (new Application)->withId($this->applicationId);
 
@@ -215,11 +222,11 @@ class ApplicationActivationsHandlerTest extends MerchantSDKTestCase
         );
 
         $requestFactory = self::createMock(RequestFactory::class);
-        $requestFactory->method('createRequest')->willReturn($this->createMock(RequestInterface::class));
+        $requestFactory->method('createRequest')->willReturn(self::createMock(RequestInterface::class));
 
-        $wrapper = new HttpWrapper($httpClient, '-merchant-api-pub-http-host-', '', $requestFactory);
+        $wrapper = new HttpWrapper($httpClient, '-merchant-api-pub-http-host-', 'divido', $requestFactory);
 
-        $handler = new Handler($wrapper, 'divido');
+        $handler = new Handler($wrapper);
 
         $application = (new Application)->withId($this->applicationId);
 

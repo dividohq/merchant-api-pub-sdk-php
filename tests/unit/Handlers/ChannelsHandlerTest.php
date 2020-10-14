@@ -21,9 +21,9 @@ class ChannelsHandlerTest extends MerchantSDKTestCase
 
         $requestFactory = $this->createRequestFactory();
 
-        $wrapper = new HttpWrapper($httpClient, '-merchant-api-pub-http-host-', '', $requestFactory);
+        $wrapper = new HttpWrapper($httpClient, '-merchant-api-pub-http-host-', 'divido', $requestFactory);
 
-        $handler = new Handler($wrapper, 'divido');
+        $handler = new Handler($wrapper);
 
         $requestOptions = (new ApiRequestOptions());
 
@@ -47,9 +47,9 @@ class ChannelsHandlerTest extends MerchantSDKTestCase
 
         $requestFactory = $this->createRequestFactory();
 
-        $wrapper = new HttpWrapper($httpClient, '-merchant-api-pub-http-host-', '', $requestFactory);
+        $wrapper = new HttpWrapper($httpClient, '-merchant-api-pub-http-host-', 'divido', $requestFactory);
 
-        $handler = new Handler($wrapper, 'divido');
+        $handler = new Handler($wrapper);
 
         $requestOptions = (new ApiRequestOptions());
 
@@ -73,9 +73,9 @@ class ChannelsHandlerTest extends MerchantSDKTestCase
 
         $requestFactory = $this->createRequestFactory();
 
-        $wrapper = new HttpWrapper($httpClient, '-merchant-api-pub-http-host-', '', $requestFactory);
+        $wrapper = new HttpWrapper($httpClient, '-merchant-api-pub-http-host-', 'divido', $requestFactory);
 
-        $handler = new Handler($wrapper, 'divido');
+        $handler = new Handler($wrapper);
 
         $requestOptions = (new ApiRequestOptions());
 
@@ -99,9 +99,9 @@ class ChannelsHandlerTest extends MerchantSDKTestCase
 
         $requestFactory = $this->createRequestFactory();
 
-        $wrapper = new HttpWrapper($httpClient, '-merchant-api-pub-http-host-', '', $requestFactory);
+        $wrapper = new HttpWrapper($httpClient, '-merchant-api-pub-http-host-', 'divido', $requestFactory);
 
-        $handler = new Handler($wrapper, 'divido');
+        $handler = new Handler($wrapper);
 
         $requestOptions = (new ApiRequestOptions());
 
@@ -128,9 +128,9 @@ class ChannelsHandlerTest extends MerchantSDKTestCase
 
         $requestFactory = $this->createRequestFactory();
 
-        $wrapper = new HttpWrapper($httpClient, '-merchant-api-pub-http-host-', '', $requestFactory);
+        $wrapper = new HttpWrapper($httpClient, '-merchant-api-pub-http-host-', 'divido', $requestFactory);
 
-        $handler = new Handler($wrapper, 'divido');
+        $handler = new Handler($wrapper);
 
         $requestOptions = (new ApiRequestOptions())->setPage(2);
 
@@ -160,9 +160,9 @@ class ChannelsHandlerTest extends MerchantSDKTestCase
 
         $requestFactory = $this->createRequestFactory();
 
-        $wrapper = new HttpWrapper($httpClient, '-merchant-api-pub-http-host-', '', $requestFactory);
+        $wrapper = new HttpWrapper($httpClient, '-merchant-api-pub-http-host-', 'divido', $requestFactory);
 
-        $handler = new Handler($wrapper, 'divido');
+        $handler = new Handler($wrapper);
 
         $requestOptions = (new ApiRequestOptions())->setSort('-created_at');
 

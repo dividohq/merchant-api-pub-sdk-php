@@ -22,9 +22,9 @@ class ApplicationDocumentsHandlerTest extends MerchantSDKTestCase
 
         $requestFactory = $this->createRequestFactory();
 
-        $wrapper = new HttpWrapper($httpClient, '-merchant-api-pub-http-host-', '', $requestFactory);
+        $wrapper = new HttpWrapper($httpClient, '-merchant-api-pub-http-host-', 'divido', $requestFactory);
 
-        $handler = new Handler($wrapper, 'divido');
+        $handler = new Handler($wrapper);
 
         $application = (new Application)->withId($this->applicationId);
 
@@ -46,9 +46,9 @@ class ApplicationDocumentsHandlerTest extends MerchantSDKTestCase
 
         $requestFactory = $this->createRequestFactory();
 
-        $wrapper = new HttpWrapper($httpClient, '-merchant-api-pub-http-host-', '', $requestFactory);
+        $wrapper = new HttpWrapper($httpClient, '-merchant-api-pub-http-host-', 'divido', $requestFactory);
 
-        $handler = new Handler($wrapper, 'divido');
+        $handler = new Handler($wrapper);
 
         $application = (new Application)->withId($this->applicationId);
 

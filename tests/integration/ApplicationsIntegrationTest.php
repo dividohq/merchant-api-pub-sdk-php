@@ -22,9 +22,9 @@ class ApplicationsIntegrationTest extends MerchantSDKTestCase
         );
 
         $requestFactory = self::createMock(RequestFactory::class);
-        $requestFactory->method('createRequest')->willReturn($this->createMock(RequestInterface::class));
+        $requestFactory->method('createRequest')->willReturn(self::createMock(RequestInterface::class));
 
-        $wrapper = new HttpWrapper($httpClient, '-merchant-api-pub-http-host-', '', $requestFactory);
+        $wrapper = new HttpWrapper($httpClient, '-merchant-api-pub-http-host-', 'divido', $requestFactory);
 
         $sdk = new Client($wrapper, Environment::SANDBOX);
 
@@ -46,9 +46,9 @@ class ApplicationsIntegrationTest extends MerchantSDKTestCase
         );
 
         $requestFactory = self::createMock(RequestFactory::class);
-        $requestFactory->method('createRequest')->willReturn($this->createMock(RequestInterface::class));
+        $requestFactory->method('createRequest')->willReturn(self::createMock(RequestInterface::class));
 
-        $wrapper = new HttpWrapper($httpClient, '-merchant-api-pub-http-host-', '', $requestFactory);
+        $wrapper = new HttpWrapper($httpClient, '-merchant-api-pub-http-host-', 'divido', $requestFactory);
 
         $sdk = new Client($wrapper, Environment::SANDBOX);
 
@@ -76,9 +76,9 @@ class ApplicationsIntegrationTest extends MerchantSDKTestCase
         );
 
         $requestFactory = self::createMock(RequestFactory::class);
-        $requestFactory->method('createRequest')->willReturn($this->createMock(RequestInterface::class));
+        $requestFactory->method('createRequest')->willReturn(self::createMock(RequestInterface::class));
 
-        $wrapper = new HttpWrapper($httpClient, '-merchant-api-pub-http-host-', '', $requestFactory);
+        $wrapper = new HttpWrapper($httpClient, '-merchant-api-pub-http-host-', 'divido', $requestFactory);
 
         $sdk = new Client($wrapper, Environment::SANDBOX);
 
@@ -103,9 +103,9 @@ class ApplicationsIntegrationTest extends MerchantSDKTestCase
         );
 
         $requestFactory = self::createMock(RequestFactory::class);
-        $requestFactory->method('createRequest')->willReturn($this->createMock(RequestInterface::class));
+        $requestFactory->method('createRequest')->willReturn(self::createMock(RequestInterface::class));
 
-        $wrapper = new HttpWrapper($httpClient, '-merchant-api-pub-http-host-', '', $requestFactory);
+        $wrapper = new HttpWrapper($httpClient, '-merchant-api-pub-http-host-', 'divido', $requestFactory);
 
         $sdk = new Client($wrapper, Environment::SANDBOX);
 
@@ -131,9 +131,9 @@ class ApplicationsIntegrationTest extends MerchantSDKTestCase
         );
 
         $requestFactory = self::createMock(RequestFactory::class);
-        $requestFactory->method('createRequest')->willReturn($this->createMock(RequestInterface::class));
+        $requestFactory->method('createRequest')->willReturn(self::createMock(RequestInterface::class));
 
-        $wrapper = new HttpWrapper($httpClient, '-merchant-api-pub-http-host-', '', $requestFactory);
+        $wrapper = new HttpWrapper($httpClient, '-merchant-api-pub-http-host-', 'divido', $requestFactory);
 
         $sdk = new Client($wrapper, Environment::SANDBOX);
 
@@ -157,9 +157,9 @@ class ApplicationsIntegrationTest extends MerchantSDKTestCase
             $this->createResponseMock(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/applications_page_1.json')),
         );
         $requestFactory = self::createMock(RequestFactory::class);
-        $requestFactory->method('createRequest')->willReturn($this->createMock(RequestInterface::class));
+        $requestFactory->method('createRequest')->willReturn(self::createMock(RequestInterface::class));
 
-        $wrapper = new HttpWrapper($httpClient, '-merchant-api-pub-http-host-', '', $requestFactory);
+        $wrapper = new HttpWrapper($httpClient, '-merchant-api-pub-http-host-', 'divido', $requestFactory);
 
         $sdk = new Client($wrapper, Environment::SANDBOX);
 
@@ -182,9 +182,9 @@ class ApplicationsIntegrationTest extends MerchantSDKTestCase
         );
 
         $requestFactory = self::createMock(RequestFactory::class);
-        $requestFactory->method('createRequest')->willReturn($this->createMock(RequestInterface::class));
+        $requestFactory->method('createRequest')->willReturn(self::createMock(RequestInterface::class));
 
-        $wrapper = new HttpWrapper($httpClient, '-merchant-api-pub-http-host-', '', $requestFactory);
+        $wrapper = new HttpWrapper($httpClient, '-merchant-api-pub-http-host-', 'divido', $requestFactory);
 
         $sdk = new Client($wrapper, Environment::SANDBOX);
 

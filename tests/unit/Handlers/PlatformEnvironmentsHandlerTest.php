@@ -19,9 +19,9 @@ class PlatformEnvironmentsHandlerTest extends MerchantSDKTestCase
 
         $requestFactory = $this->createRequestFactory();
 
-        $wrapper = new HttpWrapper($httpClient, '-merchant-api-pub-http-host-', '', $requestFactory);
+        $wrapper = new HttpWrapper($httpClient, '-merchant-api-pub-http-host-', 'divido', $requestFactory);
 
-        $handler = new Handler($wrapper, 'divido');
+        $handler = new Handler($wrapper);
 
         $response = $handler->getPlatformEnvironment();
 

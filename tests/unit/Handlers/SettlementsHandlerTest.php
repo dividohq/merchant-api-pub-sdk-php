@@ -23,9 +23,9 @@ class SettlementsHandlerTest extends MerchantSDKTestCase
 
         $requestFactory = $this->createRequestFactory();
 
-        $wrapper = new HttpWrapper($httpClient, '-merchant-api-pub-http-host-', '', $requestFactory);
+        $wrapper = new HttpWrapper($httpClient, '-merchant-api-pub-http-host-', 'divido', $requestFactory);
 
-        $handler = new Handler($wrapper, 'divido');
+        $handler = new Handler($wrapper);
 
         $requestOptions = (new ApiRequestOptions())->setPage(1);
 
@@ -49,9 +49,9 @@ class SettlementsHandlerTest extends MerchantSDKTestCase
 
         $requestFactory = $this->createRequestFactory();
 
-        $wrapper = new HttpWrapper($httpClient, '-merchant-api-pub-http-host-', '', $requestFactory);
+        $wrapper = new HttpWrapper($httpClient, '-merchant-api-pub-http-host-', 'divido', $requestFactory);
 
-        $handler = new Handler($wrapper, 'divido');
+        $handler = new Handler($wrapper);
 
         $requestOptions = (new ApiRequestOptions())->setPage(1);
 
@@ -75,9 +75,9 @@ class SettlementsHandlerTest extends MerchantSDKTestCase
 
         $requestFactory = $this->createRequestFactory();
 
-        $wrapper = new HttpWrapper($httpClient, '-merchant-api-pub-http-host-', '', $requestFactory);
+        $wrapper = new HttpWrapper($httpClient, '-merchant-api-pub-http-host-', 'divido', $requestFactory);
 
-        $handler = new Handler($wrapper, 'divido');
+        $handler = new Handler($wrapper);
 
         $requestOptions = (new ApiRequestOptions());
 
@@ -101,9 +101,9 @@ class SettlementsHandlerTest extends MerchantSDKTestCase
 
         $requestFactory = $this->createRequestFactory();
 
-        $wrapper = new HttpWrapper($httpClient, '-merchant-api-pub-http-host-', '', $requestFactory);
+        $wrapper = new HttpWrapper($httpClient, '-merchant-api-pub-http-host-', 'divido', $requestFactory);
 
-        $handler = new Handler($wrapper, 'divido');
+        $handler = new Handler($wrapper);
 
         $requestOptions = (new ApiRequestOptions());
 
@@ -130,9 +130,9 @@ class SettlementsHandlerTest extends MerchantSDKTestCase
 
         $requestFactory = $this->createRequestFactory();
 
-        $wrapper = new HttpWrapper($httpClient, '-merchant-api-pub-http-host-', '', $requestFactory);
+        $wrapper = new HttpWrapper($httpClient, '-merchant-api-pub-http-host-', 'divido', $requestFactory);
 
-        $handler = new Handler($wrapper, 'divido');
+        $handler = new Handler($wrapper);
 
         $requestOptions = (new ApiRequestOptions())->setPage(2);
 
@@ -162,9 +162,9 @@ class SettlementsHandlerTest extends MerchantSDKTestCase
 
         $requestFactory = $this->createRequestFactory();
 
-        $wrapper = new HttpWrapper($httpClient, '-merchant-api-pub-http-host-', '', $requestFactory);
+        $wrapper = new HttpWrapper($httpClient, '-merchant-api-pub-http-host-', 'divido', $requestFactory);
 
-        $handler = new Handler($wrapper, 'divido');
+        $handler = new Handler($wrapper);
 
         $requestOptions = (new ApiRequestOptions())->setPage(1)->setSort('-created_at');
 
@@ -184,9 +184,9 @@ class SettlementsHandlerTest extends MerchantSDKTestCase
 
         $requestFactory = $this->createRequestFactory();
 
-        $wrapper = new HttpWrapper($httpClient, '-merchant-api-pub-http-host-', '', $requestFactory);
+        $wrapper = new HttpWrapper($httpClient, '-merchant-api-pub-http-host-', 'divido', $requestFactory);
 
-        $handler = new Handler($wrapper, 'divido');
+        $handler = new Handler($wrapper);
 
         $response = $handler->getSingleSettlement($this->settlementId);
 
