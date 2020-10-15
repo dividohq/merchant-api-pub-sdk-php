@@ -2,13 +2,11 @@
 
 namespace Divido\MerchantSDK\Test\Unit;
 
-use Divido\MerchantSDK\Client;
-use Divido\MerchantSDK\Environment;
 use Divido\MerchantSDK\Handlers\ApiRequestOptions;
 use Divido\MerchantSDK\Handlers\Channels\Handler;
 use Divido\MerchantSDK\HttpClient\HttpClientWrapper;
-use Divido\MerchantSDK\Test\Stubs\HttpClient\GuzzleAdapter;
 use Divido\MerchantSDK\Response\ResponseWrapper;
+use Divido\MerchantSDK\Test\Stubs\HttpClient\GuzzleAdapter;
 use GuzzleHttp\Psr7\Response;
 use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 
@@ -135,7 +133,6 @@ class ChannelsHandlerTest extends MerchantSDKTestCase
 
         $plan = $channels->current();
         self::assertCount(2, $channels);
-
 
         self::assertInternalType('object', $plan);
         self::assertObjectHasAttribute('id', $plan);

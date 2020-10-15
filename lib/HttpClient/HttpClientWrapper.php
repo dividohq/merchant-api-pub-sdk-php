@@ -8,7 +8,6 @@ namespace Divido\MerchantSDK\HttpClient;
  * @author Neil McGibbon <neil.mcgibbon@divido.com>
  * @author Mike Lovely <mike.lovely@divido.com>
  * @copyright (c) 2018, Divido
- * @package Divido\MerchantSDK
  */
 class HttpClientWrapper
 {
@@ -74,20 +73,27 @@ class HttpClientWrapper
         switch ($method) {
             case 'get':
                 return $this->httpClient->get($uri, $headers);
+
                 break;
             case 'post':
                 $headers['Content-Type'] = 'application/json';
+
                 return $this->httpClient->post($uri, $headers, $payload);
+
                 break;
             case 'patch':
                 $headers['Content-Type'] = 'application/json';
+
                 return $this->httpClient->patch($uri, $headers, $payload);
+
                 break;
             case 'delete':
                 return $this->httpClient->delete($uri, $headers);
+
                 break;
             default:
                 throw new \InvalidArgumentException('Divido Merchant SDK does not support this HTTP method');
+
                 break;
         }
     }

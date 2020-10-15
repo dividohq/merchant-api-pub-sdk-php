@@ -12,7 +12,6 @@ use Divido\MerchantSDK\Response\ResponseWrapper;
  * @author Neil McGibbon <neil.mcgibbon@divido.com>
  * @author Mike Lovely <mike.lovely@divido.com>
  * @copyright (c) 2018, Divido
- * @package Divido\MerchantSDK
  */
 trait ClientProxyTrait
 {
@@ -55,6 +54,7 @@ trait ClientProxyTrait
         }
 
         $options->setPaginated(true);
+
         return $this->applicationActivations()->getApplicationActivations($options, $application);
     }
 
@@ -73,6 +73,7 @@ trait ClientProxyTrait
         }
 
         $options->setPaginated(false);
+
         return $this->applicationActivations()->getApplicationActivations($options, $application);
     }
 

@@ -19,7 +19,6 @@ class MerchantSDKTestCase extends TestCase
         $mockHandler = new MockHandler($calls);
         $historyHandler = Middleware::history($history);
 
-
         $stack = HandlerStack::create($mockHandler);
         $stack->push($historyHandler);
 

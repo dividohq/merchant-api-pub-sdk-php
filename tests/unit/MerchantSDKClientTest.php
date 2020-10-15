@@ -4,10 +4,7 @@ namespace Divido\MerchantSDK\Test\Unit;
 
 use Divido\MerchantSDK\Client;
 use Divido\MerchantSDK\Environment;
-use Divido\MerchantSDK\GuzzleWrapper;
-use Divido\MerchantSDK\Handlers\FinancesHandler;
 use Divido\MerchantSDK\Test\Stubs\HttpClient\GuzzleAdapter;
-use GuzzleHttp\ClientInterface;
 use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 use PHPUnit\Framework\TestCase;
 

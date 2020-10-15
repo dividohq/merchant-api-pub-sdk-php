@@ -10,7 +10,6 @@ use GuzzleHttp\Psr7\Response;
  * @author Neil McGibbon <neil.mcgibbon@divido.com>
  * @author Mike Lovely <mike.lovely@divido.com>
  * @copyright (c) 2018, Divido
- * @package Divido\MerchantSDK
  */
 class ResponseWrapper
 {
@@ -64,6 +63,7 @@ class ResponseWrapper
     public function setResources(array $resources)
     {
         $this->resources = $resources;
+
         return $this;
     }
 
@@ -86,6 +86,7 @@ class ResponseWrapper
     public function setMetadata(Metadata $metadata)
     {
         $this->metadata = $metadata;
+
         return $this;
     }
 
@@ -108,6 +109,7 @@ class ResponseWrapper
     public function setRawResponse(Response $rawResponse)
     {
         $this->rawResponse = $rawResponse;
+
         return $this;
     }
 }

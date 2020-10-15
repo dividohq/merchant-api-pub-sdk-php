@@ -11,7 +11,6 @@ use Divido\MerchantSDK\Response\ResponseWrapper;
  * @author Neil McGibbon <neil.mcgibbon@divido.com>
  * @author Mike Lovely <mike.lovely@divido.com>
  * @copyright (c) 2018, Divido
- * @package Divido\MerchantSDK
  */
 trait ClientProxyTrait
 {
@@ -49,6 +48,7 @@ trait ClientProxyTrait
     public function getSettlementsByPage(ApiRequestOptions $options)
     {
         $options->setPaginated(true);
+
         return $this->settlements()->getSettlements($options);
     }
 
@@ -62,6 +62,7 @@ trait ClientProxyTrait
     public function getAllSettlements(ApiRequestOptions $options)
     {
         $options->setPaginated(false);
+
         return $this->settlements()->getSettlements($options);
     }
 

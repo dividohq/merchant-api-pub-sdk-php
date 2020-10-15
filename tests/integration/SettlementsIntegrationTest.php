@@ -6,10 +6,8 @@ use Divido\MerchantSDK\Client;
 use Divido\MerchantSDK\Environment;
 use Divido\MerchantSDK\Handlers\ApiRequestOptions;
 use Divido\MerchantSDK\HttpClient\HttpClientWrapper;
-use Divido\MerchantSDK\Handlers\Settlements\Handler;
-use Divido\MerchantSDK\Test\Stubs\HttpClient\GuzzleAdapter;
-use Divido\MerchantSDK\Models\Settlement;
 use Divido\MerchantSDK\Response\ResponseWrapper;
+use Divido\MerchantSDK\Test\Stubs\HttpClient\GuzzleAdapter;
 use Divido\MerchantSDK\Test\Unit\MerchantSDKTestCase;
 use GuzzleHttp\Psr7\Response;
 use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
@@ -155,7 +153,6 @@ class SettlementsIntegrationTest extends MerchantSDKTestCase
 
         $plan = $settlements->current();
         self::assertCount(4, $settlements);
-
 
         self::assertInternalType('object', $plan);
         self::assertObjectHasAttribute('id', $plan);
