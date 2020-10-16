@@ -2,14 +2,12 @@
 
 namespace Divido\MerchantSDK\Test\Unit;
 
-use Divido\MerchantSDK\Client;
-use Divido\MerchantSDK\Environment;
 use Divido\MerchantSDK\Handlers\ApiRequestOptions;
 use Divido\MerchantSDK\Handlers\ApplicationActivations\Handler;
 use Divido\MerchantSDK\HttpClient\HttpClientWrapper;
-use Divido\MerchantSDK\Test\Stubs\HttpClient\GuzzleAdapter;
 use Divido\MerchantSDK\Models\Application;
 use Divido\MerchantSDK\Response\ResponseWrapper;
+use Divido\MerchantSDK\Test\Stubs\HttpClient\GuzzleAdapter;
 use GuzzleHttp\Psr7\Response;
 use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 
@@ -105,7 +103,6 @@ class ApplicationActivationsHandlerTest extends MerchantSDKTestCase
         $requestOptions = (new ApiRequestOptions())->setPaginated(false);
         $activations = $handler->getAllApplicationActivations($requestOptions, $application);
 
-
         self::assertInstanceOf(ResponseWrapper::class, $activations);
         self::assertCount(3, $activations->getResources());
         self::assertInternalType('object', $activations->getResources()[0]);
@@ -113,7 +110,6 @@ class ApplicationActivationsHandlerTest extends MerchantSDKTestCase
         self::assertSame('97ca1476-2c9c-4ca2-b4c6-1f41f2ecdf5b', $activations->getResources()[0]->id);
         self::assertSame('69c08979-b727-407b-b449-6f03de02dd77', $activations->getResources()[1]->id);
         self::assertSame('69c08979-b727-407b-b449-6f03de02dd78', $activations->getResources()[2]->id);
-
 
         self::assertCount(2, $history);
         self::assertSame('GET', $history[0]['request']->getMethod());

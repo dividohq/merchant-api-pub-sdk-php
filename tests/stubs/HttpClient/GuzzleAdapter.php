@@ -14,7 +14,6 @@ use Psr\Http\Message\UriInterface;
  * @author Neil McGibbon <neil.mcgibbon@divido.com>
  * @author Mike Lovely <mike.lovely@divido.com>
  * @copyright (c) 2018, Divido
- * @package Divido\MerchantSDK
  */
 class GuzzleAdapter implements IHttpClient
 {

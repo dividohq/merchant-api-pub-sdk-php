@@ -14,7 +14,6 @@ use Psr\Http\Message\ResponseInterface;
  * @author Neil McGibbon <neil.mcgibbon@divido.com>
  * @author Mike Lovely <mike.lovely@divido.com>
  * @copyright (c) 2018, Divido
- * @package Divido\MerchantSDK
  */
 abstract class AbstractHttpHandler
 {
@@ -135,5 +134,4 @@ abstract class AbstractHttpHandler
             $options->setPage($options->getPage() + 1);
         }
     }
-
 }

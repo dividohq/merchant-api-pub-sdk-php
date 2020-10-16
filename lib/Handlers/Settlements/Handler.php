@@ -12,7 +12,6 @@ use Divido\MerchantSDK\Response\ResponseWrapper;
  * @author Neil McGibbon <neil.mcgibbon@divido.com>
  * @author Mike Lovely <mike.lovely@divido.com>
  * @copyright (c) 2018, Divido
- * @package Divido\MerchantSDK
  */
 class Handler extends AbstractHttpHandler
 {
@@ -43,6 +42,7 @@ class Handler extends AbstractHttpHandler
             foreach ($this->yieldAllSettlements($options) as $settlement) {
                 yield $settlement;
             }
+
             return;
         }
 

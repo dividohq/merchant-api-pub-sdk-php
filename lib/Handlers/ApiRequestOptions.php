@@ -8,7 +8,6 @@ namespace Divido\MerchantSDK\Handlers;
  * @author Neil McGibbon <neil.mcgibbon@divido.com>
  * @author Mike Lovely <mike.lovely@divido.com>
  * @copyright (c) 2018, Divido
- * @package Divido\MerchantSDK
  */
 class ApiRequestOptions
 {
@@ -55,6 +54,7 @@ class ApiRequestOptions
     public function setPage($page)
     {
         $this->page = $page;
+
         return $this;
     }
 
@@ -73,6 +73,7 @@ class ApiRequestOptions
     public function setSort($sort)
     {
         $this->sort = $sort;
+
         return $this;
     }
 
@@ -91,6 +92,7 @@ class ApiRequestOptions
     public function setFilters(array $filters)
     {
         $this->filters = $filters;
+
         return $this;
     }
 
@@ -109,6 +111,7 @@ class ApiRequestOptions
     public function setPaginated($paginated)
     {
         $this->paginated = $paginated;
+
         return $this;
     }
 }

@@ -5,7 +5,6 @@ namespace Divido\MerchantSDK\Handlers\ApplicationDocuments;
 use Divido\MerchantSDK\Handlers\AbstractHttpHandler;
 use Divido\MerchantSDK\Models\Application;
 use Divido\MerchantSDK\Models\ApplicationDocument;
-use Divido\MerchantSDK\Response\ResponseWrapper;
 
 /**
  * Class Handler
@@ -13,7 +12,6 @@ use Divido\MerchantSDK\Response\ResponseWrapper;
  * @author Neil McGibbon <neil.mcgibbon@divido.com>
  * @author Mike Lovely <mike.lovely@divido.com>
  * @copyright (c) 2018, Divido
- * @package Divido\MerchantSDK
  */
 class Handler extends AbstractHttpHandler
 {

@@ -5,7 +5,6 @@ namespace Divido\MerchantSDK\Handlers\Applications;
 use Divido\MerchantSDK\Handlers\AbstractHttpHandler;
 use Divido\MerchantSDK\Handlers\ApiRequestOptions;
 use Divido\MerchantSDK\Models\Application;
-use Divido\MerchantSDK\Response\ResponseWrapperer;
 
 /**
  * Class Handler
@@ -13,7 +12,6 @@ use Divido\MerchantSDK\Response\ResponseWrapperer;
  * @author Neil McGibbon <neil.mcgibbon@divido.com>
  * @author Mike Lovely <mike.lovely@divido.com>
  * @copyright (c) 2018, Divido
- * @package Divido\MerchantSDK
  */
 class Handler extends AbstractHttpHandler
 {
@@ -44,6 +42,7 @@ class Handler extends AbstractHttpHandler
             foreach ($this->yieldAllApplications($options) as $application) {
                 yield $application;
             }
+
             return;
         }
 

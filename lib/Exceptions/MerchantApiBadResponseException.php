@@ -7,7 +7,6 @@ namespace Divido\MerchantSDK\Exceptions;
  *
  * @author Mike Lovely <mike.lovely@divido.com>
  * @copyright (c) 2018, Divido
- * @package Divido\MerchantSDK
  */
 class MerchantApiBadResponseException extends \Exception
 {
@@ -53,10 +52,11 @@ class MerchantApiBadResponseException extends \Exception
      */
     private function validateCode($code)
     {
-        $code = (int)$code;
+        $code = (int) $code;
         if (strlen(trim($code)) !== 6) {
             return false;
         }
+
         return $code;
     }
 }
