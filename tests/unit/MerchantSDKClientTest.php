@@ -19,7 +19,7 @@ class MerchantSDKClientTest extends TestCase
         $requestFactory = self::createMock(RequestFactory::class);
         $requestFactory->method('createRequest')->willReturn(self::createMock(RequestInterface::class));
 
-        $wrapper = new HttpWrapper($httpClient, '-merchant-api-pub-http-host-', 'divido', $requestFactory);
+        $wrapper = new HttpWrapper('-merchant-api-pub-http-host-', 'divido', $httpClient, $requestFactory);
 
         $sdk = new Client($wrapper);
         $this->assertSame(Environment::SANDBOX, $sdk->getEnvironment());
@@ -32,7 +32,7 @@ class MerchantSDKClientTest extends TestCase
         $requestFactory = self::createMock(RequestFactory::class);
         $requestFactory->method('createRequest')->willReturn(self::createMock(RequestInterface::class));
 
-        $wrapper = new HttpWrapper($httpClient, '-merchant-api-pub-http-host-', 'divido', $requestFactory);
+        $wrapper = new HttpWrapper('-merchant-api-pub-http-host-', 'divido', $httpClient, $requestFactory);
 
         $sdk = new Client($wrapper, Environment::PRODUCTION);
         $this->assertSame(Environment::PRODUCTION, $sdk->getEnvironment());

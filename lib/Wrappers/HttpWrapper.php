@@ -35,22 +35,20 @@ class HttpWrapper implements WrapperInterface
     private $requestFactory;
 
     /**
-     * @param ClientInterface $httpClient
      * @param string $baseUrl
      * @param string $apiKey
+     * @param ClientInterface $httpClient
      * @param RequestFactory $requestFactory
      */
     public function __construct(
+        string $baseUrl,
+        string $apiKey,
         ClientInterface $httpClient = null,
-        string $baseUrl = null,
-        string $apiKey = null,
         RequestFactory $requestFactory = null
     ) {
-        // @todo add backward compatible check here
-
-        $this->httpClient = $httpClient ?? Psr18ClientDiscovery::find();
         $this->baseUrl = $baseUrl;
         $this->apiKey = $apiKey;
+        $this->httpClient = $httpClient ?? Psr18ClientDiscovery::find();
         $this->requestFactory = $requestFactory ?? MessageFactoryDiscovery::find();
     }
 
