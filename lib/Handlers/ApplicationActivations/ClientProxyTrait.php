@@ -33,7 +33,7 @@ trait ClientProxyTrait
     public function applicationActivations()
     {
         if (!array_key_exists('application_activations', $this->getHandlers())) {
-            $this->setHandler('application_activations', new Handler($this->httpClientWrapper));
+            $this->setHandler('application_activations', new Handler($this->wrapper));
         }
 
         return $this->getHandlers()['application_activations'];

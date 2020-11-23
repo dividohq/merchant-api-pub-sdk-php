@@ -5,6 +5,7 @@ namespace Divido\MerchantSDK\Handlers\Applications;
 use Divido\MerchantSDK\Handlers\AbstractHttpHandler;
 use Divido\MerchantSDK\Handlers\ApiRequestOptions;
 use Divido\MerchantSDK\Models\Application;
+use Psr\Http\Message\ResponseInterface;
 
 /**
  * Class Handler
@@ -83,7 +84,7 @@ class Handler extends AbstractHttpHandler
             'filter' => $options->getFilters(),
         ];
 
-        $response = $this->httpClientWrapper->request('get', $path, $query);
+        $response = $this->wrapper->request('get', $path, $query);
         $parsed = $this->parseResponse($response);
 
         return $parsed;
@@ -104,7 +105,7 @@ class Handler extends AbstractHttpHandler
      * Get single application by id
      *
      * @param string $applicationId
-     * @return \GuzzleHttp\Psr7\Response
+     * @return ResponseInterface
      */
     public function getSingleApplication($applicationId)
     {
@@ -113,14 +114,14 @@ class Handler extends AbstractHttpHandler
             $applicationId,
         ]);
 
-        return $this->httpClientWrapper->request('get', $path);
+        return $this->wrapper->request('get', $path);
     }
 
     /**
      * Create an application
      *
      * @param Application $application
-     * @return \GuzzleHttp\Psr7\Response
+     * @return ResponseInterface
      */
     public function createApplication(Application $application, array $query = [], array $headers = [])
     {
@@ -128,14 +129,14 @@ class Handler extends AbstractHttpHandler
             'applications',
         ]);
 
-        return $this->httpClientWrapper->request('post', $path, $query, $headers, $application->getJsonPayload());
+        return $this->wrapper->request('post', $path, $query, $headers, $application->getJsonPayload());
     }
 
     /**
      * Update an application
      *
      * @param Application $application
-     * @return \GuzzleHttp\Psr7\Response
+     * @return ResponseInterface
      */
     public function updateApplication(Application $application)
     {
@@ -144,6 +145,6 @@ class Handler extends AbstractHttpHandler
             $application->getId(),
         ]);
 
-        return $this->httpClientWrapper->request('patch', $path, [], [], $application->getJsonPayload());
+        return $this->wrapper->request('patch', $path, [], [], $application->getJsonPayload());
     }
 }

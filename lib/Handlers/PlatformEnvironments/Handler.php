@@ -3,6 +3,7 @@
 namespace Divido\MerchantSDK\Handlers\PlatformEnvironments;
 
 use Divido\MerchantSDK\Handlers\AbstractHttpHandler;
+use Psr\Http\Message\ResponseInterface;
 
 /**
  * Class Handler
@@ -16,10 +17,10 @@ class Handler extends AbstractHttpHandler
     /**
      * Get environment based on provided api key
      *
-     * @return \GuzzleHttp\Psr7\Response
+     * @return ResponseInterface
      */
     public function getPlatformEnvironment()
     {
-        return $this->httpClientWrapper->request('get', '/environment');
+        return $this->wrapper->request('get', '/environment');
     }
 }

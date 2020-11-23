@@ -3,28 +3,39 @@
 
 ## Basic SDK usage
 
-### Create a merchant sdk
+### Creating the merchant sdk client
 
 ```php
 <?php
 
-// find the environment
-$array = explode('_', 'test_cfabc123.querty098765merchantsdk12345');
+// Your api-key.
+$apiKey = 'sandbox_0fa84548.9bc12e569d3e2d0c3131bfb5eeb647d0';
+
+// Find the environment (eg "sandbox", "production") to help you find the $baseUri.
+$array = explode('_', $apiKey);
 $identifier = strtoupper($array[0]);
 $env =  ('LIVE' == $identifier)
     ? constant("Divido\MerchantSDK\Environment::PRODUCTION")
     : constant("Divido\MerchantSDK\Environment::$identifier");
 
-// create a client wrapper
-$client = new \GuzzleHttp\Client();
-$httpClientWrapper = new \Divido\MerchantSDK\HttpClient\HttpClientWrapper(
-    new \Divido\MerchantSDKGuzzle6\GuzzleAdapter($client),
-    \Divido\MerchantSDK\Environment::CONFIGURATION[$env]['base_uri'],
-    'test_cfabc123.querty098765merchantsdk12345'
+// The base_uri to divido. Eg https://merchant.api.sandbox.divido.net
+$baseUri = \Divido\MerchantSDK\Environment::CONFIGURATION[$env]['base_uri'];
+
+// Create a http wrapper either by relying on psr18-client-discovery like this:
+$wrapper = new \Divido\MerchantSDK\Wrappers\HttpWrapper(
+    $baseUri,
+    $apiKey
 );
 
-// create the sdk
-$sdk = new \Divido\MerchantSDK\Client($httpClientWrapper, $env);
+// Alternatively, you can pass any http-client that implements the [psr-http client interface](https://github.com/php-fig/http-client).
+$wrapper = new \Divido\MerchantSDK\Wrappers\HttpWrapper(
+    $baseUri,
+    $apiKey,
+    new \Http\Adapter\Guzzle6\Client()
+);
+
+// Create the SDK client to use throughout your project.
+$sdk = new \Divido\MerchantSDK\Client($wrapper);
 ```
 
 ### Get all finance plans
@@ -56,7 +67,8 @@ $applications = $applications->getResources();
 ```
 ### Get Single Application
 
-```
+```php
+<?php
 $application = $sdk->applications->getSingleApplication($applicationId);
 $result = json_decode($application->getBody(), true);
 

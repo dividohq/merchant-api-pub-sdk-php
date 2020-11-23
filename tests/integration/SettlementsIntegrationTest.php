@@ -5,34 +5,32 @@ namespace Divido\MerchantSDK\Test\Integration;
 use Divido\MerchantSDK\Client;
 use Divido\MerchantSDK\Environment;
 use Divido\MerchantSDK\Handlers\ApiRequestOptions;
-use Divido\MerchantSDK\HttpClient\HttpClientWrapper;
 use Divido\MerchantSDK\Response\ResponseWrapper;
-use Divido\MerchantSDK\Test\Stubs\HttpClient\GuzzleAdapter;
 use Divido\MerchantSDK\Test\Unit\MerchantSDKTestCase;
-use GuzzleHttp\Psr7\Response;
-use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
+use Divido\MerchantSDK\Wrappers\HttpWrapper;
+use Http\Message\RequestFactory;
+use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseFactoryInterface;
 
 class SettlementsIntegrationTest extends MerchantSDKTestCase
 {
-    use MockeryPHPUnitIntegration;
-
     private $settlementId = '6EC506EE-7919-11E8-A4CE-0242AC1E000B';
 
     public function test_GetSettlementsFromClient_ReturnsSettlements()
     {
-        $history = [];
-
-        $client = $this->getGuzzleStackedClient([
-            new Response(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/settlements_page_1.json')),
-        ], $history);
-
-        $httpClientWrapper = new HttpClientWrapper(
-            new GuzzleAdapter($client),
-            Environment::CONFIGURATION[Environment::SANDBOX]['base_uri'],
-            'test_key'
+        $httpClient = new \Http\Mock\Client(self::createMock(ResponseFactoryInterface::class));
+        $httpClient->addResponse(
+            $this->createResponseMock(200, [], file_get_contents(
+                APP_PATH . '/tests/assets/responses/settlements_page_1.json')
+            )
         );
 
-        $sdk = new Client($httpClientWrapper, Environment::SANDBOX);
+        $requestFactory = self::createMock(RequestFactory::class);
+        $requestFactory->method('createRequest')->willReturn(self::createMock(RequestInterface::class));
+
+        $wrapper = new HttpWrapper('-merchant-api-pub-http-host-', 'divido', $httpClient, $requestFactory);
+
+        $sdk = new Client($wrapper, Environment::SANDBOX);
 
         $requestOptions = (new ApiRequestOptions())->setPage(1);
 
@@ -40,36 +38,26 @@ class SettlementsIntegrationTest extends MerchantSDKTestCase
 
         self::assertInstanceOf(ResponseWrapper::class, $settlements);
         self::assertCount(4, $settlements->getResources());
-        self::assertInternalType('object', $settlements->getResources()[0]);
+        self::assertIsObject($settlements->getResources()[0]);
         self::assertObjectHasAttribute('id', $settlements->getResources()[0]);
         self::assertSame('6EC506EE-7919-11E8-A4CE-0242AC1E000B', $settlements->getResources()[0]->id);
-
-        self::assertCount(1, $history);
-        self::assertSame('GET', $history[0]['request']->getMethod());
-        self::assertSame('/settlements', $history[0]['request']->getUri()->getPath());
-
-        $query = [];
-        parse_str($history[0]['request']->getUri()->getQuery(), $query);
-
-        self::assertArrayHasKey('page', $query);
-        self::assertSame('1', $query['page']);
     }
 
     public function test_GetSettlementsByPageFromClient_ReturnsSettlements()
     {
-        $history = [];
-
-        $client = $this->getGuzzleStackedClient([
-            new Response(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/settlements_page_1.json')),
-        ], $history);
-
-        $httpClientWrapper = new HttpClientWrapper(
-            new GuzzleAdapter($client),
-            Environment::CONFIGURATION[Environment::SANDBOX]['base_uri'],
-            'test_key'
+        $httpClient = new \Http\Mock\Client(self::createMock(ResponseFactoryInterface::class));
+        $httpClient->addResponse(
+            $this->createResponseMock(200, [], file_get_contents(
+                APP_PATH . '/tests/assets/responses/settlements_page_1.json')
+            )
         );
 
-        $sdk = new Client($httpClientWrapper, Environment::SANDBOX);
+        $requestFactory = self::createMock(RequestFactory::class);
+        $requestFactory->method('createRequest')->willReturn(self::createMock(RequestInterface::class));
+
+        $wrapper = new HttpWrapper('-merchant-api-pub-http-host-', 'divido', $httpClient, $requestFactory);
+
+        $sdk = new Client($wrapper, Environment::SANDBOX);
 
         $requestOptions = (new ApiRequestOptions())->setPage(1);
 
@@ -77,36 +65,26 @@ class SettlementsIntegrationTest extends MerchantSDKTestCase
 
         self::assertInstanceOf(ResponseWrapper::class, $settlements);
         self::assertCount(4, $settlements->getResources());
-        self::assertInternalType('object', $settlements->getResources()[0]);
+        self::assertIsObject($settlements->getResources()[0]);
         self::assertObjectHasAttribute('id', $settlements->getResources()[0]);
         self::assertSame('6EC506EE-7919-11E8-A4CE-0242AC1E000B', $settlements->getResources()[0]->id);
-
-        self::assertCount(1, $history);
-        self::assertSame('GET', $history[0]['request']->getMethod());
-        self::assertSame('/settlements', $history[0]['request']->getUri()->getPath());
-
-        $query = [];
-        parse_str($history[0]['request']->getUri()->getQuery(), $query);
-
-        self::assertArrayHasKey('page', $query);
-        self::assertSame('1', $query['page']);
     }
 
     public function test_GetAllSettlementsFromClient_ReturnsSettlements()
     {
-        $history = [];
-
-        $client = $this->getGuzzleStackedClient([
-            new Response(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/settlements_page_1.json')),
-        ], $history);
-
-        $httpClientWrapper = new HttpClientWrapper(
-            new GuzzleAdapter($client),
-            Environment::CONFIGURATION[Environment::SANDBOX]['base_uri'],
-            'test_key'
+        $httpClient = new \Http\Mock\Client(self::createMock(ResponseFactoryInterface::class));
+        $httpClient->addResponse(
+            $this->createResponseMock(200, [], file_get_contents(
+                APP_PATH . '/tests/assets/responses/settlements_page_1.json')
+            )
         );
 
-        $sdk = new Client($httpClientWrapper, Environment::SANDBOX);
+        $requestFactory = self::createMock(RequestFactory::class);
+        $requestFactory->method('createRequest')->willReturn(self::createMock(RequestInterface::class));
+
+        $wrapper = new HttpWrapper('-merchant-api-pub-http-host-', 'divido', $httpClient, $requestFactory);
+
+        $sdk = new Client($wrapper, Environment::SANDBOX);
 
         $requestOptions = (new ApiRequestOptions());
 
@@ -114,36 +92,27 @@ class SettlementsIntegrationTest extends MerchantSDKTestCase
 
         self::assertInstanceOf(ResponseWrapper::class, $settlements);
         self::assertCount(4, $settlements->getResources());
-        self::assertInternalType('object', $settlements->getResources()[0]);
+        self::assertIsObject($settlements->getResources()[0]);
         self::assertObjectHasAttribute('id', $settlements->getResources()[0]);
         self::assertSame('6EC506EE-7919-11E8-A4CE-0242AC1E000B', $settlements->getResources()[0]->id);
-
-        self::assertCount(1, $history);
-        self::assertSame('GET', $history[0]['request']->getMethod());
-        self::assertSame('/settlements', $history[0]['request']->getUri()->getPath());
-
-        $query = [];
-        parse_str($history[0]['request']->getUri()->getQuery(), $query);
-
-        self::assertArrayHasKey('page', $query);
-        self::assertSame('1', $query['page']);
     }
 
     public function test_YieldAllSettlementsFromClient_ReturnsSettlementGenerator()
     {
-        $history = [];
+        $httpClient = new \Http\Mock\Client(self::createMock(ResponseFactoryInterface::class));
 
-        $client = $this->getGuzzleStackedClient([
-            new Response(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/settlements_page_1.json')),
-        ], $history);
-
-        $httpClientWrapper = new HttpClientWrapper(
-            new GuzzleAdapter($client),
-            Environment::CONFIGURATION[Environment::SANDBOX]['base_uri'],
-            'test_key'
+        $httpClient->addResponse(
+            $this->createResponseMock(200, [], file_get_contents(
+                APP_PATH . '/tests/assets/responses/settlements_page_1.json')
+            )
         );
 
-        $sdk = new Client($httpClientWrapper, Environment::SANDBOX);
+        $requestFactory = self::createMock(RequestFactory::class);
+        $requestFactory->method('createRequest')->willReturn(self::createMock(RequestInterface::class));
+
+        $wrapper = new HttpWrapper('-merchant-api-pub-http-host-', 'divido', $httpClient, $requestFactory);
+
+        $sdk = new Client($wrapper, Environment::SANDBOX);
 
         $requestOptions = (new ApiRequestOptions());
 
@@ -154,66 +123,48 @@ class SettlementsIntegrationTest extends MerchantSDKTestCase
         $plan = $settlements->current();
         self::assertCount(4, $settlements);
 
-        self::assertInternalType('object', $plan);
+        self::assertIsObject($plan);
         self::assertObjectHasAttribute('id', $plan);
         self::assertSame('6EC506EE-7919-11E8-A4CE-0242AC1E000B', $plan->id);
-
-        self::assertCount(1, $history);
-        self::assertSame('GET', $history[0]['request']->getMethod());
-        self::assertSame('/settlements', $history[0]['request']->getUri()->getPath());
-
-        $query = [];
-        parse_str($history[0]['request']->getUri()->getQuery(), $query);
-
-        self::assertArrayHasKey('page', $query);
-        self::assertSame('1', $query['page']);
     }
 
     public function test_GetSettlementsByPageFromClient_WithSort_ReturnsSortedSettlements()
     {
-        $history = [];
-
-        $client = $this->getGuzzleStackedClient([
-            new Response(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/settlements_page_1.json')),
-        ], $history);
-        $httpClientWrapper = new HttpClientWrapper(
-            new GuzzleAdapter($client),
-            Environment::CONFIGURATION[Environment::SANDBOX]['base_uri'],
-            'test_key'
+        $httpClient = new \Http\Mock\Client(self::createMock(ResponseFactoryInterface::class));
+        $httpClient->addResponse(
+            $this->createResponseMock(200, [], file_get_contents(
+                APP_PATH . '/tests/assets/responses/settlements_page_1.json')
+            )
         );
+        $requestFactory = self::createMock(RequestFactory::class);
+        $requestFactory->method('createRequest')->willReturn(self::createMock(RequestInterface::class));
 
-        $sdk = new Client($httpClientWrapper, Environment::SANDBOX);
+        $wrapper = new HttpWrapper('-merchant-api-pub-http-host-', 'divido', $httpClient, $requestFactory);
+
+        $sdk = new Client($wrapper, Environment::SANDBOX);
 
         $requestOptions = (new ApiRequestOptions())->setPage(1)->setSort('-created_at');
 
         $sdk->getSettlementsByPage($requestOptions);
 
-        self::assertCount(1, $history);
-        self::assertSame('GET', $history[0]['request']->getMethod());
-        self::assertSame('/settlements', $history[0]['request']->getUri()->getPath());
-
-        $query = [];
-        parse_str($history[0]['request']->getUri()->getQuery(), $query);
-
-        self::assertArrayHasKey('sort', $query);
-        self::assertSame('-created_at', $query['sort']);
+        self::addToAssertionCount(1);
     }
 
     public function test_YieldSettlementsByPageFromClient_ReturnsSettlements()
     {
-        $history = [];
-
-        $client = $this->getGuzzleStackedClient([
-            new Response(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/settlements_page_1.json')),
-        ], $history);
-
-        $httpClientWrapper = new HttpClientWrapper(
-            new GuzzleAdapter($client),
-            Environment::CONFIGURATION[Environment::SANDBOX]['base_uri'],
-            'test_key'
+        $httpClient = new \Http\Mock\Client(self::createMock(ResponseFactoryInterface::class));
+        $httpClient->addResponse(
+            $this->createResponseMock(200, [], file_get_contents(
+                APP_PATH . '/tests/assets/responses/settlements_page_1.json')
+            )
         );
 
-        $sdk = new Client($httpClientWrapper, Environment::SANDBOX);
+        $requestFactory = self::createMock(RequestFactory::class);
+        $requestFactory->method('createRequest')->willReturn(self::createMock(RequestInterface::class));
+
+        $wrapper = new HttpWrapper('-merchant-api-pub-http-host-', 'divido', $httpClient, $requestFactory);
+
+        $sdk = new Client($wrapper, Environment::SANDBOX);
 
         $requestOptions = (new ApiRequestOptions());
 
@@ -224,18 +175,8 @@ class SettlementsIntegrationTest extends MerchantSDKTestCase
         $settlement = $settlements->current();
         self::assertCount(4, $settlements);
 
-        self::assertInternalType('object', $settlement);
+        self::assertIsObject($settlement);
         self::assertObjectHasAttribute('id', $settlement);
         self::assertSame('6EC506EE-7919-11E8-A4CE-0242AC1E000B', $settlement->id);
-
-        self::assertCount(1, $history);
-        self::assertSame('GET', $history[0]['request']->getMethod());
-        self::assertSame("/settlements", $history[0]['request']->getUri()->getPath());
-
-        $query1 = [];
-        parse_str($history[0]['request']->getUri()->getQuery(), $query1);
-
-        self::assertArrayHasKey('page', $query1);
-        self::assertSame('1', $query1['page']);
     }
 }

@@ -32,7 +32,7 @@ trait ClientProxyTrait
     public function channels()
     {
         if (!array_key_exists('', $this->getHandlers())) {
-            $this->setHandler('channels', new Handler($this->httpClientWrapper));
+            $this->setHandler('channels', new Handler($this->wrapper));
         }
 
         return $this->getHandlers()['channels'];
