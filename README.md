@@ -3,7 +3,7 @@
 
 ## Basic SDK usage
 
-### Create a merchant sdk
+### Create a merchant sdk (Divido tenant)
 
 ```php
 <?php
@@ -20,6 +20,31 @@ $client = new \GuzzleHttp\Client();
 $httpClientWrapper = new \Divido\MerchantSDK\HttpClient\HttpClientWrapper(
     new \Divido\MerchantSDKGuzzle6\GuzzleAdapter($client),
     \Divido\MerchantSDK\Environment::CONFIGURATION[$env]['base_uri'],
+    'test_cfabc123.querty098765merchantsdk12345'
+);
+
+// create the sdk
+$sdk = new \Divido\MerchantSDK\Client($httpClientWrapper, $env);
+```
+
+
+### Create a merchant sdk (non-Divido tenant)
+
+```php
+<?php
+
+// find the environment
+$array = explode('_', 'test_cfabc123.querty098765merchantsdk12345');
+$identifier = strtoupper($array[0]);
+$env =  ('LIVE' == $identifier)
+    ? constant("Divido\MerchantSDK\Environment::PRODUCTION")
+    : constant("Divido\MerchantSDK\Environment::$identifier");
+
+// create a client wrapper
+$client = new \GuzzleHttp\Client();
+$httpClientWrapper = new \Divido\MerchantSDK\HttpClient\HttpClientWrapper(
+    new \Divido\MerchantSDKGuzzle6\GuzzleAdapter($client),
+    "https://merchant-api-pub.sandbox.example-tenant.divido.net/",
     'test_cfabc123.querty098765merchantsdk12345'
 );
 
