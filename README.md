@@ -30,11 +30,13 @@ $sdk = new \Divido\MerchantSDK\Client($httpClientWrapper, $env);
 
 ### Create a merchant sdk (non-Divido tenant)
 
+The value for the "TENANT_API_KEY" and the "TENANT_URI" will be supplied by Divido
+
 ```php
 <?php
 
 // find the environment
-$array = explode('_', 'test_cfabc123.querty098765merchantsdk12345');
+$array = explode('_', 'TENANT_API_KEY');
 $identifier = strtoupper($array[0]);
 $env =  ('LIVE' == $identifier)
     ? constant("Divido\MerchantSDK\Environment::PRODUCTION")
@@ -44,8 +46,8 @@ $env =  ('LIVE' == $identifier)
 $client = new \GuzzleHttp\Client();
 $httpClientWrapper = new \Divido\MerchantSDK\HttpClient\HttpClientWrapper(
     new \Divido\MerchantSDKGuzzle6\GuzzleAdapter($client),
-    "https://merchant-api-pub.sandbox.example-tenant.divido.net/",
-    'test_cfabc123.querty098765merchantsdk12345'
+    'TENANT_URI',
+    'TENANT_API_KEY'
 );
 
 // create the sdk
