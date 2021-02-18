@@ -82,6 +82,11 @@ class Application extends AbstractModel
     protected $urls;
 
     /**
+     * @var array
+     */
+    protected $shipping;
+
+    /**
      * Wet id.
      *
      * @param string $(
@@ -312,6 +317,22 @@ class Application extends AbstractModel
         $cloned = clone $this;
 
         $cloned->urls = $urls;
+
+        return $cloned;
+    }
+
+    /**
+     * With shipping address.
+     *
+     * @param array $shipping
+     *
+     * @return \Divido\MerchantSDK\Models\Application
+     */
+    public function withShipping($shipping)
+    {
+        $cloned = clone $this;
+
+        $cloned->shipping = $shipping;
 
         return $cloned;
     }
