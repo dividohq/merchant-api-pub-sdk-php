@@ -1,0 +1,149 @@
+name: CI
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+
+jobs:
+  phpstan:
+    name: PHPStan (PHP ${{ matrix.php_versions }})
+    runs-on: ubuntu-latest
+    env:
+      extensions: mbstring, xml, ctype, iconv, intl, mysql, bcmath
+      extension_cache_key: cache-v1
+
+    strategy:
+      # We want all of the jobs to succeed even if one version fails.
+      fail-fast: false
+      matrix:
+        # Run against PHP 7.3 and 7.4.
+        php_versions: ['7.3', '7.4']
+
+    steps:
+      # Check out the project code.
+      - uses: actions/checkout@v2
+      # Set up the cache environment.
+      - uses: shivammathur/cache-extensions@v1
+        id: cache-env
+        with:
+          php-version: ${{ matrix.php_versions }}
+          extensions: ${{ env.extensions }}
+          key: ${{ env.extension_cache_key }}
+      # Cache the extensions.
+      - uses: actions/cache@v2.1.6
+        with:
+          path: ${{ steps.cache-env.outputs.dir }}
+          key: ${{ steps.cache-env.outputs.key }}
+          restore-keys: ${{ steps.cache-env.outputs.key }}
+      # Set up PHP
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php_versions }}
+          extensions: ${{ env.extensions }}
+          tools: cs2pr, phpstan
+      # Set our private token for Composer.
+      - name: Set private token for Composer access
+        run: |
+          composer config -g github-oauth.github.com ${{ secrets.ORG_GITHUB_TOKEN }}
+      # Set up caching for Composer.
+      - name: Get Composer cache directory
+        id: composer-cache
+        run: |
+          echo "::set-output name=dir::$(composer config cache-files-dir)"
+      # Cache Composer dependencies.
+      - name: Cache Composer dependencies
+        uses: actions/cache@v2.1.6
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: ${{ runner.os }}-composer-
+      # Install Composer dependencies.
+      - name: Install Composer dependencies
+        run: |
+          composer install --no-progress --no-suggest --prefer-dist --optimize-autoloader --classmap-authoritative
+      # Run PHPStan, and pipe output through cs2pr to create annotations.
+      - name: Run PHPStan
+        run: |
+          phpstan analyse --error-format=checkstyle | cs2pr
+
+  phpunit:
+    name: PHPUnit (PHP ${{ matrix.php_versions }})
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        php_versions: ['7.3', '7.4']
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php_versions }}
+          extensions: mbstring, xml, ctype, iconv, intl, mysql, bcmath
+          coverage: pcov
+
+      - name: Set private token for Composer access
+        run: |
+          composer config -g github-oauth.github.com ${{ secrets.ORG_GITHUB_TOKEN }}
+
+      - name: Get Composer cache directory
+        id: composer-cache
+        run: |
+          echo "::set-output name=dir::$(composer config cache-files-dir)"
+
+      - name: Cache Composer dependencies
+        uses: actions/cache@v2.1.6
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: ${{ runner.os }}-composer-
+
+      - name: Install Composer dependencies
+        run: |
+          composer install --no-progress --no-suggest --prefer-dist --optimize-autoloader
+
+      - name: Setup problem matchers for PHP
+        run: |
+          echo "::add-matcher::${{ runner.tool_cache }}/php.json"
+
+      - name: Setup problem matchers for PHPUnit
+        run: |
+          echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
+
+      - name: Run tests
+        run: |
+          bin/phpunit
+
+      - name: Upload coverage report
+        uses: actions/upload-artifact@v2
+        with:
+          name: "Code Coverage Report ${{ matrix.php_versions }}"
+          path: coverage
+
+  release:
+    name:  Semantic Release
+    needs: [phpstan, phpunit]
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Create .releaserc file
+        env:
+          RELEASERC_JSON: '{"plugins": ["@semantic-release/commit-analyzer","@semantic-release/release-notes-generator","@semantic-release/github"]}'
+        run: echo $RELEASERC_JSON > .releaserc
+      - name: Semantic Release
+        uses: cycjimmy/semantic-release-action@v2
+        with:
+          semantic_version: 17.0.8
+          branches: |
+            [
+              'master'
+            ]
+        env:
+          GITHUB_TOKEN: ${{ secrets.ORG_GITHUB_TOKEN }}
