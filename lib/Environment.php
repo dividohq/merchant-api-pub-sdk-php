@@ -51,7 +51,7 @@ class Environment
      *
      * @return string The environment corresponding to the API key
      */
-    public function getEnvironmentFromAPIKey($apiKey)
+    public static function getEnvironmentFromAPIKey($apiKey)
     {
         $splitApiKey = explode('_', $apiKey);
         $environment = str_replace('-','_',strtoupper($splitApiKey[0]));
