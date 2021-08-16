@@ -19,6 +19,8 @@ class Environment
 
     const STAGING = "staging";
 
+    const USER_ACCEPTANCE_TESTING = "user-acceptance-testing";
+
     const PRODUCTION = "production";
 
     const LIVE = "production";
@@ -40,4 +42,21 @@ class Environment
             'base_uri' => 'https://merchant.api.divido.com',
         ],
     ];
+
+    /**
+     * Get the environment based off of the provided API key
+     *
+     *
+     * @param string $apiKey The API key to get the environment from
+     *
+     * @return string The environment corresponding to the API key
+     */
+    public function getEnvironmentFromAPIKey($apiKey)
+    {
+        $splitApiKey = explode('_', $apiKey);
+        $environment = str_replace('-','_',strtoupper($splitApiKey[0]));
+        return ('LIVE' == $environment)
+            ? constant('self::PRODUCTION')
+            : constant('self::'. $environment);
+    }
 }
