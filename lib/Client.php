@@ -78,7 +78,6 @@ class Client
     /**
      * Set a defined handler.
      *
-     * @return array
      */
     protected function setHandler($key, $value)
     {
