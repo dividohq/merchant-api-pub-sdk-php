@@ -55,7 +55,8 @@ class Environment
     {
         $splitApiKey = explode('_', $apiKey);
         $environment = str_replace('-','_',strtoupper($splitApiKey[0]));
-        return ('LIVE' == $environment)
+
+        return ('LIVE' === $environment)
             ? constant('self::PRODUCTION')
             : constant('self::'. $environment);
     }
