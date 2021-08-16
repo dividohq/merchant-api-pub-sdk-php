@@ -1,6 +1,6 @@
 <?php
 
-namespace Divido\MerchantSDK\Test\unit;
+namespace Divido\MerchantSDK\Test\Unit;
 
 use Divido\MerchantSDK\Environment;
 
