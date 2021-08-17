@@ -19,7 +19,7 @@ class Environment
 
     const STAGING = "staging";
 
-    const USER_ACCEPTANCE_TESTING = "user-acceptance-testing";
+    const USER_ACCEPTANCE_TESTING = "uat";
 
     const PRODUCTION = "production";
 
