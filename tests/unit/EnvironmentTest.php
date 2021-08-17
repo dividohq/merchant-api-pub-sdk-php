@@ -24,7 +24,7 @@ class EnvironmentTest extends MerchantSDKTestCase
             ["testing_pk_f9425ece.3ec313437567c831d289efbdc240dd75", "testing"],
             ["staging_pk_f9425ece.3ec313437567c831d289efbdc240dd75", "staging"],
             ["sandbox_f9425ece.3ec313437567c831d289efbdc240dd75", "sandbox"],
-            ["user-acceptance-testing_pk_f9425ece.3ec313437567c831d289efbdc240dd75", "user-acceptance-testing"],
+            ["user-acceptance-testing_pk_f9425ece.3ec313437567c831d289efbdc240dd75", "uat"],
             ["production_f9425ece.3ec313437567c831d289efbdc240dd75", "production"],
             ["live_pk_f9425ece.3ec313437567c831d289efbdc240dd75", "production"]
         ];
