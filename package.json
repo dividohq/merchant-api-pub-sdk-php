@@ -1,6 +1,6 @@
 {
   "name": "divido-merchant-sdk",
-  "version": "2.1.1",
+  "version": "2.2.1",
   "scripts": {
     "release": "standard-version"
   },
