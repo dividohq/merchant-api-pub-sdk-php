@@ -25,7 +25,7 @@ ci-test: composer-install
 
 
 ci-analyze: composer-install
-	docker-compose -f ./.divido/development/console.yml run --rm console ./bin/phpstan analyse
+	docker  run --rm -e CHECKS="phpstan" -v $(PWD):/project divido/devtools:php-analysis
 
 ci-check-coverage:
 
