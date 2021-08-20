@@ -35,5 +35,4 @@ echo ">>>  Install dependencies"
 DOCKER_COMPOSE run --rm console composer install
 
 echo ">>>  Run Tests"
-DOCKER_COMPOSE run --rm console composer update
 DOCKER_COMPOSE run --rm console ./bin/phpunit tests/ --stop-on-failure --coverage-clover=tmp/coverage.clover.xml --coverage-text=tmp/coverage.out

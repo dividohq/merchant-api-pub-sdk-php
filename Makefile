@@ -21,7 +21,6 @@ ci-fmt:
 ci-test: composer-install
 	PHP_VERSION=7.3 ALPINE_VERSION=3.12 ./.divido/build/run_tests.sh
 	PHP_VERSION=7.4 ./.divido/build/run_tests.sh
-	PHP_VERSION=8.0 ./.divido/build/run_tests.sh
 	make ci-clean
 
 
