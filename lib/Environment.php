@@ -54,7 +54,7 @@ class Environment
     public static function getEnvironmentFromAPIKey($apiKey)
     {
         $splitApiKey = explode('_', $apiKey);
-        $environment = str_replace('-','_',strtoupper($splitApiKey[0]));
+        $environment = str_replace('-', '_', strtoupper($splitApiKey[0]));
 
         return ('LIVE' === $environment)
             ? constant('self::PRODUCTION')
