@@ -22,7 +22,7 @@ trait ClientProxyTrait
     abstract protected function setHandler($key, $value);
 
     /**
-     * Connect to the application refunds handler.
+     * Connect to the platform environments handler.
      *
      * @return Handler
      */
