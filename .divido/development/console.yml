@@ -1,0 +1,18 @@
+version: '3.4'
+
+services:
+  console:
+    build:
+      context: docker/console
+      args:
+        - PHP_VERSION
+        - ALPINE_VERSION
+    container_name: console
+    environment:
+      - "COMPOSER_AUTH={\"github-oauth\": {\"github.com\": \"${GITHUB_TOKEN}\"}}"
+    command: ${CMD}
+    user: ${UID}
+    volumes:
+      - ../../:/opt/divido/app
+
+
