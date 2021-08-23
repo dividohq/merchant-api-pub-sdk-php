@@ -8,6 +8,16 @@ use Psr\Http\Message\UriInterface;
 interface IHttpClient
 {
     /**
+     * Submit an HTTP HEAD request. Using this to hit the /health endpoint.
+     *
+     * @param UriInterface $url The url to send the request to $uri
+     * @param array $headers A key/value pair array of headers to send with the request
+     *
+     * @return ResponseInterface The HTTP response (PSR implementation)
+     */
+    public function head(UriInterface $url, array $headers = []);
+
+    /**
      * Submit an HTTP GET request
      *
      * @param UriInterface $url The url to send the request to $uri
