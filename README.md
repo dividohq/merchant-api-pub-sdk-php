@@ -1,6 +1,14 @@
 
 # PHP Merchant SDK
 
+## Running phpunit and phpstan
+
+Docker needs to be running for these commands to work.
+
+**phpunit**: `make ci-test`  
+**phpstan**: `make ci-analyze`  
+
+
 ## Basic SDK usage
 
 ### Create a merchant sdk (Divido tenant)
