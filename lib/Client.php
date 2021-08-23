@@ -19,6 +19,7 @@ class Client
     use Handlers\Finances\ClientProxyTrait;
     use Handlers\PlatformEnvironments\ClientProxyTrait;
     use Handlers\Settlements\ClientProxyTrait;
+    use Handlers\Healthcheck\ClientProxyTrait;
 
     /**
      * The API environment to consume
