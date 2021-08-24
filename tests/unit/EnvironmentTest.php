@@ -54,7 +54,11 @@ class EnvironmentTest extends MerchantSDKTestCase
             'cheeky_user_tried_using_configuration_as_key_may_be_to_try_to_break_things' => [
                 uniqid('configuration_'),
                 InvalidEnvironmentException::class
-            ]
+            ],
+            'null_key' => [
+                null,
+                InvalidApiKeyFormatException::class
+            ],
         ];
     }
 
