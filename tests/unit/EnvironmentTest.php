@@ -32,47 +32,54 @@ class EnvironmentTest extends MerchantSDKTestCase
         ];
     }
 
-    public function provider_test_shouldThrowAnErrorIfApiDoesNotMatchValidEnvironment(): array
+    public function provider_test_shouldThrowErrorOnInvalidApiKey()
     {
         return [
-            'key_with_env_prefix_that_does_not_exist_as_constant' => [
-                uniqid('doesnotexistasconstant_'),
-                InvalidEnvironmentException::class
-            ],
             'key_without_underscore' => [
                 uniqid('apikey'),
-                InvalidApiKeyFormatException::class
             ],
             'empty_key' => [
                 '',
-                InvalidApiKeyFormatException::class
             ],
             'key_that_starts_with_underscore' => [
                 uniqid('_apikey_'),
-                InvalidApiKeyFormatException::class
-            ],
-            'cheeky_user_tried_using_configuration_as_key_may_be_to_try_to_break_things' => [
-                uniqid('configuration_'),
-                InvalidEnvironmentException::class
             ],
             'null_key' => [
                 null,
-                InvalidApiKeyFormatException::class
             ],
         ];
     }
 
     /**
-     * @dataProvider provider_test_shouldThrowAnErrorIfApiDoesNotMatchValidEnvironment
+     * @dataProvider provider_test_shouldThrowErrorOnInvalidApiKey
      * @param mixed $apiKey
-     * @param $expectedException
      */
-    public function test_shouldThrowAnErrorIfApiDoesNotMatchValidEnvironment(
-        $apiKey,
-        $expectedException
-    )
+    public function test_shouldThrowErrorOnInvalidApiKey($apiKey)
     {
-        $this->expectException($expectedException);
+        $this->expectException(InvalidApiKeyFormatException::class);
+
+        Environment::getEnvironmentFromAPIKey($apiKey);
+    }
+
+    public function provider_test_shouldThrowErrorOnInvalidEnvironment()
+    {
+        return [
+            'key_with_env_prefix_that_does_not_exist_as_constant' => [
+                uniqid('doesnotexistasconstant_'),
+            ],
+            'cheeky_user_tried_using_configuration_as_key_may_be_to_try_to_break_things' => [
+                uniqid('configuration_'),
+            ],
+        ];
+    }
+
+    /**
+     * @dataProvider provider_test_shouldThrowErrorOnInvalidEnvironment
+     * @param mixed $apiKey
+     */
+    public function test_shouldThrowErrorOnInvalidEnvironment($apiKey)
+    {
+        $this->expectException(InvalidEnvironmentException::class);
 
         Environment::getEnvironmentFromAPIKey($apiKey);
     }
