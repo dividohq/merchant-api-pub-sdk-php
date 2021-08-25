@@ -18,7 +18,7 @@ class ApplicationsIntegrationTest extends MerchantSDKTestCase
     {
         $httpClient = new \Http\Mock\Client(self::createMock(ResponseFactoryInterface::class));
         $httpClient->addResponse(
-            $this->createResponseMock(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/applications_page_1.json')),
+            $this->createResponseMock(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/applications_page_1.json'))
         );
 
         $requestFactory = self::createMock(RequestFactory::class);
@@ -42,7 +42,7 @@ class ApplicationsIntegrationTest extends MerchantSDKTestCase
     {
         $httpClient = new \Http\Mock\Client(self::createMock(ResponseFactoryInterface::class));
         $httpClient->addResponse(
-            $this->createResponseMock(400, [], file_get_contents(APP_PATH . '/tests/assets/responses/applications_all_error.json')),
+            $this->createResponseMock(400, [], file_get_contents(APP_PATH . '/tests/assets/responses/applications_all_error.json'))
         );
 
         $requestFactory = self::createMock(RequestFactory::class);
@@ -72,7 +72,7 @@ class ApplicationsIntegrationTest extends MerchantSDKTestCase
     {
         $httpClient = new \Http\Mock\Client(self::createMock(ResponseFactoryInterface::class));
         $httpClient->addResponse(
-            $this->createResponseMock(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/applications_page_1.json')),
+            $this->createResponseMock(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/applications_page_1.json'))
         );
 
         $requestFactory = self::createMock(RequestFactory::class);
@@ -96,10 +96,10 @@ class ApplicationsIntegrationTest extends MerchantSDKTestCase
     {
         $httpClient = new \Http\Mock\Client(self::createMock(ResponseFactoryInterface::class));
         $httpClient->addResponse(
-            $this->createResponseMock(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/applications_page_1.json')),
+            $this->createResponseMock(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/applications_page_1.json'))
         );
         $httpClient->addResponse(
-            $this->createResponseMock(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/applications_page_2.json')),
+            $this->createResponseMock(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/applications_page_2.json'))
         );
 
         $requestFactory = self::createMock(RequestFactory::class);
@@ -124,10 +124,10 @@ class ApplicationsIntegrationTest extends MerchantSDKTestCase
     {
         $httpClient = new \Http\Mock\Client(self::createMock(ResponseFactoryInterface::class));
         $httpClient->addResponse(
-            $this->createResponseMock(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/applications_page_1.json')),
+            $this->createResponseMock(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/applications_page_1.json'))
         );
         $httpClient->addResponse(
-            $this->createResponseMock(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/applications_page_2.json')),
+            $this->createResponseMock(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/applications_page_2.json'))
         );
 
         $requestFactory = self::createMock(RequestFactory::class);
@@ -154,7 +154,7 @@ class ApplicationsIntegrationTest extends MerchantSDKTestCase
     {
         $httpClient = new \Http\Mock\Client(self::createMock(ResponseFactoryInterface::class));
         $httpClient->addResponse(
-            $this->createResponseMock(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/applications_page_1.json')),
+            $this->createResponseMock(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/applications_page_1.json'))
         );
         $requestFactory = self::createMock(RequestFactory::class);
         $requestFactory->method('createRequest')->willReturn(self::createMock(RequestInterface::class));
@@ -175,10 +175,10 @@ class ApplicationsIntegrationTest extends MerchantSDKTestCase
     {
         $httpClient = new \Http\Mock\Client(self::createMock(ResponseFactoryInterface::class));
         $httpClient->addResponse(
-            $this->createResponseMock(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/applications_page_1.json')),
+            $this->createResponseMock(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/applications_page_1.json'))
         );
         $httpClient->addResponse(
-            $this->createResponseMock(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/applications_page_2.json')),
+            $this->createResponseMock(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/applications_page_2.json'))
         );
 
         $requestFactory = self::createMock(RequestFactory::class);

@@ -16,7 +16,7 @@ class PlatformEnvironmentsIntegrationTest extends MerchantSDKTestCase
     {
         $httpClient = new \Http\Mock\Client(self::createMock(ResponseFactoryInterface::class));
         $httpClient->addResponse(
-            $this->createResponseMock(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/environment.json')),
+            $this->createResponseMock(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/environment.json'))
         );
 
         $requestFactory = self::createMock(RequestFactory::class);
