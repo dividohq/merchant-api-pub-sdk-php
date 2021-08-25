@@ -41,7 +41,7 @@ class GuzzleAdapter implements IHttpClient
     }
 
     /**
-     * Submit an HTTP GET request
+     * Submit an HTTP HEAD request
      *
      * @param UriInterface $url The url to send the request to $uri
      * @param array $headers A key/value pair array of headers to send with the request
