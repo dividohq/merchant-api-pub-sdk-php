@@ -20,7 +20,7 @@ class ApplicationCancellationsIntegrationTest extends MerchantSDKTestCase
     /**
      * @dataProvider provider_test_GetApplicationCancellationsFromClient_ReturnsApplicationsCancellations
      */
-    public function test_GetApplicationCancellationsFromClient_ReturnsApplicationsCancellations($applicationModelProvided): void
+    public function test_GetApplicationCancellationsFromClient_ReturnsApplicationsCancellations($applicationModelProvided)
     {
         $httpClient = new \Http\Mock\Client(self::createMock(ResponseFactoryInterface::class));
         $httpClient->addResponse(
@@ -91,7 +91,7 @@ class ApplicationCancellationsIntegrationTest extends MerchantSDKTestCase
     /**
      * @dataProvider provider_test_GetAllApplicationCancellationsFromClient_ReturnsAllApplicationCancellations
      */
-    public function test_GetAllApplicationCancellationsFromClient_ReturnsAllApplicationCancellations($applicationModelProvided): void
+    public function test_GetAllApplicationCancellationsFromClient_ReturnsAllApplicationCancellations($applicationModelProvided)
     {
         $httpClient = new \Http\Mock\Client(self::createMock(ResponseFactoryInterface::class));
         $httpClient->addResponse(

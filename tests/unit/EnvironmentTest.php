@@ -13,7 +13,7 @@ class EnvironmentTest extends MerchantSDKTestCase
      *
      * @dataProvider provider_test_GettingEnvironment_WithSuppliedAPIKey_ReturnsCorrectEnvironment
      */
-    public function test_GettingEnvironment_WithSuppliedAPIKey_ReturnsCorrectEnvironment($suppliedArgument, $expectedResponse): void
+    public function test_GettingEnvironment_WithSuppliedAPIKey_ReturnsCorrectEnvironment($suppliedArgument, $expectedResponse)
     {
         $result = Environment::getEnvironmentFromAPIKey($suppliedArgument);
         $this->assertSame($expectedResponse, $result);

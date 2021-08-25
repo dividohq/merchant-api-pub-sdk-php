@@ -20,7 +20,7 @@ class ApplicationRefundsIntegrationTest extends MerchantSDKTestCase
     /**
      * @dataProvider provider_test_GetApplicationRefundsFromClient_ReturnsApplicationsRefunds
      */
-    public function test_GetApplicationRefundsFromClient_ReturnsApplicationsRefunds($applicationModelProvided): void
+    public function test_GetApplicationRefundsFromClient_ReturnsApplicationsRefunds($applicationModelProvided)
     {
         $httpClient = new \Http\Mock\Client(self::createMock(ResponseFactoryInterface::class));
         $httpClient->addResponse(
@@ -84,7 +84,7 @@ class ApplicationRefundsIntegrationTest extends MerchantSDKTestCase
     /**
      * @dataProvider provider_test_GetApplicationRefundsFromClient_ReturnsApplicationsRefunds
      */
-    public function test_GetAllApplicationRefundsFromClient_ReturnsAllApplicationRefunds($applicationModelProvided): void
+    public function test_GetAllApplicationRefundsFromClient_ReturnsAllApplicationRefunds($applicationModelProvided)
     {
         $httpClient = new \Http\Mock\Client(self::createMock(ResponseFactoryInterface::class));
         $httpClient->addResponse(

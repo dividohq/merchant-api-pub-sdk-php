@@ -12,7 +12,7 @@ class SettlementsHandlerTest extends MerchantSDKTestCase
      *
      * @dataProvider provider_test_GettingLowerCaseString_WithSuppliedArgument_ReturnsLowerCaseString
      */
-    public function test_GettingLowerCaseString_WithSuppliedArgument_ReturnsLowerCaseString($suppliedArgument, $expectedResponse): void
+    public function test_GettingLowerCaseString_WithSuppliedArgument_ReturnsLowerCaseString($suppliedArgument, $expectedResponse)
     {
         $result = Str::lower($suppliedArgument);
 
@@ -36,7 +36,7 @@ class SettlementsHandlerTest extends MerchantSDKTestCase
      *
      * @dataProvider provider_test_GettingSnakeCaseString_WithSuppliedArgument_ReturnsSnakeCaseString
      */
-    public function test_GettingSnakeCaseString_WithSuppliedArgument_ReturnsSnakeCaseString($suppliedArgument, $expectedResponse): void
+    public function test_GettingSnakeCaseString_WithSuppliedArgument_ReturnsSnakeCaseString($suppliedArgument, $expectedResponse)
     {
         $result = Str::snake($suppliedArgument);
 

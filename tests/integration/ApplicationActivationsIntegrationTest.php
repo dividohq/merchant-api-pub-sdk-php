@@ -20,7 +20,7 @@ class ApplicationActivationsIntegrationTest extends MerchantSDKTestCase
     /**
      * @dataProvider provider_test_GetApplicationActivationsByPageFromClient_ReturnsApplicationActivationsByPage
      */
-    public function test_GetApplicationActivationsByPageFromClient_ReturnsApplicationActivationsByPage($applicationModelProvided): void
+    public function test_GetApplicationActivationsByPageFromClient_ReturnsApplicationActivationsByPage($applicationModelProvided)
     {
         $httpClient = new \Http\Mock\Client(self::createMock(ResponseFactoryInterface::class));
         $httpClient->addResponse(
