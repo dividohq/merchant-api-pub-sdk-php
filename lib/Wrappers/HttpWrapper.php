@@ -2,9 +2,8 @@
 
 namespace Divido\MerchantSDK\Wrappers;
 
-use Divido\DocumentApiSdk\Exceptions\DocumentApiSdkException;
 use Divido\MerchantSDK\Exceptions\MerchantApiBadResponseException;
-use Http\Discovery\MessageFactoryDiscovery;
+use Http\Discovery\Psr17FactoryDiscovery;
 use Http\Discovery\Psr18ClientDiscovery;
 use Http\Message\RequestFactory;
 use Psr\Http\Client\ClientInterface;
@@ -48,8 +47,8 @@ class HttpWrapper implements WrapperInterface
     ) {
         $this->baseUrl = $baseUrl;
         $this->apiKey = $apiKey;
-        $this->httpClient = $httpClient ?? Psr18ClientDiscovery::find();
-        $this->requestFactory = $requestFactory ?? MessageFactoryDiscovery::find();
+        $this->httpClient = $httpClient ?: Psr18ClientDiscovery::find();
+        $this->requestFactory = $requestFactory ?: Psr17FactoryDiscovery::find();
     }
 
     /**
@@ -61,9 +60,8 @@ class HttpWrapper implements WrapperInterface
      * @param array $headers
      * @param string $body
      * @return ResponseInterface
-     * @throws DocumentApiSdkException
      */
-    public function request(string $method, string $uri, array $query = [], array $headers = [], $body = null): ResponseInterface
+    public function request(string $method, string $uri, array $query = [], array $headers = [], $body = null)
     {
         // Add the header to each call
         $headers['X-Divido-Api-Key'] = $this->apiKey;
@@ -78,11 +76,11 @@ class HttpWrapper implements WrapperInterface
         if ($statusCode >= 400 && $statusCode < 500) {
             $response = json_decode($response->getBody()->getContents());
 
-            throw new MerchantApiBadResponseException($response->message, $response->code, $response->context ?? null);
+            throw new MerchantApiBadResponseException($response->message, $response->code, $response->context ?: null);
         } else if ($statusCode >= 500) {
             $response = json_decode($response->getBody()->getContents());
 
-            throw new MerchantApiBadResponseException($response->message, $response->code, $response->context ?? null);
+            throw new MerchantApiBadResponseException($response->message, $response->code, $response->context ?: null);
         }
 
         return $response;
