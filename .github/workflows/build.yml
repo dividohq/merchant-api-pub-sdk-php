@@ -4,7 +4,7 @@ on:
     branches:
       - master
       - develop
-      - '*.*.*'
+      - "*.*.*"
   pull_request:
 jobs:
   analyze:
@@ -31,16 +31,16 @@ jobs:
         uses: actions/checkout@v2
       - name: Run Tests
         run: make ci-test
-      - name: Publish code coverage to CodeClimate
-        uses: paambaati/codeclimate-action@v2.7.5
-        env:
-          CC_TEST_REPORTER_ID: ${{ secrets.CODE_CLIMATE_TEST_REPORTER_ID }}
-        with:
-          prefix: /opt/divido/app/
-          coverageLocations: |
-            ${{github.workspace}}/tmp/coverage.clover.xml:clover
+  #      - name: Publish code coverage to CodeClimate
+  #        uses: paambaati/codeclimate-action@v2.7.5
+  #        env:
+  #          CC_TEST_REPORTER_ID: ${{ secrets.CODE_CLIMATE_TEST_REPORTER_ID }}
+  #        with:
+  #          prefix: /opt/divido/app/
+  #          coverageLocations: |
+  #            ${{github.workspace}}/tmp/coverage.clover.xml:clover
   release:
-    name:  Semantic Release
+    name: Semantic Release
     needs: test
     runs-on: ubuntu-latest
     timeout-minutes: 5
@@ -61,4 +61,3 @@ jobs:
             ]
         env:
           GITHUB_TOKEN: ${{ secrets.ORG_GITHUB_TOKEN }}
-
