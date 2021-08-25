@@ -2,6 +2,9 @@
 
 namespace Divido\MerchantSDK;
 
+use Divido\MerchantSDK\Exceptions\InvalidApiKeyFormatException;
+use Divido\MerchantSDK\Exceptions\InvalidEnvironmentException;
+
 /**
  * Class Environment
  *
@@ -44,20 +47,64 @@ class Environment
     ];
 
     /**
+     * @param $apiKey
+     * @return true
+     * @throws InvalidApiKeyFormatException
+     */
+    public static function validateApiKeyFormat($apiKey)
+    {
+        if(empty($apiKey)){
+            throw new InvalidApiKeyFormatException('API Key can not be empty');
+        }
+
+        if(strpos($apiKey, '_') === false){
+            throw new InvalidApiKeyFormatException('API key does not contain an underscore');
+        }
+
+        if(strpos($apiKey, '_') === 0){
+            throw new InvalidApiKeyFormatException('API key can not start with an underscore');
+        }
+
+        return true;
+    }
+
+    /**
      * Get the environment based off of the provided API key
      *
      *
      * @param string $apiKey The API key to get the environment from
      *
      * @return string The environment corresponding to the API key
+     *
+     * @throws InvalidEnvironmentException|InvalidApiKeyFormatException
      */
     public static function getEnvironmentFromAPIKey($apiKey)
     {
+        // Validate the formatting
+        self::validateApiKeyFormat($apiKey);
+
+        // Get the environment name part of they api key
         $splitApiKey = explode('_', $apiKey);
         $environment = str_replace('-', '_', strtoupper($splitApiKey[0]));
 
-        return ('LIVE' === $environment)
-            ? constant('self::PRODUCTION')
-            : constant('self::'. $environment);
+        // Get the full name of the constant (something like self::DEV, self::TESTING etc)
+        $constantName = ('LIVE' === $environment)
+            ? 'self::PRODUCTION'
+            : 'self::'. $environment;
+
+        // Check that the constant is defined.
+        if(!defined($constantName)){
+            throw new InvalidEnvironmentException('Could not find environment with name: ' . $environment);
+        }
+
+        // Get the value of the constant
+        $constantValue = constant($constantName);
+
+        // If the accessed constant is not a string
+        if(!is_string($constantValue)){
+            throw new InvalidEnvironmentException('Could not find valid environment value for environment name: ' . $environment);
+        }
+
+        return $constantValue;
     }
 }
