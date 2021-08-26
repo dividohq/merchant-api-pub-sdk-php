@@ -71,6 +71,10 @@ class HttpClientWrapper
 
         // Send request
         switch ($method) {
+            case 'head':
+                return $this->httpClient->head($uri, $headers);
+
+                break;
             case 'get':
                 return $this->httpClient->get($uri, $headers);
 

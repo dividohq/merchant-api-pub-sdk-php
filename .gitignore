@@ -1,5 +1,8 @@
 .DS_Store
-.idea/
-vendor/
-coverage/
-bin/
+/.idea
+/vendor
+/coverage
+/bin
+/.phpunit.result.cache
+/.php_cs.cache
+/tmp

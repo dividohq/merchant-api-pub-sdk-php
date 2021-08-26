@@ -85,7 +85,7 @@ class Environment
 
         // Get the environment name part of they api key
         $splitApiKey = explode('_', $apiKey);
-        $environment = str_replace('-','_',strtoupper($splitApiKey[0]));
+        $environment = str_replace('-', '_', strtoupper($splitApiKey[0]));
 
         // Get the full name of the constant (something like self::DEV, self::TESTING etc)
         $constantName = ('LIVE' === $environment)
