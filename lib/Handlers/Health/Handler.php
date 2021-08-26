@@ -25,9 +25,9 @@ class Handler extends AbstractHttpHandler
             $status_code = $response->getStatusCode();
 
             $healthcheck["status_code"] = $status_code;
-            $healthcheck["isHealthy"] = $status_code === 200 ? true : false;
+            $healthcheck["healthy"] = $status_code === 200 ? true : false;
         } catch (RequestException $e) {
-            $healthcheck["isHealthy"] = false;
+            $healthcheck["healthy"] = false;
         } finally {
             return $healthcheck;
         }

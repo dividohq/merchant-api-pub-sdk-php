@@ -19,12 +19,12 @@ trait ClientProxyTrait
      *
      * @return Handler
      */
-    public function healthcheck()
+    public function health()
     {
-        if (!array_key_exists('healthcheck', $this->getHandlers())) {
-            $this->setHandler('healthcheck', new Handler($this->httpClientWrapper));
+        if (!array_key_exists('health', $this->getHandlers())) {
+            $this->setHandler('health', new Handler($this->httpClientWrapper));
         }
 
-        return $this->getHandlers()['healthcheck'];
+        return $this->getHandlers()['health'];
     }
 }
