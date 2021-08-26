@@ -10,7 +10,7 @@ class Handler extends AbstractHttpHandler
     /**
      * Check health of the service
      *
-     * @return array (bool|int)[]
+     * @return (bool|int)[]
      */
     public function checkHealth()
     {
