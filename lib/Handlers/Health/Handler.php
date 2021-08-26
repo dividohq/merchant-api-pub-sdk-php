@@ -9,12 +9,10 @@ class Handler extends AbstractHttpHandler
 {
     /**
      * Check health of the service
-     * 
-     * @param string $url The service base URL to check
      *
-     * @return (bool|int)[]
+     * @return array (bool|int)[]
      */
-    public function checkHealth($url)
+    public function checkHealth()
     {
         $healthcheck = [];
         $path = 'health';
