@@ -1,6 +1,6 @@
 <?php
 
-namespace Divido\MerchantSDK\Handlers\Healthcheck;
+namespace Divido\MerchantSDK\Handlers\Health;
 
 trait ClientProxyTrait
 {
