@@ -15,7 +15,7 @@ trait ClientProxyTrait
     abstract protected function setHandler($key, $value);
 
     /**
-     * Connect to the healthcheck handler.
+     * Connect to the health handler.
      *
      * @return Handler
      */
