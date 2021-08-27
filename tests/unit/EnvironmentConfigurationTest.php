@@ -37,7 +37,7 @@ class EnvironmentConfigurationTest extends MerchantSDKTestCase
     public function test_shouldBeAbleToGetConfigurationAllPropertiesFromAllEnvironments($environment, $configPropertyName)
     {
         $this->assertNotEmpty(
-            Environment::getConfigurationForEnvironment($environment, $configPropertyName)
+            Environment::getConfigurationForMultiTenantEnvironment($environment, $configPropertyName)
         );
     }
 
@@ -45,14 +45,14 @@ class EnvironmentConfigurationTest extends MerchantSDKTestCase
     {
         $this->expectException(InvalidEnvironmentException::class);
 
-        Environment::getConfigurationForEnvironment(uniqid('bleh'));
+        Environment::getConfigurationForMultiTenantEnvironment(uniqid('bleh'));
     }
 
     public function test_shouldReturnEntireConfigurationForEnvironment()
     {
         self::assertSame(
             Environment::CONFIGURATION[Environment::DEV],
-            Environment::getConfigurationForEnvironment(Environment::DEV)
+            Environment::getConfigurationForMultiTenantEnvironment(Environment::DEV)
         );
     }
 
@@ -60,13 +60,13 @@ class EnvironmentConfigurationTest extends MerchantSDKTestCase
     {
         self::assertSame(
             Environment::CONFIGURATION[Environment::DEV][Environment::CONFIGURATION_PROPERTY_BASE_URI],
-            Environment::getConfigurationForEnvironment(Environment::DEV, Environment::CONFIGURATION_PROPERTY_BASE_URI)
+            Environment::getConfigurationForMultiTenantEnvironment(Environment::DEV, Environment::CONFIGURATION_PROPERTY_BASE_URI)
         );
     }
 
     public function test_shouldThrowExceptionIfConfigurationPropertyDoesNotExist()
     {
         $this->expectException(InvalidConfigurationPropertyNameException::class);
-        Environment::getConfigurationForEnvironment(Environment::DEV, uniqid('property_that_does_not_exist_'));
+        Environment::getConfigurationForMultiTenantEnvironment(Environment::DEV, uniqid('property_that_does_not_exist_'));
     }
 }
