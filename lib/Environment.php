@@ -3,6 +3,7 @@
 namespace Divido\MerchantSDK;
 
 use Divido\MerchantSDK\Exceptions\InvalidApiKeyFormatException;
+use Divido\MerchantSDK\Exceptions\InvalidConfigurationPropertyNameException;
 use Divido\MerchantSDK\Exceptions\InvalidEnvironmentException;
 
 /**
@@ -28,23 +29,26 @@ class Environment
 
     const LIVE = "production";
 
+    const CONFIGURATION_PROPERTY_BASE_URI = 'base_uri';
+
     const CONFIGURATION = [
         'dev' => [
-            'base_uri' => 'https://merchant-api-pub.api.dev.divido.net',
+            self::CONFIGURATION_PROPERTY_BASE_URI => 'https://merchant-api-pub.api.dev.divido.net',
         ],
         'testing' => [
-            'base_uri' => 'https://merchant-api-pub.api.testing.divido.net',
+            self::CONFIGURATION_PROPERTY_BASE_URI => 'https://merchant-api-pub.api.testing.divido.net',
         ],
         'sandbox' => [
-            'base_uri' => 'https://merchant.api.sandbox.divido.net',
+            self::CONFIGURATION_PROPERTY_BASE_URI => 'https://merchant.api.sandbox.divido.net',
         ],
         'staging' => [
-            'base_uri' => 'https://merchant-api-pub.api.staging.divido.net',
+            self::CONFIGURATION_PROPERTY_BASE_URI => 'https://merchant-api-pub.api.staging.divido.net',
         ],
         'production' => [
-            'base_uri' => 'https://merchant.api.divido.com',
+            self::CONFIGURATION_PROPERTY_BASE_URI => 'https://merchant.api.divido.com',
         ],
     ];
+
 
     /**
      * @param $apiKey
@@ -106,5 +110,39 @@ class Environment
         }
 
         return $constantValue;
+    }
+
+    /**
+     * Get the configuration array for multi tenant environment
+     * If 'propertyName' is supplied will try to get that property and return only that from the configuration array
+     *
+     * @param string $environmentName
+     * @param string|null $propertyName
+     * @return mixed
+     * @throws InvalidEnvironmentException
+     * @throws InvalidConfigurationPropertyNameException
+     */
+    public static function getConfigurationForMultiTenantEnvironment($environmentName, $propertyName = null)
+    {
+        // Check that multi tenant configuration array has environment as key
+        if (!array_key_exists($environmentName, self::CONFIGURATION)) {
+            throw new InvalidEnvironmentException('Could not find configuration for environment');
+        }
+
+        // Get the multi tenant configuration array for this environment
+        $environmentConfiguration = self::CONFIGURATION[$environmentName];
+
+        // If no property is supplied, return the entire configuration array as is
+        if($propertyName === null){
+            return $environmentConfiguration;
+        }
+
+        // Property does not exist
+        if(!array_key_exists($propertyName, $environmentConfiguration)){
+            throw new InvalidConfigurationPropertyNameException('Could not find configuration property');
+        }
+
+        // Return just the requested property
+        return $environmentConfiguration[$propertyName];
     }
 }
