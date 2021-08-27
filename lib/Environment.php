@@ -113,28 +113,36 @@ class Environment
     }
 
     /**
+     * Get the configuration array for multi tenant environment
+     * If 'propertyName' is supplied will try to get that property and return only that from the configuration array
+     *
      * @param string $environmentName
      * @param string|null $propertyName
      * @return mixed
      * @throws InvalidEnvironmentException
      * @throws InvalidConfigurationPropertyNameException
      */
-    public static function getConfigurationForEnvironment($environmentName, $propertyName = null)
+    public static function getConfigurationForMultiTenantEnvironment($environmentName, $propertyName = null)
     {
+        // Check that multi tenant configuration array has environment as key
         if (!array_key_exists($environmentName, self::CONFIGURATION)) {
             throw new InvalidEnvironmentException('Could not find configuration for environment');
         }
 
+        // Get the multi tenant configuration array for this environment
         $environmentConfiguration = self::CONFIGURATION[$environmentName];
 
+        // If no property is supplied, return the entire configuration array as is
         if($propertyName === null){
             return $environmentConfiguration;
         }
 
+        // Property does not exist
         if(!array_key_exists($propertyName, $environmentConfiguration)){
             throw new InvalidConfigurationPropertyNameException('Could not find configuration property');
         }
 
+        // Return just the requested property
         return $environmentConfiguration[$propertyName];
     }
 }
