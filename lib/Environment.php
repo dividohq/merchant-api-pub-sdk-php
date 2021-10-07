@@ -44,6 +44,9 @@ class Environment
         'staging' => [
             self::CONFIGURATION_PROPERTY_BASE_URI => 'https://merchant-api-pub.api.staging.divido.net',
         ],
+        'uat' => [
+            self::CONFIGURATION_PROPERTY_BASE_URI => 'https://merchant-api-pub.uat.ing.poweredbydivido.com',
+        ],
         'production' => [
             self::CONFIGURATION_PROPERTY_BASE_URI => 'https://merchant.api.divido.com',
         ],
