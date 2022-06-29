@@ -32,7 +32,7 @@
         "mockery/mockery": "1.1.0",
         "phpdocumentor/reflection-docblock": "~2.0",
         "phpdocumentor/phpdocumentor": "2.9.0",
-        "guzzlehttp/guzzle": "^6.3|^7",
+        "guzzlehttp/guzzle": "^6.3 | ^7",
         "phpstan/phpstan": "^0.12.32"
     },
     "config": {
