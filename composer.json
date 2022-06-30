@@ -35,6 +35,8 @@
         "guzzlehttp/guzzle": "^6.3 || ^7",
         "phpstan/phpstan": "^0.12.32"
     },
+    "minimum-stability": "dev",
+    "prefer-stable" : true,
     "config": {
         "bin-dir": "bin/"
     }
