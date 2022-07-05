@@ -19,12 +19,12 @@ class Handler extends AbstractHttpHandler
 
         // Make the request, catch exceptions 
         try {
-            $response = $this->httpClientWrapper->request('head', $path);
+            $response = $this->wrapper->request('head', $path);
             $status_code = $response->getStatusCode();
 
             $healthcheck["status_code"] = $status_code;
             $healthcheck["healthy"] = $status_code === 200 ? true : false;
-        } catch (RequestException $e) {
+        } catch (\Exception $e) {
             $healthcheck["healthy"] = false;
         } finally {
             return $healthcheck;

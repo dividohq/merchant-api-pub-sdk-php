@@ -73,11 +73,7 @@ class HttpWrapper implements WrapperInterface
         $response = $this->httpClient->sendRequest($request);
         $statusCode = $response->getStatusCode();
 
-        if ($statusCode >= 400 && $statusCode < 500) {
-            $response = json_decode($response->getBody()->getContents());
-
-            throw new MerchantApiBadResponseException($response->message, $response->code, $response->context ?: null);
-        } else if ($statusCode >= 500) {
+        if ($statusCode >= 400 && $statusCode <= 599) {
             $response = json_decode($response->getBody()->getContents());
 
             throw new MerchantApiBadResponseException($response->message, $response->code, $response->context ?: null);

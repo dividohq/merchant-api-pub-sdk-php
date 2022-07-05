@@ -27,6 +27,8 @@ class EnvironmentConfigurationTest extends MerchantSDKTestCase
                 ];
             }
         }
+
+        return $testItems;
     }
 
     /**

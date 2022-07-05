@@ -18,7 +18,8 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Divido\\MerchantSDK\\Test\\": "tests/"
+            "Divido\\MerchantSDK\\Test\\Unit\\": "tests/unit/",
+            "Divido\\MerchantSDK\\Test\\Integration\\": "tests/integration/"
         },
         "classmap": [
             "tests"
