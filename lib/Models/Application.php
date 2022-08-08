@@ -42,12 +42,12 @@ class Application extends AbstractModel
     protected $languageId;
 
     /**
-     * @var array
+     * @var array|null
      */
     protected $applicants = [];
 
     /**
-     * @var array
+     * @var array|null
      */
     protected $orderItems = [];
 
@@ -192,11 +192,11 @@ class Application extends AbstractModel
     /**
      * With applicants.
      *
-     * @param array $applicants
+     * @param array|null $applicants
      *
      * @return \Divido\MerchantSDK\Models\Application
      */
-    public function withApplicants(array $applicants)
+    public function withApplicants(?array $applicants)
     {
         $cloned = clone $this;
 
@@ -208,11 +208,11 @@ class Application extends AbstractModel
     /**
      * With order items.
      *
-     * @param array $orderItems
+     * @param array|null $orderItems
      *
      * @return \Divido\MerchantSDK\Models\Application
      */
-    public function withOrderItems(array $orderItems)
+    public function withOrderItems(?array $orderItems)
     {
         $cloned = clone $this;
 
