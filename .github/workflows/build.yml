@@ -6,14 +6,15 @@ on:
       - develop
       - "*.*.*"
   pull_request:
+env:
+  GOPRIVATE: github.com/dividohq
+  GITHUB_TOKEN: ${{ secrets.ORG_GITHUB_TOKEN }}
+  ECR_REGISTRY: 625359548668.dkr.ecr.eu-west-1.amazonaws.com
 jobs:
   vetting:
     name: Vetting
     runs-on: ubuntu-latest
     timeout-minutes: 5
-    env:
-      ORG_AWS_ACCESS_KEY_ID: ${{ secrets.ORG_AWS_ACCESS_KEY_ID }}
-      ORG_AWS_SECRET_ACCESS_KEY: ${{ secrets.ORG_AWS_SECRET_ACCESS_KEY }}
     steps:
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -33,11 +34,6 @@ jobs:
     needs: vetting
     runs-on: ubuntu-latest
     timeout-minutes: 5
-    env:
-      GOPRIVATE: github.com/dividohq
-      GITHUB_TOKEN: ${{ secrets.ORG_GITHUB_TOKEN }}
-      ORG_AWS_ACCESS_KEY_ID: ${{ secrets.ORG_AWS_ACCESS_KEY_ID }}
-      ORG_AWS_SECRET_ACCESS_KEY: ${{ secrets.ORG_AWS_SECRET_ACCESS_KEY }}
     steps:
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -57,10 +53,6 @@ jobs:
     needs: analyze
     runs-on: ubuntu-latest
     timeout-minutes: 15
-    env:
-      GITHUB_TOKEN: ${{ secrets.ORG_GITHUB_TOKEN }}
-      ORG_AWS_ACCESS_KEY_ID: ${{ secrets.ORG_AWS_ACCESS_KEY_ID }}
-      ORG_AWS_SECRET_ACCESS_KEY: ${{ secrets.ORG_AWS_SECRET_ACCESS_KEY }}
     steps:      
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
