@@ -7,57 +7,12 @@ on:
       - "*.*.*"
   pull_request:
 jobs:
-  analyze:
-    name: Static Analysis
-    runs-on: ubuntu-latest
-    timeout-minutes: 5
-    env:
-      GOPRIVATE: github.com/dividohq
-      GITHUB_TOKEN: ${{ secrets.ORG_GITHUB_TOKEN }}
-    steps:
-      - name: Checkout repo
-        uses: actions/checkout@v2
-      - name: Static Analysis
-        run: make ci-analyze
   test:
     name: Test
-    needs: analyze
     runs-on: ubuntu-latest
     timeout-minutes: 15
-    env:
-      GITHUB_TOKEN: ${{ secrets.ORG_GITHUB_TOKEN }}
     steps:
       - name: Repo Checkout
         uses: actions/checkout@v2
       - name: Run Tests
         run: make ci-test
-  #      - name: Publish code coverage to CodeClimate
-  #        uses: paambaati/codeclimate-action@v2.7.5
-  #        env:
-  #          CC_TEST_REPORTER_ID: ${{ secrets.CODE_CLIMATE_TEST_REPORTER_ID }}
-  #        with:
-  #          prefix: /opt/divido/app/
-  #          coverageLocations: |
-  #            ${{github.workspace}}/tmp/coverage.clover.xml:clover
-  release:
-    name: Semantic Release
-    needs: test
-    runs-on: ubuntu-latest
-    timeout-minutes: 5
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      - name: Create .releaserc file
-        env:
-          RELEASERC_JSON: '{"plugins": ["@semantic-release/commit-analyzer","@semantic-release/release-notes-generator","@semantic-release/github"]}'
-        run: echo $RELEASERC_JSON > .releaserc
-      - name: Semantic Release
-        uses: cycjimmy/semantic-release-action@v2
-        with:
-          semantic_version: 17.0.8
-          branches: |
-            [
-              'master'
-            ]
-        env:
-          GITHUB_TOKEN: ${{ secrets.ORG_GITHUB_TOKEN }}
