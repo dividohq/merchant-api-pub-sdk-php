@@ -5,18 +5,16 @@ namespace Divido\MerchantSDK\Test\Integration;
 use Divido\MerchantSDK\Client;
 use Divido\MerchantSDK\Environment;
 use Divido\MerchantSDK\Handlers\ApiRequestOptions;
-use Divido\MerchantSDK\HttpClient\HttpClientWrapper;
 use Divido\MerchantSDK\Models\Application;
 use Divido\MerchantSDK\Response\ResponseWrapper;
-use Divido\MerchantSDK\Test\Stubs\HttpClient\GuzzleAdapter;
 use Divido\MerchantSDK\Test\Unit\MerchantSDKTestCase;
-use GuzzleHttp\Psr7\Response;
-use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
+use Divido\MerchantSDK\Wrappers\HttpWrapper;
+use Http\Message\RequestFactory;
+use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseFactoryInterface;
 
 class ApplicationCancellationsIntegrationTest extends MerchantSDKTestCase
 {
-    use MockeryPHPUnitIntegration;
-
     private $applicationId = '53ad60ed-860d-4fa1-a497-03c1aea39f0a';
 
     /**
@@ -24,19 +22,17 @@ class ApplicationCancellationsIntegrationTest extends MerchantSDKTestCase
      */
     public function test_GetApplicationCancellationsFromClient_ReturnsApplicationsCancellations($applicationModelProvided)
     {
-        $history = [];
-
-        $client = $this->getGuzzleStackedClient([
-            new Response(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/application_cancellations_page_1.json')),
-        ], $history);
-
-        $httpClientWrapper = new HttpClientWrapper(
-            new GuzzleAdapter($client),
-            Environment::CONFIGURATION[Environment::SANDBOX]['base_uri'],
-            'test_key'
+        $httpClient = new \Http\Mock\Client(self::createMock(ResponseFactoryInterface::class));
+        $httpClient->addResponse(
+            $this->createResponseMock(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/application_cancellations_page_1.json'))
         );
 
-        $sdk = new Client($httpClientWrapper, Environment::SANDBOX);
+        $requestFactory = self::createMock(RequestFactory::class);
+        $requestFactory->method('createRequest')->willReturn(self::createMock(RequestInterface::class));
+
+        $wrapper = new HttpWrapper('-merchant-api-pub-http-host-', 'divido', $httpClient, $requestFactory);
+
+        $sdk = new Client($wrapper, Environment::SANDBOX);
 
         if ($applicationModelProvided) {
             $application = $this->applicationId;
@@ -51,18 +47,9 @@ class ApplicationCancellationsIntegrationTest extends MerchantSDKTestCase
         self::assertInstanceOf(ResponseWrapper::class, $cancellations);
         self::assertCount(2, $cancellations->getResources());
 
-        self::assertInternalType('object', $cancellations->getResources()[0]);
+        self::assertIsObject($cancellations->getResources()[0]);
         self::assertObjectHasAttribute('id', $cancellations->getResources()[0]);
         self::assertSame('5d1b94f5-3a7f-4f70-be6e-bb53abd7f955', $cancellations->getResources()[0]->id);
-
-        self::assertCount(1, $history);
-        self::assertSame('GET', $history[0]['request']->getMethod());
-        self::assertSame("/applications/{$this->applicationId}/cancellations", $history[0]['request']->getUri()->getPath());
-
-        $query = [];
-        parse_str($history[0]['request']->getUri()->getQuery(), $query);
-
-        self::assertArrayHasKey('page', $query);
     }
 
     public function provider_test_GetApplicationCancellationsFromClient_ReturnsApplicationsCancellations()
@@ -75,19 +62,17 @@ class ApplicationCancellationsIntegrationTest extends MerchantSDKTestCase
 
     public function test_GetApplicationCancellationsByPageFromClient_ReturnsApplicationsCancellations()
     {
-        $history = [];
-
-        $client = $this->getGuzzleStackedClient([
-            new Response(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/application_cancellations_page_1.json')),
-        ], $history);
-
-        $httpClientWrapper = new HttpClientWrapper(
-            new GuzzleAdapter($client),
-            Environment::CONFIGURATION[Environment::SANDBOX]['base_uri'],
-            'test_key'
+        $httpClient = new \Http\Mock\Client(self::createMock(ResponseFactoryInterface::class));
+        $httpClient->addResponse(
+            $this->createResponseMock(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/application_cancellations_page_1.json'))
         );
 
-        $sdk = new Client($httpClientWrapper, Environment::SANDBOX);
+        $requestFactory = self::createMock(RequestFactory::class);
+        $requestFactory->method('createRequest')->willReturn(self::createMock(RequestInterface::class));
+
+        $wrapper = new HttpWrapper('-merchant-api-pub-http-host-', 'divido', $httpClient, $requestFactory);
+
+        $sdk = new Client($wrapper, Environment::SANDBOX);
 
         $application = (new Application)->withId($this->applicationId);
 
@@ -98,18 +83,9 @@ class ApplicationCancellationsIntegrationTest extends MerchantSDKTestCase
         self::assertInstanceOf(ResponseWrapper::class, $cancellations);
         self::assertCount(2, $cancellations->getResources());
 
-        self::assertInternalType('object', $cancellations->getResources()[0]);
+        self::assertIsObject($cancellations->getResources()[0]);
         self::assertObjectHasAttribute('id', $cancellations->getResources()[0]);
         self::assertSame('5d1b94f5-3a7f-4f70-be6e-bb53abd7f955', $cancellations->getResources()[0]->id);
-
-        self::assertCount(1, $history);
-        self::assertSame('GET', $history[0]['request']->getMethod());
-        self::assertSame("/applications/{$this->applicationId}/cancellations", $history[0]['request']->getUri()->getPath());
-
-        $query = [];
-        parse_str($history[0]['request']->getUri()->getQuery(), $query);
-
-        self::assertArrayHasKey('page', $query);
     }
 
     /**
@@ -117,20 +93,19 @@ class ApplicationCancellationsIntegrationTest extends MerchantSDKTestCase
      */
     public function test_GetAllApplicationCancellationsFromClient_ReturnsAllApplicationCancellations($applicationModelProvided)
     {
-        $history = [];
-
-        $client = $this->getGuzzleStackedClient([
-            new Response(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/application_cancellations_page_1.json')),
-            new Response(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/application_cancellations_page_2.json')),
-        ], $history);
-
-        $httpClientWrapper = new HttpClientWrapper(
-            new GuzzleAdapter($client),
-            Environment::CONFIGURATION[Environment::SANDBOX]['base_uri'],
-            'test_key'
+        $httpClient = new \Http\Mock\Client(self::createMock(ResponseFactoryInterface::class));
+        $httpClient->addResponse(
+            $this->createResponseMock(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/application_cancellations_page_1.json'))
         );
+        $httpClient->addResponse(
+            $this->createResponseMock(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/application_cancellations_page_2.json'))
+        );
+        $requestFactory = self::createMock(RequestFactory::class);
+        $requestFactory->method('createRequest')->willReturn(self::createMock(RequestInterface::class));
 
-        $sdk = new Client($httpClientWrapper, Environment::SANDBOX);
+        $wrapper = new HttpWrapper('-merchant-api-pub-http-host-', 'divido', $httpClient, $requestFactory);
+
+        $sdk = new Client($wrapper, Environment::SANDBOX);
 
         $requestOptions = (new ApiRequestOptions())->setPaginated(false);
 
@@ -144,24 +119,10 @@ class ApplicationCancellationsIntegrationTest extends MerchantSDKTestCase
 
         self::assertInstanceOf(ResponseWrapper::class, $cancellations);
         self::assertCount(3, $cancellations->getResources());
-        self::assertInternalType('object', $cancellations->getResources()[0]);
+        self::assertIsObject($cancellations->getResources()[0]);
         self::assertObjectHasAttribute('id', $cancellations->getResources()[0]);
         self::assertSame('5d1b94f5-3a7f-4f70-be6e-bb53abd7f955', $cancellations->getResources()[0]->id);
         self::assertSame('5d1b94f5-3a7f-4f70-be6e-ab53abd7f950', $cancellations->getResources()[1]->id);
-
-        self::assertCount(2, $history);
-        self::assertSame('GET', $history[0]['request']->getMethod());
-        self::assertSame("/applications/{$this->applicationId}/cancellations", $history[0]['request']->getUri()->getPath());
-        self::assertSame("/applications/{$this->applicationId}/cancellations", $history[1]['request']->getUri()->getPath());
-
-        $query1 = [];
-        parse_str($history[0]['request']->getUri()->getQuery(), $query1);
-        $query2 = [];
-        parse_str($history[1]['request']->getUri()->getQuery(), $query2);
-        self::assertArrayHasKey('page', $query1);
-        self::assertArrayHasKey('page', $query2);
-        self::assertSame('1', $query1['page']);
-        self::assertSame('2', $query2['page']);
     }
 
     public function provider_test_GetAllApplicationCancellationsFromClient_ReturnsAllApplicationCancellations()
@@ -174,20 +135,20 @@ class ApplicationCancellationsIntegrationTest extends MerchantSDKTestCase
 
     public function test_YieldAllApplicationCancellationsFromClient_ReturnsApplicationCancellationsGenerator()
     {
-        $history = [];
-
-        $client = $this->getGuzzleStackedClient([
-            new Response(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/application_cancellations_page_1.json')),
-            new Response(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/application_cancellations_page_2.json')),
-        ], $history);
-
-        $httpClientWrapper = new HttpClientWrapper(
-            new GuzzleAdapter($client),
-            Environment::CONFIGURATION[Environment::SANDBOX]['base_uri'],
-            'test_key'
+        $httpClient = new \Http\Mock\Client(self::createMock(ResponseFactoryInterface::class));
+        $httpClient->addResponse(
+            $this->createResponseMock(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/application_cancellations_page_1.json'))
+        );
+        $httpClient->addResponse(
+            $this->createResponseMock(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/application_cancellations_page_2.json'))
         );
 
-        $sdk = new Client($httpClientWrapper, Environment::SANDBOX);
+        $requestFactory = self::createMock(RequestFactory::class);
+        $requestFactory->method('createRequest')->willReturn(self::createMock(RequestInterface::class));
+
+        $wrapper = new HttpWrapper('-merchant-api-pub-http-host-', 'divido', $httpClient, $requestFactory);
+
+        $sdk = new Client($wrapper, Environment::SANDBOX);
 
         $requestOptions = (new ApiRequestOptions());
 
@@ -200,40 +161,24 @@ class ApplicationCancellationsIntegrationTest extends MerchantSDKTestCase
         $cancellation = $cancellations->current();
         self::assertCount(3, $cancellations);
 
-        self::assertInternalType('object', $cancellation);
+        self::assertIsObject($cancellation);
         self::assertObjectHasAttribute('id', $cancellation);
         self::assertSame('5d1b94f5-3a7f-4f70-be6e-bb53abd7f955', $cancellation->id);
-
-        self::assertCount(2, $history);
-        self::assertSame('GET', $history[0]['request']->getMethod());
-        self::assertSame("/applications/{$this->applicationId}/cancellations", $history[0]['request']->getUri()->getPath());
-
-        $query1 = [];
-        parse_str($history[0]['request']->getUri()->getQuery(), $query1);
-        $query2 = [];
-        parse_str($history[1]['request']->getUri()->getQuery(), $query2);
-
-        self::assertArrayHasKey('page', $query1);
-        self::assertArrayHasKey('page', $query2);
-        self::assertSame('1', $query1['page']);
-        self::assertSame('2', $query2['page']);
     }
 
     public function test_GetApplicationCancellationsByPageFromClient_WithSort_ReturnsSortedApplicationCancellations()
     {
-        $history = [];
-
-        $client = $this->getGuzzleStackedClient([
-            new Response(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/application_cancellations_page_1.json')),
-        ], $history);
-
-        $httpClientWrapper = new HttpClientWrapper(
-            new GuzzleAdapter($client),
-            Environment::CONFIGURATION[Environment::SANDBOX]['base_uri'],
-            'test_key'
+        $httpClient = new \Http\Mock\Client(self::createMock(ResponseFactoryInterface::class));
+        $httpClient->addResponse(
+            $this->createResponseMock(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/application_cancellations_page_1.json'))
         );
 
-        $sdk = new Client($httpClientWrapper, Environment::SANDBOX);
+        $requestFactory = self::createMock(RequestFactory::class);
+        $requestFactory->method('createRequest')->willReturn(self::createMock(RequestInterface::class));
+
+        $wrapper = new HttpWrapper('-merchant-api-pub-http-host-', 'divido', $httpClient, $requestFactory);
+
+        $sdk = new Client($wrapper, Environment::SANDBOX);
 
         $requestOptions = (new ApiRequestOptions())->setSort('-created_at');
 
@@ -241,33 +186,24 @@ class ApplicationCancellationsIntegrationTest extends MerchantSDKTestCase
 
         $sdk->getApplicationCancellationsByPage($requestOptions, $application);
 
-        self::assertCount(1, $history);
-        self::assertSame('GET', $history[0]['request']->getMethod());
-        self::assertSame("/applications/{$this->applicationId}/cancellations", $history[0]['request']->getUri()->getPath());
-
-        $query = [];
-        parse_str($history[0]['request']->getUri()->getQuery(), $query);
-
-        self::assertArrayHasKey('sort', $query);
-        self::assertSame('-created_at', $query['sort']);
+        self::addToAssertionCount(1);
     }
 
     public function test_YieldApplicationCancellationsByPageFromClient_ReturnsApplicationCancellations()
     {
-        $history = [];
-
-        $client = $this->getGuzzleStackedClient([
-            new Response(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/application_cancellations_page_1.json')),
-            new Response(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/application_cancellations_page_2.json')),
-        ], $history);
-
-        $httpClientWrapper = new HttpClientWrapper(
-            new GuzzleAdapter($client),
-            Environment::CONFIGURATION[Environment::SANDBOX]['base_uri'],
-            'test_key'
+        $httpClient = new \Http\Mock\Client(self::createMock(ResponseFactoryInterface::class));
+        $httpClient->addResponse(
+            $this->createResponseMock(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/application_cancellations_page_1.json'))
         );
+        $httpClient->addResponse(
+            $this->createResponseMock(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/application_cancellations_page_2.json'))
+        );
+        $requestFactory = self::createMock(RequestFactory::class);
+        $requestFactory->method('createRequest')->willReturn(self::createMock(RequestInterface::class));
 
-        $sdk = new Client($httpClientWrapper, Environment::SANDBOX);
+        $wrapper = new HttpWrapper('-merchant-api-pub-http-host-', 'divido', $httpClient, $requestFactory);
+
+        $sdk = new Client($wrapper, Environment::SANDBOX);
 
         $requestOptions = (new ApiRequestOptions());
 
@@ -278,18 +214,8 @@ class ApplicationCancellationsIntegrationTest extends MerchantSDKTestCase
         $cancellation = $cancellations->current();
         self::assertCount(2, $cancellations);
 
-        self::assertInternalType('object', $cancellation);
+        self::assertIsObject($cancellation);
         self::assertObjectHasAttribute('id', $cancellation);
         self::assertSame('5d1b94f5-3a7f-4f70-be6e-bb53abd7f955', $cancellation->id);
-
-        self::assertCount(1, $history);
-        self::assertSame('GET', $history[0]['request']->getMethod());
-        self::assertSame("/applications/{$this->applicationId}/cancellations", $history[0]['request']->getUri()->getPath());
-
-        $query1 = [];
-        parse_str($history[0]['request']->getUri()->getQuery(), $query1);
-
-        self::assertArrayHasKey('page', $query1);
-        self::assertSame('1', $query1['page']);
     }
 }

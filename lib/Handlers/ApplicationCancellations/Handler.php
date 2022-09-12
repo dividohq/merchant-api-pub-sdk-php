@@ -7,6 +7,7 @@ use Divido\MerchantSDK\Handlers\ApiRequestOptions;
 use Divido\MerchantSDK\Models\Application;
 use Divido\MerchantSDK\Models\ApplicationCancellation;
 use Divido\MerchantSDK\Response\ResponseWrapper;
+use Psr\Http\Message\ResponseInterface;
 
 /**
  * Class Handler
@@ -90,7 +91,7 @@ class Handler extends AbstractHttpHandler
             'sort' => $options->getSort(),
         ];
 
-        $response = $this->httpClientWrapper->request('get', $path, $query);
+        $response = $this->wrapper->request('get', $path, $query);
         $parsed = $this->parseResponse($response);
 
         return $parsed;
@@ -113,7 +114,7 @@ class Handler extends AbstractHttpHandler
      *
      * @param Application $application
      * @param string $cancellationId
-     * @return \GuzzleHttp\Psr7\Response
+     * @return ResponseInterface
      */
     public function getSingleApplicationCancellation(Application $application, $cancellationId)
     {
@@ -124,7 +125,7 @@ class Handler extends AbstractHttpHandler
             $cancellationId,
         ]);
 
-        return $this->httpClientWrapper->request('get', $path);
+        return $this->wrapper->request('get', $path);
     }
 
     /**
@@ -132,7 +133,7 @@ class Handler extends AbstractHttpHandler
      *
      * @param Application $application
      * @param ApplicationCancellation $applicationCancellation
-     * @return \GuzzleHttp\Psr7\Response
+     * @return ResponseInterface
      */
     public function createApplicationCancellation(Application $application, ApplicationCancellation $applicationCancellation)
     {
@@ -142,6 +143,6 @@ class Handler extends AbstractHttpHandler
             'cancellations',
         ]);
 
-        return $this->httpClientWrapper->request('post', $path, [], [], $applicationCancellation->getJsonPayload());
+        return $this->wrapper->request('post', $path, [], [], $applicationCancellation->getJsonPayload());
     }
 }

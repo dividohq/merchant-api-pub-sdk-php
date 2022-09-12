@@ -4,34 +4,30 @@ namespace Divido\MerchantSDK\Test\Integration;
 
 use Divido\MerchantSDK\Client;
 use Divido\MerchantSDK\Environment;
-use Divido\MerchantSDK\HttpClient\HttpClientWrapper;
-use Divido\MerchantSDK\Test\Stubs\HttpClient\GuzzleAdapter;
 use Divido\MerchantSDK\Test\Unit\MerchantSDKTestCase;
-use GuzzleHttp\Psr7\Response;
-use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
+use Divido\MerchantSDK\Wrappers\HttpWrapper;
+use Http\Message\RequestFactory;
+use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseFactoryInterface;
 
 class PlatformEnvironmentsIntegrationTest extends MerchantSDKTestCase
 {
-    use MockeryPHPUnitIntegration;
-
     public function test_YieldApplicationRefundsByPageFromClient_ReturnsApplicationRefunds()
     {
-        $history = [];
-
-        $client = $this->getGuzzleStackedClient([
-            new Response(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/environment.json')),
-        ], $history);
-
-        $httpClientWrapper = new HttpClientWrapper(
-            new GuzzleAdapter($client),
-            Environment::CONFIGURATION[Environment::SANDBOX]['base_uri'],
-            'test_key'
+        $httpClient = new \Http\Mock\Client(self::createMock(ResponseFactoryInterface::class));
+        $httpClient->addResponse(
+            $this->createResponseMock(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/environment.json'))
         );
 
-        $sdk = new Client($httpClientWrapper, Environment::SANDBOX);
+        $requestFactory = self::createMock(RequestFactory::class);
+        $requestFactory->method('createRequest')->willReturn(self::createMock(RequestInterface::class));
+
+        $wrapper = new HttpWrapper('-merchant-api-pub-http-host-', 'divido', $httpClient, $requestFactory);
+
+        $sdk = new Client($wrapper, Environment::SANDBOX);
 
         $environment = $sdk->platformEnvironments()->getPlatformEnvironment();
-        $body = json_decode($environment->getBody()->getContents(), 1);
+        $body = json_decode($environment->getBody()->getContents(), true);
 
         self::assertSame('divido', $body['data']['environment']);
     }

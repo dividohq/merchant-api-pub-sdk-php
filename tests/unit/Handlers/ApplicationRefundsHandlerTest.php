@@ -4,146 +4,133 @@ namespace Divido\MerchantSDK\Test\Unit;
 
 use Divido\MerchantSDK\Handlers\ApiRequestOptions;
 use Divido\MerchantSDK\Handlers\ApplicationRefunds\Handler;
-use Divido\MerchantSDK\HttpClient\HttpClientWrapper;
 use Divido\MerchantSDK\Models\Application;
 use Divido\MerchantSDK\Response\ResponseWrapper;
-use Divido\MerchantSDK\Test\Stubs\HttpClient\GuzzleAdapter;
-use GuzzleHttp\Psr7\Response;
-use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
+use Divido\MerchantSDK\Wrappers\HttpWrapper;
+use Http\Message\RequestFactory;
+use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseFactoryInterface;
 
 class ApplicationRefundsHandlerTest extends MerchantSDKTestCase
 {
-    use MockeryPHPUnitIntegration;
+    private $applicationId = '53ad60ed-860d-4fa1-a497-03c1aea39f0a';
 
-    private $applicationId = '90a25b24-2f53-4c80-aba8-9787c68e4c1d';
-
-    public function test_GetApplicationRefunds_ReturnsApplicationsRefunds()
+    public function test_GetApplicationRefunds_ReturnsApplicationRefunds()
     {
-        $history = [];
+        $httpClient = new \Http\Mock\Client(self::createMock(ResponseFactoryInterface::class));
+        $httpClient->addResponse(
+            $this->createResponseMock(200, [], file_get_contents(
+                APP_PATH . '/tests/assets/responses/application_refunds_page_1.json'
+            ))
+        );
 
-        $client = $this->getGuzzleStackedClient([
-            new Response(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/application_refunds_page_1.json')),
-        ], $history);
+        $requestFactory = self::createMock(RequestFactory::class);
+        $requestFactory->method('createRequest')->willReturn(self::createMock(RequestInterface::class));
 
-        $httpClientWrapper = new HttpClientWrapper(new GuzzleAdapter($client), '', '');
+        $wrapper = new HttpWrapper('-merchant-api-pub-http-host-', 'divido', $httpClient, $requestFactory);
 
-        $handler = new Handler($httpClientWrapper);
-
-        $requestOptions = (new ApiRequestOptions());
+        $handler = new Handler($wrapper);
 
         $application = (new Application)->withId($this->applicationId);
+        $requestOptions = (new ApiRequestOptions());
 
         $refunds = $handler->getApplicationRefunds($requestOptions, $application);
 
         self::assertInstanceOf(ResponseWrapper::class, $refunds);
         self::assertCount(2, $refunds->getResources());
 
-        self::assertInternalType('object', $refunds->getResources()[0]);
+        self::assertIsObject($refunds->getResources()[0]);
         self::assertObjectHasAttribute('id', $refunds->getResources()[0]);
         self::assertSame('97ca1476-2c9c-4ca2-b4c6-1f41f2ecdf5b', $refunds->getResources()[0]->id);
-
-        self::assertCount(1, $history);
-        self::assertSame('GET', $history[0]['request']->getMethod());
-        self::assertSame("/applications/{$this->applicationId}/refunds", $history[0]['request']->getUri()->getPath());
-
-        $query = [];
-        parse_str($history[0]['request']->getUri()->getQuery(), $query);
-
-        self::assertArrayHasKey('page', $query);
     }
 
     public function test_GetApplicationRefundsByPage_ReturnsApplicationsRefunds()
     {
-        $history = [];
+        $httpClient = new \Http\Mock\Client(self::createMock(ResponseFactoryInterface::class));
+        $httpClient->addResponse(
+            $this->createResponseMock(200, [], file_get_contents(
+                APP_PATH . '/tests/assets/responses/application_refunds_page_1.json'
+            ))
+        );
 
-        $client = $this->getGuzzleStackedClient([
-            new Response(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/application_refunds_page_1.json')),
-        ], $history);
+        $requestFactory = self::createMock(RequestFactory::class);
+        $requestFactory->method('createRequest')->willReturn(self::createMock(RequestInterface::class));
 
-        $httpClientWrapper = new HttpClientWrapper(new GuzzleAdapter($client), '', '');
+        $wrapper = new HttpWrapper('-merchant-api-pub-http-host-', 'divido', $httpClient, $requestFactory);
 
-        $handler = new Handler($httpClientWrapper);
-
-        $requestOptions = (new ApiRequestOptions());
+        $handler = new Handler($wrapper);
 
         $application = (new Application)->withId($this->applicationId);
+        $requestOptions = (new ApiRequestOptions());
 
         $refunds = $handler->getApplicationRefundsByPage($requestOptions, $application);
 
         self::assertInstanceOf(ResponseWrapper::class, $refunds);
         self::assertCount(2, $refunds->getResources());
 
-        self::assertInternalType('object', $refunds->getResources()[0]);
+        self::assertIsObject($refunds->getResources()[0]);
         self::assertObjectHasAttribute('id', $refunds->getResources()[0]);
         self::assertSame('97ca1476-2c9c-4ca2-b4c6-1f41f2ecdf5b', $refunds->getResources()[0]->id);
-
-        self::assertCount(1, $history);
-        self::assertSame('GET', $history[0]['request']->getMethod());
-        self::assertSame("/applications/{$this->applicationId}/refunds", $history[0]['request']->getUri()->getPath());
-
-        $query = [];
-        parse_str($history[0]['request']->getUri()->getQuery(), $query);
-
-        self::assertArrayHasKey('page', $query);
     }
 
     public function test_GetAllApplicationRefunds_ReturnsAllApplicationRefunds()
     {
-        $history = [];
+        $httpClient = new \Http\Mock\Client(self::createMock(ResponseFactoryInterface::class));
+        $httpClient->addResponse(
+            $this->createResponseMock(200, [], file_get_contents(
+                APP_PATH . '/tests/assets/responses/application_refunds_page_1.json'
+            ))
+        );
+        $httpClient->addResponse(
+            $this->createResponseMock(200, [], file_get_contents(
+                APP_PATH . '/tests/assets/responses/application_refunds_page_2.json'
+            ))
+        );
 
-        $client = $this->getGuzzleStackedClient([
-            new Response(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/application_refunds_page_1.json')),
-            new Response(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/application_refunds_page_2.json')),
-        ], $history);
+        $requestFactory = self::createMock(RequestFactory::class);
+        $requestFactory->method('createRequest')->willReturn(self::createMock(RequestInterface::class));
 
-        $httpClientWrapper = new HttpClientWrapper(new GuzzleAdapter($client), '', '');
+        $wrapper = new HttpWrapper('-merchant-api-pub-http-host-', 'divido', $httpClient, $requestFactory);
 
-        $handler = new Handler($httpClientWrapper);
-
-        $requestOptions = (new ApiRequestOptions());
+        $handler = new Handler($wrapper);
 
         $application = (new Application)->withId($this->applicationId);
 
+        $requestOptions = (new ApiRequestOptions())->setPaginated(false);
         $refunds = $handler->getAllApplicationRefunds($requestOptions, $application);
 
         self::assertInstanceOf(ResponseWrapper::class, $refunds);
-        // self::assertCount(2, $refunds->getResources());
-        self::assertInternalType('object', $refunds->getResources()[0]);
+        self::assertCount(3, $refunds->getResources());
+        self::assertIsObject($refunds->getResources()[0]);
         self::assertObjectHasAttribute('id', $refunds->getResources()[0]);
         self::assertSame('97ca1476-2c9c-4ca2-b4c6-1f41f2ecdf5b', $refunds->getResources()[0]->id);
         self::assertSame('69c08979-b727-407b-b449-6f03de02dd77', $refunds->getResources()[1]->id);
-
-        self::assertCount(2, $history);
-        self::assertSame('GET', $history[0]['request']->getMethod());
-        self::assertSame("/applications/{$this->applicationId}/refunds", $history[0]['request']->getUri()->getPath());
-        self::assertSame("/applications/{$this->applicationId}/refunds", $history[1]['request']->getUri()->getPath());
-
-        $query1 = [];
-        parse_str($history[0]['request']->getUri()->getQuery(), $query1);
-        $query2 = [];
-        parse_str($history[1]['request']->getUri()->getQuery(), $query2);
-        self::assertArrayHasKey('page', $query1);
-        self::assertArrayHasKey('page', $query2);
-        self::assertSame('1', $query1['page']);
-        self::assertSame('2', $query2['page']);
+        self::assertSame('69c08979-b727-407b-b449-6f03de02dd78', $refunds->getResources()[2]->id);
     }
 
     public function test_YieldAllApplicationRefunds_ReturnsApplicationRefundsGenerator()
     {
-        $history = [];
+        $httpClient = new \Http\Mock\Client(self::createMock(ResponseFactoryInterface::class));
+        $httpClient->addResponse(
+            $this->createResponseMock(200, [], file_get_contents(
+                APP_PATH . '/tests/assets/responses/application_refunds_page_1.json'
+            ))
+        );
+        $httpClient->addResponse(
+            $this->createResponseMock(200, [], file_get_contents(
+                APP_PATH . '/tests/assets/responses/application_refunds_page_2.json'
+            ))
+        );
 
-        $client = $this->getGuzzleStackedClient([
-            new Response(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/application_refunds_page_1.json')),
-            new Response(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/application_refunds_page_2.json')),
-        ], $history);
+        $requestFactory = self::createMock(RequestFactory::class);
+        $requestFactory->method('createRequest')->willReturn(self::createMock(RequestInterface::class));
 
-        $httpClientWrapper = new HttpClientWrapper(new GuzzleAdapter($client), '', '');
+        $wrapper = new HttpWrapper('-merchant-api-pub-http-host-', 'divido', $httpClient, $requestFactory);
 
-        $handler = new Handler($httpClientWrapper);
-
-        $requestOptions = (new ApiRequestOptions())->setPage(2);
+        $handler = new Handler($wrapper);
 
         $application = (new Application)->withId($this->applicationId);
+        $requestOptions = (new ApiRequestOptions())->setPaginated(false);
 
         $refunds = $handler->yieldAllApplicationRefunds($requestOptions, $application);
 
@@ -152,141 +139,94 @@ class ApplicationRefundsHandlerTest extends MerchantSDKTestCase
         $refund = $refunds->current();
         self::assertCount(3, $refunds);
 
-        self::assertInternalType('object', $refund);
+        self::assertIsObject($refund);
         self::assertObjectHasAttribute('id', $refund);
         self::assertSame('97ca1476-2c9c-4ca2-b4c6-1f41f2ecdf5b', $refund->id);
-
-        self::assertCount(2, $history);
-        self::assertSame('GET', $history[0]['request']->getMethod());
-        self::assertSame("/applications/{$this->applicationId}/refunds", $history[0]['request']->getUri()->getPath());
-
-        $query1 = [];
-        parse_str($history[0]['request']->getUri()->getQuery(), $query1);
-        $query2 = [];
-        parse_str($history[1]['request']->getUri()->getQuery(), $query2);
-
-        self::assertArrayHasKey('page', $query1);
-        self::assertArrayHasKey('page', $query2);
-        self::assertSame('1', $query1['page']);
-        self::assertSame('2', $query2['page']);
     }
 
     public function test_YieldApplicationRefundsByPage_ReturnsApplicationRefundsGenerator()
     {
-        $history = [];
+        $httpClient = new \Http\Mock\Client(self::createMock(ResponseFactoryInterface::class));
+        $httpClient->addResponse(
+            $this->createResponseMock(200, [], file_get_contents(
+                APP_PATH . '/tests/assets/responses/application_refunds_page_1.json'
+            ))
+        );
+        $httpClient->addResponse(
+            $this->createResponseMock(200, [], file_get_contents(
+                APP_PATH . '/tests/assets/responses/application_refunds_page_2.json'
+            ))
+        );
 
-        $client = $this->getGuzzleStackedClient([
-            new Response(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/application_refunds_page_1.json')),
-            new Response(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/application_refunds_page_2.json')),
-        ], $history);
+        $requestFactory = self::createMock(RequestFactory::class);
+        $requestFactory->method('createRequest')->willReturn(self::createMock(RequestInterface::class));
 
-        $httpClientWrapper = new HttpClientWrapper(new GuzzleAdapter($client), '', '');
+        $wrapper = new HttpWrapper('-merchant-api-pub-http-host-', 'divido', $httpClient, $requestFactory);
 
-        $handler = new Handler($httpClientWrapper);
-
-        $requestOptions = (new ApiRequestOptions())->setPage(2);
+        $handler = new Handler($wrapper);
 
         $application = (new Application)->withId($this->applicationId);
+        $requestOptions = (new ApiRequestOptions())->setPaginated(true);
 
         $refunds = $handler->yieldApplicationRefunds($requestOptions, $application);
 
         self::assertInstanceOf(\Generator::class, $refunds);
 
         $refund = $refunds->current();
-
-        // Bug?:
-        // Failed asserting that actual size 0 matches expected size 0
         self::assertCount(2, $refunds);
 
-        self::assertInternalType('object', $refund);
+        self::assertIsObject($refund);
         self::assertObjectHasAttribute('id', $refund);
         self::assertSame('97ca1476-2c9c-4ca2-b4c6-1f41f2ecdf5b', $refund->id);
-
-        self::assertCount(1, $history);
-        self::assertSame('GET', $history[0]['request']->getMethod());
-        self::assertSame("/applications/{$this->applicationId}/refunds", $history[0]['request']->getUri()->getPath());
-
-        $query1 = [];
-        parse_str($history[0]['request']->getUri()->getQuery(), $query1);
-
-        self::assertArrayHasKey('page', $query1);
-        self::assertSame('2', $query1['page']);
-    }
-
-    public function test_GetApplicationActivtionsByPage_WithSort_ReturnsSortedApplicationRefunds()
-    {
-        $history = [];
-
-        $client = $this->getGuzzleStackedClient([
-            new Response(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/application_refunds_page_1.json')),
-        ], $history);
-
-        $httpClientWrapper = new HttpClientWrapper(new GuzzleAdapter($client), '', '');
-
-        $handler = new Handler($httpClientWrapper);
-
-        $requestOptions = (new ApiRequestOptions())->setSort('-created_at');
-
-        $application = (new Application)->withId($this->applicationId);
-
-       $handler->getApplicationRefundsByPage($requestOptions, $application);
-
-        self::assertCount(1, $history);
-        self::assertSame('GET', $history[0]['request']->getMethod());
-        self::assertSame("/applications/{$this->applicationId}/refunds", $history[0]['request']->getUri()->getPath());
-
-        $query = [];
-        parse_str($history[0]['request']->getUri()->getQuery(), $query);
-
-        self::assertArrayHasKey('sort', $query);
-        self::assertSame('-created_at', $query['sort']);
-
     }
 
     public function test_GetSingleApplicationRefund_ReturnsSingleApplicationRefund()
     {
-        $history = [];
+        $httpClient = new \Http\Mock\Client(self::createMock(ResponseFactoryInterface::class));
+        $httpClient->addResponse(
+            $this->createResponseMock(200, [], file_get_contents(
+                APP_PATH . '/tests/assets/responses/application_refunds_get_one.json'
+            ))
+        );
 
-        $client = $this->getGuzzleStackedClient([
-            new Response(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/application_refunds_get_one.json')),
-        ], $history);
-        $httpClientWrapper = new HttpClientWrapper(new GuzzleAdapter($client), '', '');
+        $requestFactory = self::createMock(RequestFactory::class);
+        $requestFactory->method('createRequest')->willReturn(self::createMock(RequestInterface::class));
 
-        $handler = new Handler($httpClientWrapper);
+        $wrapper = new HttpWrapper('-merchant-api-pub-http-host-', 'divido', $httpClient, $requestFactory);
+
+        $handler = new Handler($wrapper);
 
         $application = (new Application)->withId($this->applicationId);
 
-        $response = $handler->getSingleApplicationRefund($application, '26d56518-e4a0-4d33-9415-be3c8d6c2661');
+        $response = $handler->getSingleApplicationRefund($application, '97ca1476-2c9c-4ca2-b4c6-1f41f2ecdf5b');
 
-        self::assertCount(1, $history);
-        self::assertSame('GET', $history[0]['request']->getMethod());
-        self::assertSame(
-            "/applications/{$this->applicationId}/refunds/26d56518-e4a0-4d33-9415-be3c8d6c2661",
-            $history[0]['request']->getUri()->getPath()
-        );
-
-        $result = json_decode($response->getBody(), true);
+        $result = json_decode($response->getBody()->getContents(), true);
 
         self::assertSame('26d56518-e4a0-4d33-9415-be3c8d6c2661', $result['data']['id']);
     }
 
     public function test_CreateApplicationRefund_ReturnsNewlyCreatedApplicationRefund()
     {
-        $history = [];
+        $httpClient = new \Http\Mock\Client(self::createMock(ResponseFactoryInterface::class));
+        $httpClient->addResponse(
+            $this->createResponseMock(201, [], file_get_contents(
+                APP_PATH . '/tests/assets/responses/application_refunds_get_one.json'
+            ))
+        );
 
-        $client = $this->getGuzzleStackedClient([
-            new Response(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/application_refunds_get_one.json')),
-        ], $history);
-        $httpClientWrapper = new HttpClientWrapper(new GuzzleAdapter($client), '', '');
+        $requestFactory = self::createMock(RequestFactory::class);
+        $requestFactory->method('createRequest')->willReturn(self::createMock(RequestInterface::class));
 
-        $handler = new Handler($httpClientWrapper);
+        $wrapper = new HttpWrapper('-merchant-api-pub-http-host-', 'divido', $httpClient, $requestFactory);
+
+        $handler = new Handler($wrapper);
 
         $application = (new Application)->withId($this->applicationId);
 
         $refund = (new \Divido\MerchantSDK\Models\ApplicationRefund)
             ->withAmount(1000)
             ->withReference('D4M-njPjFRE-MxsB')
-            ->withComment('Item activated')
+            ->withComment('Item refunded')
             ->withOrderItems([
                 [
                     'name' => 'Handbag',
@@ -297,11 +237,7 @@ class ApplicationRefundsHandlerTest extends MerchantSDKTestCase
 
         $response = $handler->createApplicationRefund($application, $refund);
 
-        self::assertCount(1, $history);
-        self::assertSame('POST', $history[0]['request']->getMethod());
-        self::assertSame("/applications/{$this->applicationId}/refunds", $history[0]['request']->getUri()->getPath());
-
-        $result = json_decode($response->getBody(), true);
+        $result = json_decode($response->getBody()->getContents(), true);
 
         self::assertSame('26d56518-e4a0-4d33-9415-be3c8d6c2661', $result['data']['id']);
     }

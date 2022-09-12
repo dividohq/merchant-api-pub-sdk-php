@@ -5,7 +5,7 @@ namespace Divido\MerchantSDK\Test\Unit\Helpers;
 use Divido\MerchantSDK\Helpers\Str;
 use Divido\MerchantSDK\Test\Unit\MerchantSDKTestCase;
 
-class SettlementsHandlerTest extends MerchantSDKTestCase
+class StrTest extends MerchantSDKTestCase
 {
     /**
      * Test getting lower case string with supplied argument returns lower case string.

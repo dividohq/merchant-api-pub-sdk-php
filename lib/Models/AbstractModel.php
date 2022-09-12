@@ -31,7 +31,7 @@ abstract class AbstractModel
     public function getPayload()
     {
         $payload = array_filter(get_object_vars($this), function ($value) {
-            return !is_null($value);
+            return null !== $value;
         });
 
         return $this->transformKeysToSnakeCase($payload);

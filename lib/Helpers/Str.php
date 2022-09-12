@@ -46,7 +46,7 @@ class Str
         }
 
         if (! ctype_lower($value)) {
-            $value = preg_replace('/\s+/u', '', ucwords($value));
+            $value = preg_replace('/\s+/u', '', ucwords((string) $value));
 
             $value = static::lower(preg_replace('/(.)(?=[A-Z])/u', '$1'.$delimiter, $value));
         }

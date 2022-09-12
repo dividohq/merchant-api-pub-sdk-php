@@ -22,7 +22,7 @@ trait ClientProxyTrait
     public function health()
     {
         if (!array_key_exists('health', $this->getHandlers())) {
-            $this->setHandler('health', new Handler($this->httpClientWrapper));
+            $this->setHandler('health', new Handler($this->wrapper));
         }
 
         return $this->getHandlers()['health'];
