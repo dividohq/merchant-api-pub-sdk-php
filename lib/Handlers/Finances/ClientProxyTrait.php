@@ -68,7 +68,7 @@ trait ClientProxyTrait
      * Yield all plans.
      *
      * @param ApiRequestOptions $options
-     * @return ResponseWrapper
+     * @return \Generator
      */
     public function yieldAllPlans(ApiRequestOptions $options)
     {
@@ -82,7 +82,7 @@ trait ClientProxyTrait
      * Yield plans by page.
      *
      * @param ApiRequestOptions $options
-     * @return ResponseWrapper
+     * @return \Generator
      */
     public function yieldPlansByPage(ApiRequestOptions $options)
     {

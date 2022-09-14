@@ -23,9 +23,11 @@ ci-test: composer-install
 	PHP_VERSION=7.4 ./.divido/build/run_tests.sh
 	make ci-clean
 
-
-ci-analyze: composer-install
-	docker  run --rm -e CHECKS="phpstan" -v $(PWD):/project divido/devtools:php-analysis
+ci-analyze:
+	docker run --rm \
+		-v $(PWD):/project \
+		-w /project \
+		ghcr.io/phpstan/phpstan analyse -c phpstan.neon
 
 ci-check-coverage:
 

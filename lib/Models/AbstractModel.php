@@ -40,7 +40,7 @@ abstract class AbstractModel
     /**
      * Convert each array key to snake case.
      *
-     * @param string $input
+     * @param array $input
      * @return array
      */
     private function transformKeysToSnakeCase($input)

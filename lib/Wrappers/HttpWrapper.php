@@ -6,6 +6,7 @@ use Divido\MerchantSDK\Exceptions\MerchantApiBadResponseException;
 use Http\Discovery\MessageFactoryDiscovery;
 use Http\Discovery\Psr18ClientDiscovery;
 use Http\Message\RequestFactory;
+use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\ResponseInterface;
 
@@ -58,8 +59,9 @@ class HttpWrapper implements WrapperInterface
      * @param string $uri
      * @param array $query
      * @param array $headers
-     * @param string $body
+     * @param mixed $body
      * @return ResponseInterface
+     * @throws MerchantApiBadResponseException
      */
     public function request(string $method, string $uri, array $query = [], array $headers = [], $body = null)
     {
@@ -70,7 +72,12 @@ class HttpWrapper implements WrapperInterface
 
         $request = $this->requestFactory->createRequest($method, $uri, $headers, $body);
 
-        $response = $this->httpClient->sendRequest($request);
+        try {
+            $response = $this->httpClient->sendRequest($request);
+        } catch (ClientExceptionInterface $e) {
+            throw new MerchantApiBadResponseException($e->getMessage(), $e->getCode(), null);
+        }
+
         $statusCode = $response->getStatusCode();
 
         if ($statusCode >= 400 && $statusCode <= 599) {

@@ -71,7 +71,7 @@ trait ClientProxyTrait
      *
      * @param ApiRequestOptions $options
      *
-     * @return ResponseWrapper
+     * @return \Generator
      */
     public function yieldAllSettlements(ApiRequestOptions $options)
     {
@@ -86,7 +86,7 @@ trait ClientProxyTrait
      *
      * @param ApiRequestOptions $options
      *
-     * @return ResponseWrapper
+     * @return \Generator
      */
     public function yieldSettlementsByPage(ApiRequestOptions $options)
     {

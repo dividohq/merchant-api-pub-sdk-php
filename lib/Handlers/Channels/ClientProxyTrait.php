@@ -68,7 +68,7 @@ trait ClientProxyTrait
      * Yield all channels.
      *
      * @param ApiRequestOptions $options
-     * @return ResponseWrapper
+     * @return \Generator
      */
     public function yieldAllChannels(ApiRequestOptions $options)
     {
@@ -82,7 +82,7 @@ trait ClientProxyTrait
      * Yield channels by page.
      *
      * @param ApiRequestOptions $options
-     * @return ResponseWrapper
+     * @return \Generator
      */
     public function yieldChannelsByPage(ApiRequestOptions $options)
     {

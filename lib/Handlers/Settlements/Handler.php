@@ -5,6 +5,7 @@ namespace Divido\MerchantSDK\Handlers\Settlements;
 use Divido\MerchantSDK\Handlers\AbstractHttpHandler;
 use Divido\MerchantSDK\Handlers\ApiRequestOptions;
 use Divido\MerchantSDK\Response\ResponseWrapper;
+use Psr\Http\Message\ResponseInterface;
 
 /**
  * Class Handler
@@ -102,7 +103,7 @@ class Handler extends AbstractHttpHandler
     /**
      * Get single settlement by id
      *
-     * @return ResponseWrapper
+     * @return ResponseInterface
      */
     public function getSingleSettlement($settlementId)
     {

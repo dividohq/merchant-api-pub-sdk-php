@@ -5,6 +5,7 @@ namespace Divido\MerchantSDK\Handlers\Applications;
 use Divido\MerchantSDK\Handlers\AbstractHttpHandler;
 use Divido\MerchantSDK\Handlers\ApiRequestOptions;
 use Divido\MerchantSDK\Models\Application;
+use Divido\MerchantSDK\Response\ResponseWrapper;
 use Psr\Http\Message\ResponseInterface;
 
 /**

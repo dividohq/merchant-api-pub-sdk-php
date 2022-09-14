@@ -83,7 +83,7 @@ trait ClientProxyTrait
      * @param ApiRequestOptions $options
      * @param mixed $application
      *
-     * @return ResponseWrapper
+     * @return \Generator
      */
     public function yieldAllApplicationActivations(ApiRequestOptions $options, $application)
     {
@@ -103,7 +103,7 @@ trait ClientProxyTrait
      * @param ApiRequestOptions $options
      * @param mixed $application
      *
-     * @return ResponseWrapper
+     * @return \Generator
      */
     public function yieldApplicationActivationsByPage(ApiRequestOptions $options, $application)
     {

@@ -83,7 +83,7 @@ trait ClientProxyTrait
      * @param ApiRequestOptions $options
      * @param mixed $application
      *
-     * @return ResponseWrapper
+     * @return \Generator
      */
     public function yieldAllApplicationCancellations(ApiRequestOptions $options, $application)
     {
@@ -103,7 +103,7 @@ trait ClientProxyTrait
      * @param ApiRequestOptions $options
      * @param mixed $application
      *
-     * @return ResponseWrapper
+     * @return \Generator
      */
     public function yieldApplicationCancellationsByPage(ApiRequestOptions $options, $application)
     {
