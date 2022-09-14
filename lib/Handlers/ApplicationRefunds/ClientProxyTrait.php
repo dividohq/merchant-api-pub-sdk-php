@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Divido\MerchantSDK\Handlers\ApplicationRefunds;
 
 use Divido\MerchantSDK\Handlers\ApiRequestOptions;

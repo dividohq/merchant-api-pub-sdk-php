@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Divido\MerchantSDK;
 
 use Divido\MerchantSDK\Exceptions\InvalidApiKeyFormatException;
@@ -48,7 +50,6 @@ class Environment
             self::CONFIGURATION_PROPERTY_BASE_URI => 'https://merchant.api.divido.com',
         ],
     ];
-
 
     /**
      * @param $apiKey

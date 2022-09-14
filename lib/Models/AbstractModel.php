@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Divido\MerchantSDK\Models;
 
 use Divido\MerchantSDK\Helpers\Str;

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Divido\MerchantSDK\Handlers\Finances;
 
 use Divido\MerchantSDK\Handlers\ApiRequestOptions;

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Divido\MerchantSDK\Test\Integration;
 
 use Divido\MerchantSDK\Client;

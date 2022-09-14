@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Divido\MerchantSDK\Handlers\ApplicationDocuments;
 
 use Divido\MerchantSDK\Handlers\AbstractHttpHandler;
