@@ -8,6 +8,15 @@ Docker needs to be running for these commands to work.
 **phpunit**: `make ci-test`  
 **phpstan**: `make ci-analyze`  
 
+## Requirements
+
+PHP 5.6 and later.
+
+## Getting Started
+
+This SDK can be installed via [Composer](https://getcomposer.org/) using the following command:
+
+`composer require divido/merchant-api` 
 
 ## Basic SDK usage
 
@@ -194,20 +203,18 @@ $applicationResponseBody = $response->getBody()->getContents();
 $application = (new \Divido\MerchantSDK\Models\Application())
     ->withId('application-id-goes-here');
 
-$items = [
-    [
-        'name' => 'Handbag',
-        'quantity' => 1,
-        'price' => 3000,
-    ],
-];
-
 // Create a new application activation model.
 $applicationActivation = (new \Divido\MerchantSDK\Models\ApplicationActivation())
     ->withAmount(18000)
     ->withReference('Order 235509678096')
     ->withComment('Order was delivered to the customer.')
-    ->withOrderItems($items)
+    ->withOrderItems([
+        [
+            'name' => 'Handbag',
+            'quantity' => 1,
+            'price' => 3000,
+        ],
+    ])
     ->withDeliveryMethod('delivery')
     ->withTrackingNumber('988gbqj182836');
 
@@ -226,20 +233,18 @@ $activationResponseBody = $response->getBody()->getContents();
 $application = (new \Divido\MerchantSDK\Models\Application())
     ->withId('application-id-goes-here');
 
-$items = [
-    [
-        'name' => 'Handbag',
-        'quantity' => 1,
-        'price' => 3000,
-    ],
-];
-
 // Create a new application cancellation model.
 $applicationCancellation = (new \Divido\MerchantSDK\Models\ApplicationCancellation())
     ->withAmount(18000)
     ->withReference('Order 235509678096')
     ->withComment('As per customer request.')
-    ->withOrderItems($items);
+    ->withOrderItems([
+        [
+            'name' => 'Handbag',
+            'quantity' => 1,
+            'price' => 3000,
+        ],
+    ]);
 
 // Create a new cancellation for the application.
 $response = $sdk->applicationCancellations()->createApplicationCancellation($application, $applicationCancellation);
@@ -256,20 +261,18 @@ $cancellationResponseBody = $response->getBody()->getContents();
 $application = (new \Divido\MerchantSDK\Models\Application())
     ->withId('application-id-goes-here');
 
-$items = [
-    [
-        'name' => 'Handbag',
-        'quantity' => 1,
-        'price' => 3000,
-    ],
-];
-
 // Create a new application refund model.
 $applicationRefund = (new \Divido\MerchantSDK\Models\ApplicationRefund())
     ->withAmount(18000)
     ->withReference('Order 235509678096')
     ->withComment('As per customer request.')
-    ->withOrderItems($items);
+    ->withOrderItems([
+        [
+            'name' => 'Handbag',
+            'quantity' => 1,
+            'price' => 3000,
+        ],
+    ]);
 
 // Create a new refund for the application.
 $response = $sdk->applicationRefunds()->createApplicationRefund($application, $applicationRefund);

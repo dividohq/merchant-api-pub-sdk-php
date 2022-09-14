@@ -1,9 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Divido\MerchantSDK\Handlers\Health;
 
 use Divido\MerchantSDK\Handlers\AbstractHttpHandler;
-use GuzzleHttp\Exception\RequestException;
 
 class Handler extends AbstractHttpHandler
 {

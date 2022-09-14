@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Divido\MerchantSDK\Handlers\ApplicationRefunds;
 
 use Divido\MerchantSDK\Handlers\ApiRequestOptions;
@@ -83,7 +85,7 @@ trait ClientProxyTrait
      * @param ApiRequestOptions $options
      * @param mixed $application
      *
-     * @return ResponseWrapper
+     * @return \Generator
      */
     public function yieldAllApplicationRefunds(ApiRequestOptions $options, $application)
     {
@@ -103,7 +105,7 @@ trait ClientProxyTrait
      * @param ApiRequestOptions $options
      * @param mixed $application
      *
-     * @return ResponseWrapper
+     * @return \Generator
      */
     public function yieldApplicationRefundsByPage(ApiRequestOptions $options, $application)
     {

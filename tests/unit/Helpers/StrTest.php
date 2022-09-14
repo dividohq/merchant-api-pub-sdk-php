@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Divido\MerchantSDK\Test\Unit\Helpers;
 
 use Divido\MerchantSDK\Helpers\Str;
@@ -26,8 +28,6 @@ class StrTest extends MerchantSDKTestCase
             ["camelCaseFoo", "camelcasefoo"],
             ["separate WORDS", "separate words"],
             ["", ""],
-            [null, ""],
-            [1, "1"],
         ];
     }
 
@@ -50,8 +50,6 @@ class StrTest extends MerchantSDKTestCase
             ["camelCaseFoo", "camel_case_foo"],
             ["camel case foo", "camel_case_foo"],
             ["", ""],
-            [null, ""],
-            [1, "1"],
         ];
     }
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Divido\MerchantSDK\Handlers\Finances;
 
 use Divido\MerchantSDK\Handlers\ApiRequestOptions;
@@ -68,7 +70,7 @@ trait ClientProxyTrait
      * Yield all plans.
      *
      * @param ApiRequestOptions $options
-     * @return ResponseWrapper
+     * @return \Generator
      */
     public function yieldAllPlans(ApiRequestOptions $options)
     {
@@ -82,7 +84,7 @@ trait ClientProxyTrait
      * Yield plans by page.
      *
      * @param ApiRequestOptions $options
-     * @return ResponseWrapper
+     * @return \Generator
      */
     public function yieldPlansByPage(ApiRequestOptions $options)
     {

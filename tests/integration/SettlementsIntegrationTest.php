@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Divido\MerchantSDK\Test\Integration;
 
 use Divido\MerchantSDK\Client;
@@ -14,8 +16,6 @@ use Psr\Http\Message\ResponseFactoryInterface;
 
 class SettlementsIntegrationTest extends MerchantSDKTestCase
 {
-    private $settlementId = '6EC506EE-7919-11E8-A4CE-0242AC1E000B';
-
     public function test_GetSettlementsFromClient_ReturnsSettlements()
     {
         $httpClient = new \Http\Mock\Client(self::createMock(ResponseFactoryInterface::class));

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Divido\MerchantSDK\Handlers\Channels;
 
 use Divido\MerchantSDK\Handlers\ApiRequestOptions;
@@ -68,7 +70,7 @@ trait ClientProxyTrait
      * Yield all channels.
      *
      * @param ApiRequestOptions $options
-     * @return ResponseWrapper
+     * @return \Generator
      */
     public function yieldAllChannels(ApiRequestOptions $options)
     {
@@ -82,7 +84,7 @@ trait ClientProxyTrait
      * Yield channels by page.
      *
      * @param ApiRequestOptions $options
-     * @return ResponseWrapper
+     * @return \Generator
      */
     public function yieldChannelsByPage(ApiRequestOptions $options)
     {

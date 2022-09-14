@@ -1,9 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Divido\MerchantSDK\Test\Integration;
 
 use Divido\MerchantSDK\Client;
 use Divido\MerchantSDK\Environment;
+use Divido\MerchantSDK\Exceptions\MerchantApiBadResponseException;
 use Divido\MerchantSDK\Handlers\ApiRequestOptions;
 use Divido\MerchantSDK\Response\ResponseWrapper;
 use Divido\MerchantSDK\Test\Unit\MerchantSDKTestCase;
@@ -40,6 +43,8 @@ class ApplicationsIntegrationTest extends MerchantSDKTestCase
 
     public function test_GetApplicationsFromClient_WithInvalidRequest_ThrowsException()
     {
+        $merchantApiBadResponseExceptionThrown = false;
+
         $httpClient = new \Http\Mock\Client(self::createMock(ResponseFactoryInterface::class));
         $httpClient->addResponse(
             $this->createResponseMock(400, [], file_get_contents(APP_PATH . '/tests/assets/responses/applications_all_error.json'))
@@ -57,15 +62,21 @@ class ApplicationsIntegrationTest extends MerchantSDKTestCase
         try {
             $sdk->getApplicationsByPage($requestOptions);
         } catch (\Exception $e) {
-            $context = (object) [
-                'property' => 'sort',
-                'more' => 'Foo more',
-            ];
+            if ($e instanceof MerchantApiBadResponseException) {
+                $merchantApiBadResponseExceptionThrown = true;
 
-            self::assertEquals($context, $e->getContext());
+                $context = (object) [
+                    'property' => 'sort',
+                    'more' => 'Foo more',
+                ];
+
+                self::assertEquals($context, $e->getContext());
+            }
 
             self::assertSame('payload property missing or invalid', $e->getMessage());
         }
+
+        self::assertTrue($merchantApiBadResponseExceptionThrown);
     }
 
     public function test_GetApplicationsByPageFromClient_ReturnsApplications()

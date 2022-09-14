@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Divido\MerchantSDK\Models;
 
 /**
@@ -82,7 +84,7 @@ class ApplicationRefund extends AbstractModel
     /**
      * With order items.
      *
-     * @param string $orderItems
+     * @param array $orderItems
      *
      * @return \Divido\MerchantSDK\Models\ApplicationRefund
      */

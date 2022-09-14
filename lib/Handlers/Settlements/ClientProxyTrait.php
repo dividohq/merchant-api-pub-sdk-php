@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Divido\MerchantSDK\Handlers\Settlements;
 
 use Divido\MerchantSDK\Handlers\ApiRequestOptions;
@@ -71,7 +73,7 @@ trait ClientProxyTrait
      *
      * @param ApiRequestOptions $options
      *
-     * @return ResponseWrapper
+     * @return \Generator
      */
     public function yieldAllSettlements(ApiRequestOptions $options)
     {
@@ -86,7 +88,7 @@ trait ClientProxyTrait
      *
      * @param ApiRequestOptions $options
      *
-     * @return ResponseWrapper
+     * @return \Generator
      */
     public function yieldSettlementsByPage(ApiRequestOptions $options)
     {

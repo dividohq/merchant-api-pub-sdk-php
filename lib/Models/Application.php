@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Divido\MerchantSDK\Models;
 
 /**
@@ -52,12 +54,12 @@ class Application extends AbstractModel
     protected $orderItems = [];
 
     /**
-     * @var string
+     * @var integer
      */
     protected $depositAmount;
 
     /**
-     * @var string
+     * @var float
      */
     protected $depositPercentage;
 
@@ -67,7 +69,7 @@ class Application extends AbstractModel
     protected $metadata;
 
     /**
-     * @var string
+     * @var bool
      */
     protected $finalisationRequired;
 
@@ -82,11 +84,9 @@ class Application extends AbstractModel
     protected $urls;
 
     /**
-     * Wet id.
+     * Get id.
      *
-     * @param string $(
-     *
-     * @return \Divido\MerchantSDK\Models\Application
+     * @return string
      */
     public function getId()
     {
@@ -303,7 +303,7 @@ class Application extends AbstractModel
 
     /**
      *
-     * @param string $urls
+     * @param array $urls
      *
      * @return \Divido\MerchantSDK\Models\Application
      */
