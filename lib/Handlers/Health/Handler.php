@@ -20,7 +20,7 @@ class Handler extends AbstractHttpHandler
 
         // Make the request, catch exceptions 
         try {
-            $response = $this->wrapper->request('head', $path);
+            $response = $this->wrapper->request(self::HEAD_METHOD, $path);
             $status_code = $response->getStatusCode();
 
             $healthcheck["status_code"] = $status_code;

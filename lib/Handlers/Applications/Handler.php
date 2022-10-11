@@ -87,7 +87,7 @@ class Handler extends AbstractHttpHandler
             'filter' => $options->getFilters(),
         ];
 
-        $response = $this->wrapper->request('get', $path, $query);
+        $response = $this->wrapper->request(self::GET_METHOD, $path, $query);
         $parsed = $this->parseResponse($response);
 
         return $parsed;
@@ -117,7 +117,7 @@ class Handler extends AbstractHttpHandler
             $applicationId,
         ]);
 
-        return $this->wrapper->request('get', $path);
+        return $this->wrapper->request(self::GET_METHOD, $path);
     }
 
     /**
@@ -132,7 +132,7 @@ class Handler extends AbstractHttpHandler
             'applications',
         ]);
 
-        return $this->wrapper->request('post', $path, $query, $headers, $application->getJsonPayload());
+        return $this->wrapper->request(self::POST_METHOD, $path, $query, $headers, $application->getJsonPayload());
     }
 
     /**
@@ -148,6 +148,6 @@ class Handler extends AbstractHttpHandler
             $application->getId(),
         ]);
 
-        return $this->wrapper->request('patch', $path, [], [], $application->getJsonPayload());
+        return $this->wrapper->request(self::PATCH_METHOD, $path, [], [], $application->getJsonPayload());
     }
 }
