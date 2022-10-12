@@ -93,7 +93,7 @@ class Handler extends AbstractHttpHandler
             'sort' => $options->getSort(),
         ];
 
-        $response = $this->wrapper->request('get', $path, $query);
+        $response = $this->wrapper->request(self::GET_METHOD, $path, $query);
         $parsed = $this->parseResponse($response);
 
         return $parsed;
@@ -127,7 +127,7 @@ class Handler extends AbstractHttpHandler
             $activationId,
         ]);
 
-        return $this->wrapper->request('get', $path);
+        return $this->wrapper->request(self::GET_METHOD, $path);
     }
 
     /**
@@ -145,6 +145,6 @@ class Handler extends AbstractHttpHandler
             'activations',
         ]);
 
-        return $this->wrapper->request('post', $path, [], [], $applicationActivation->getJsonPayload());
+        return $this->wrapper->request(self::POST_METHOD, $path, [], [], $applicationActivation->getJsonPayload());
     }
 }

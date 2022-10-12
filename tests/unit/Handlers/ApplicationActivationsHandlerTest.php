@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Divido\MerchantSDK\Test\Unit;
 
+use Divido\MerchantSDK\Handlers\AbstractHttpHandler;
 use Divido\MerchantSDK\Handlers\ApiRequestOptions;
 use Divido\MerchantSDK\Handlers\ApplicationActivations\Handler;
 use Divido\MerchantSDK\Models\Application;
@@ -33,7 +34,7 @@ class ApplicationActivationsHandlerTest extends MerchantSDKTestCase
             '?page=1&sort=-created_at';
         $requestFactory = self::createMock(RequestFactory::class);
         $requestFactory->method('createRequest')
-            ->with('get', $expectedUri, ['X-Divido-Api-Key' => 'divido'], null)
+            ->with(AbstractHttpHandler::GET_METHOD, $expectedUri, ['X-Divido-Api-Key' => 'divido'], null)
             ->willReturn(self::createMock(RequestInterface::class));
 
         $wrapper = new HttpWrapper('-merchant-api-pub-http-host-', 'divido', $httpClient, $requestFactory);

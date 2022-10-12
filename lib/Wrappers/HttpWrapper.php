@@ -72,7 +72,12 @@ class HttpWrapper implements WrapperInterface
 
         $uri = $this->baseUrl  . '/' . $uri . '?' . http_build_query($query, '', '&');
 
-        $request = $this->requestFactory->createRequest($method, $uri, $headers, $body);
+        $request = $this->requestFactory->createRequest(
+            strtoupper($method), 
+            $uri, 
+            $headers, 
+            $body
+        );
 
         try {
             $response = $this->httpClient->sendRequest($request);

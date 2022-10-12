@@ -84,7 +84,7 @@ class Handler extends AbstractHttpHandler
             'sort' => $options->getSort(),
         ];
 
-        $response = $this->wrapper->request('get', $path, $query);
+        $response = $this->wrapper->request(self::GET_METHOD, $path, $query);
         $parsed = $this->parseResponse($response);
 
         return $parsed;

@@ -33,7 +33,7 @@ class Handler extends AbstractHttpHandler
             'documents',
         ]);
 
-        return $this->wrapper->request('post', $path, [], ['Content-Type' => 'multipart/form-data'], $applicationDocument->getJsonPayload());
+        return $this->wrapper->request(self::POST_METHOD, $path, [], ['Content-Type' => 'multipart/form-data'], $applicationDocument->getJsonPayload());
     }
 
     /**
@@ -52,6 +52,6 @@ class Handler extends AbstractHttpHandler
             $applicationDocumentId,
         ]);
 
-        return $this->wrapper->request('delete', $path);
+        return $this->wrapper->request(self::DELETE_METHOD, $path);
     }
 }

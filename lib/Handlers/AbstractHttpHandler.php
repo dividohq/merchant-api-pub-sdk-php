@@ -18,6 +18,13 @@ use Psr\Http\Message\ResponseInterface;
  */
 abstract class AbstractHttpHandler
 {
+    const POST_METHOD = 'POST';
+    const GET_METHOD = 'GET';
+    const PUT_METHOD = 'PUT';
+    const PATCH_METHOD = 'PATCH';
+    const DELETE_METHOD = 'DELETE';
+    const HEAD_METHOD = 'HEAD';
+
     /**
      * @var WrapperInterface
      */
