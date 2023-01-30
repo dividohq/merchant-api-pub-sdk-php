@@ -235,7 +235,8 @@ class ApplicationRefundsHandlerTest extends MerchantSDKTestCase
                     'quantity' => 1,
                     'price' => 3000,
                 ],
-            ]);
+            ])
+            ->withReason('Too Small');
 
         $response = $handler->createApplicationRefund($application, $refund);
 

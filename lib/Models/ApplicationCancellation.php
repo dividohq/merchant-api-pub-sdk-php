@@ -34,6 +34,11 @@ class ApplicationCancellation extends AbstractModel
     protected $orderItems = [];
 
     /**
+     * @var string
+     */
+    protected $reason;
+
+    /**
      * With amount.
      *
      * @param int $amount
@@ -93,6 +98,22 @@ class ApplicationCancellation extends AbstractModel
         $cloned = clone $this;
 
         $cloned->orderItems = $orderItems;
+
+        return $cloned;
+    }
+
+    /**
+     * With reason.
+     *
+     * @param string $reason
+     *
+     * @return \Divido\MerchantSDK\Models\ApplicationCancellation
+     */
+    public function withReason($reason)
+    {
+        $cloned = clone $this;
+
+        $cloned->reason = $reason;
 
         return $cloned;
     }

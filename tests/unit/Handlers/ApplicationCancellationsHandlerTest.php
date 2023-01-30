@@ -235,7 +235,8 @@ class ApplicationCancellationsHandlerTest extends MerchantSDKTestCase
                     'quantity' => 1,
                     'price' => 3000,
                 ],
-            ]);
+            ])
+            ->withReason('Too Big');
 
         $response = $handler->createApplicationCancellation($application, $cancellation);
 
