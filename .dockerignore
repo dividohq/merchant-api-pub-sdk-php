@@ -1,0 +1,11 @@
+/.git
+/.github
+/.gitignore
+/.divido/manifest.json
+/.divido/openapi-v3-1-0.json
+/.divido/openapi-v3-0-0.json
+/tmp
+/var
+/Makefile
+/README.md
+/.php_cs.cache
