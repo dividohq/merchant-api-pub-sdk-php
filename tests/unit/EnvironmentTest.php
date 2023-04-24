@@ -72,6 +72,12 @@ class EnvironmentTest extends MerchantSDKTestCase
             'cheeky_user_tried_using_configuration_as_key_may_be_to_try_to_break_things' => [
                 uniqid('configuration_'),
             ],
+            'badApiKey_prefix' => [
+                uniqid('badAPIkey_098634df.')
+            ],
+            'configuration_prefix' => [
+                uniqid('configuration_')
+            ]
         ];
     }
 
@@ -84,5 +90,16 @@ class EnvironmentTest extends MerchantSDKTestCase
         $this->expectException(InvalidEnvironmentException::class);
 
         Environment::getEnvironmentFromAPIKey($apiKey);
+    }
+
+    public function test_productionAndLiveApiKeysShouldYieldTheSameResults()
+    {
+        $liveConf = Environment::getEnvironmentFromAPIKey(uniqid('live_'));
+        $productionConf = Environment::getEnvironmentFromAPIKey(uniqid('live_'));
+
+        self::assertSame(
+            $liveConf,
+            $productionConf
+        );
     }
 }

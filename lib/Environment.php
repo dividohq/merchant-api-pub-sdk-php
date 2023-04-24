@@ -17,6 +17,7 @@ use Divido\MerchantSDK\Exceptions\InvalidEnvironmentException;
  */
 class Environment
 {
+    // The constant names defined here are all valid environment names
     const DEV = "dev";
 
     const TESTING = "testing";
@@ -31,8 +32,10 @@ class Environment
 
     const LIVE = "production";
 
+    // Key for accessing Base URI for the merchant api pub for multi tenant environment configuration
     const CONFIGURATION_PROPERTY_BASE_URI = 'base_uri';
 
+    // Configuration for multi tenant environment
     const CONFIGURATION = [
         'dev' => [
             self::CONFIGURATION_PROPERTY_BASE_URI => 'https://merchant-api-pub.api.dev.divido.net',
@@ -74,8 +77,12 @@ class Environment
     }
 
     /**
-     * Get the environment based off of the provided API key
+     * Get the environment based off of the provided API key, format should be: [environment]_[apikey]
+     * Examples: testing_abcd12345, production_abcde12345
      *
+     * API key will first be validated against some simple rules, see the validateApiKeyFormat method.
+     * If it is deemed to be of a valid format we will check if the first part is a valid environment name
+     * We do this by comparing it to the defined constants of this class and see if the name exists
      *
      * @param string $apiKey The API key to get the environment from
      *
@@ -92,10 +99,19 @@ class Environment
         $splitApiKey = explode('_', $apiKey);
         $environment = str_replace('-', '_', strtoupper($splitApiKey[0]));
 
-        // Get the full name of the constant (something like self::DEV, self::TESTING etc)
-        $constantName = ('LIVE' === $environment)
-            ? 'self::PRODUCTION'
-            : 'self::'. $environment;
+        // "live" is an alias for "production"
+        if('LIVE' === $environment){
+            $environment = 'PRODUCTION';
+        }
+
+        // # Validate environment name
+
+        // Check it does not start with "configuration"
+        if(strpos('configuration', $environment) === 0){
+            throw new InvalidEnvironmentException('Invalid environment name');
+        }
+
+        $constantName = sprintf('self::%s', $environment);
 
         // Check that the constant is defined.
         if(!defined($constantName)){
