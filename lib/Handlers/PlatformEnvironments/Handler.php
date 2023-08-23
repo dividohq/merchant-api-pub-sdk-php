@@ -23,6 +23,6 @@ class Handler extends AbstractHttpHandler
      */
     public function getPlatformEnvironment()
     {
-        return $this->wrapper->request(self::GET_METHOD, '/environment');
+        return $this->wrapper->request(self::GET_METHOD, 'environment');
     }
 }
