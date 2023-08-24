@@ -16,7 +16,7 @@ PHP 5.6 and later.
 
 This SDK can be installed via [Composer](https://getcomposer.org/) using the following command:
 
-`composer require divido/merchant-api` 
+`composer require divido/merchant-sdk` 
 
 ## Basic SDK usage
 
