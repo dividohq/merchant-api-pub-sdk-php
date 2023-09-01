@@ -41,6 +41,8 @@ ci-analyze:
 		-w /project \
 		ghcr.io/phpstan/phpstan analyse -c phpstan.neon
 
+ci-composer-install: composer-install
+
 ci-check-coverage:
 
 ci-build:
