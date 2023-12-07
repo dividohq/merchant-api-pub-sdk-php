@@ -5,11 +5,12 @@ declare(strict_types=1);
 namespace Divido\MerchantSDK\Wrappers;
 
 use Divido\MerchantSDK\Exceptions\MerchantApiBadResponseException;
-use Http\Discovery\MessageFactoryDiscovery;
+use Http\Discovery\Psr17FactoryDiscovery;
 use Http\Discovery\Psr18ClientDiscovery;
 use Http\Message\RequestFactory;
 use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Client\ClientInterface;
+use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 
 class HttpWrapper implements WrapperInterface
@@ -46,12 +47,12 @@ class HttpWrapper implements WrapperInterface
         string $baseUrl,
         string $apiKey,
         ClientInterface $httpClient = null,
-        RequestFactory $requestFactory = null
+        RequestFactoryInterface $requestFactory = null
     ) {
         $this->baseUrl = $baseUrl;
         $this->apiKey = $apiKey;
         $this->httpClient = $httpClient ?: Psr18ClientDiscovery::find();
-        $this->requestFactory = $requestFactory ?: MessageFactoryDiscovery::find();
+        $this->requestFactory = $requestFactory ?: Psr17FactoryDiscovery::findRequestFactory();
     }
 
     /**
