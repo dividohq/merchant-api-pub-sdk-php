@@ -8,6 +8,8 @@ use Divido\MerchantSDK\Handlers\ApplicationDocuments\Handler;
 use Divido\MerchantSDK\Models\Application;
 use Divido\MerchantSDK\Wrappers\HttpWrapper;
 use Psr\Http\Message\ResponseFactoryInterface;
+use Psr\Http\Message\StreamFactoryInterface;
+use Psr\Http\Message\StreamInterface;
 
 class ApplicationDocumentsHandlerTest extends MerchantSDKTestCase
 {
@@ -24,7 +26,12 @@ class ApplicationDocumentsHandlerTest extends MerchantSDKTestCase
 
         $requestFactory = $this->createRequestFactory();
 
-        $wrapper = new HttpWrapper('-merchant-api-pub-http-host-', 'divido', $httpClient, $requestFactory);
+        $mockStreamFactory = $this->createMock(StreamFactoryInterface::class);
+        $mockStreamFactory->method('createStream')->willReturn(
+            $this->createMock(StreamInterface::class)
+        );
+
+        $wrapper = new HttpWrapper('-merchant-api-pub-http-host-', 'divido', $httpClient, $requestFactory, $mockStreamFactory);
 
         $handler = new Handler($wrapper);
 

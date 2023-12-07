@@ -9,6 +9,8 @@ use Divido\MerchantSDK\Handlers\Applications\Handler;
 use Divido\MerchantSDK\Response\ResponseWrapper;
 use Divido\MerchantSDK\Wrappers\HttpWrapper;
 use Psr\Http\Message\ResponseFactoryInterface;
+use Psr\Http\Message\StreamFactoryInterface;
+use Psr\Http\Message\StreamInterface;
 
 class ApplicationsHandlerTest extends MerchantSDKTestCase
 {
@@ -257,7 +259,12 @@ class ApplicationsHandlerTest extends MerchantSDKTestCase
 
         $requestFactory = $this->createRequestFactory();
 
-        $wrapper = new HttpWrapper('-merchant-api-pub-http-host-', 'divido', $httpClient, $requestFactory);
+        $mockStreamFactory = $this->createMock(StreamFactoryInterface::class);
+        $mockStreamFactory->method('createStream')->willReturn(
+            $this->createMock(StreamInterface::class)
+        );
+
+        $wrapper = new HttpWrapper('-merchant-api-pub-http-host-', 'divido', $httpClient, $requestFactory, $mockStreamFactory);
 
         $handler = new Handler($wrapper);
 
@@ -314,7 +321,12 @@ class ApplicationsHandlerTest extends MerchantSDKTestCase
 
         $requestFactory = $this->createRequestFactory();
 
-        $wrapper = new HttpWrapper('-merchant-api-pub-http-host-', 'divido', $httpClient, $requestFactory);
+        $mockStreamFactory = $this->createMock(StreamFactoryInterface::class);
+        $mockStreamFactory->method('createStream')->willReturn(
+            $this->createMock(StreamInterface::class)
+        );
+
+        $wrapper = new HttpWrapper('-merchant-api-pub-http-host-', 'divido', $httpClient, $requestFactory, $mockStreamFactory);
 
         $handler = new Handler($wrapper);
 
@@ -343,7 +355,12 @@ class ApplicationsHandlerTest extends MerchantSDKTestCase
 
         $requestFactory = $this->createRequestFactory();
 
-        $wrapper = new HttpWrapper('-merchant-api-pub-http-host-', 'divido', $httpClient, $requestFactory);
+        $mockStreamFactory = $this->createMock(StreamFactoryInterface::class);
+        $mockStreamFactory->method('createStream')->willReturn(
+            $this->createMock(StreamInterface::class)
+        );
+
+        $wrapper = new HttpWrapper('-merchant-api-pub-http-host-', 'divido', $httpClient, $requestFactory, $mockStreamFactory);
 
         $handler = new Handler($wrapper);
 

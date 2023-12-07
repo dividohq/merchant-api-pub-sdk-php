@@ -27,8 +27,15 @@ class MerchantSDKTestCase extends TestCase
     protected function createRequestFactory()
     {
         $requestFactory = self::createMock(RequestFactoryInterface::class);
-        $requestFactory->method('createRequest')->willReturn(self::createMock(RequestInterface::class));
+        $requestFactory->method('createRequest')->willReturn($this->createMockRequest());
 
         return $requestFactory;
+    }
+
+    protected function createMockRequest(){
+        $mockRequest = self::createMock(RequestInterface::class);
+        $mockRequest->method('withHeader')->willReturnSelf();
+        $mockRequest->method('withBody')->willReturnSelf();
+        return $mockRequest;
     }
 }

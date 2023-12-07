@@ -11,8 +11,6 @@ use Divido\MerchantSDK\Models\Application;
 use Divido\MerchantSDK\Response\ResponseWrapper;
 use Divido\MerchantSDK\Test\Unit\MerchantSDKTestCase;
 use Divido\MerchantSDK\Wrappers\HttpWrapper;
-use Psr\Http\Message\RequestFactoryInterface;
-use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseFactoryInterface;
 
 class ApplicationCancellationsIntegrationTest extends MerchantSDKTestCase
@@ -29,8 +27,7 @@ class ApplicationCancellationsIntegrationTest extends MerchantSDKTestCase
             $this->createResponseMock(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/application_cancellations_page_1.json'))
         );
 
-        $requestFactory = self::createMock(RequestFactoryInterface::class);
-        $requestFactory->method('createRequest')->willReturn(self::createMock(RequestInterface::class));
+        $requestFactory = $this->createRequestFactory();
 
         $wrapper = new HttpWrapper('-merchant-api-pub-http-host-', 'divido', $httpClient, $requestFactory);
 
@@ -69,8 +66,7 @@ class ApplicationCancellationsIntegrationTest extends MerchantSDKTestCase
             $this->createResponseMock(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/application_cancellations_page_1.json'))
         );
 
-        $requestFactory = self::createMock(RequestFactoryInterface::class);
-        $requestFactory->method('createRequest')->willReturn(self::createMock(RequestInterface::class));
+        $requestFactory = $this->createRequestFactory();
 
         $wrapper = new HttpWrapper('-merchant-api-pub-http-host-', 'divido', $httpClient, $requestFactory);
 
@@ -102,8 +98,8 @@ class ApplicationCancellationsIntegrationTest extends MerchantSDKTestCase
         $httpClient->addResponse(
             $this->createResponseMock(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/application_cancellations_page_2.json'))
         );
-        $requestFactory = self::createMock(RequestFactoryInterface::class);
-        $requestFactory->method('createRequest')->willReturn(self::createMock(RequestInterface::class));
+
+        $requestFactory = $this->createRequestFactory();
 
         $wrapper = new HttpWrapper('-merchant-api-pub-http-host-', 'divido', $httpClient, $requestFactory);
 
@@ -145,8 +141,7 @@ class ApplicationCancellationsIntegrationTest extends MerchantSDKTestCase
             $this->createResponseMock(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/application_cancellations_page_2.json'))
         );
 
-        $requestFactory = self::createMock(RequestFactoryInterface::class);
-        $requestFactory->method('createRequest')->willReturn(self::createMock(RequestInterface::class));
+        $requestFactory = $this->createRequestFactory();
 
         $wrapper = new HttpWrapper('-merchant-api-pub-http-host-', 'divido', $httpClient, $requestFactory);
 
@@ -175,8 +170,7 @@ class ApplicationCancellationsIntegrationTest extends MerchantSDKTestCase
             $this->createResponseMock(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/application_cancellations_page_1.json'))
         );
 
-        $requestFactory = self::createMock(RequestFactoryInterface::class);
-        $requestFactory->method('createRequest')->willReturn(self::createMock(RequestInterface::class));
+        $requestFactory = $this->createRequestFactory();
 
         $wrapper = new HttpWrapper('-merchant-api-pub-http-host-', 'divido', $httpClient, $requestFactory);
 
@@ -200,8 +194,8 @@ class ApplicationCancellationsIntegrationTest extends MerchantSDKTestCase
         $httpClient->addResponse(
             $this->createResponseMock(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/application_cancellations_page_2.json'))
         );
-        $requestFactory = self::createMock(RequestFactoryInterface::class);
-        $requestFactory->method('createRequest')->willReturn(self::createMock(RequestInterface::class));
+
+        $requestFactory = $this->createRequestFactory();
 
         $wrapper = new HttpWrapper('-merchant-api-pub-http-host-', 'divido', $httpClient, $requestFactory);
 
