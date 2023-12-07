@@ -10,7 +10,7 @@ use Divido\MerchantSDK\Handlers\ApplicationActivations\Handler;
 use Divido\MerchantSDK\Models\Application;
 use Divido\MerchantSDK\Response\ResponseWrapper;
 use Divido\MerchantSDK\Wrappers\HttpWrapper;
-use Http\Message\RequestFactory;
+use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseFactoryInterface;
 
@@ -32,7 +32,7 @@ class ApplicationActivationsHandlerTest extends MerchantSDKTestCase
             '/90a25b24-2f53-4c80-aba8-9787c68e4c1d' .
             '/activations' .
             '?page=1&sort=-created_at';
-        $requestFactory = self::createMock(RequestFactory::class);
+        $requestFactory = self::createMock(RequestFactoryInterface::class);
         $requestFactory->method('createRequest')
             ->with(AbstractHttpHandler::GET_METHOD, $expectedUri, ['X-Divido-Api-Key' => 'divido'], null)
             ->willReturn(self::createMock(RequestInterface::class));
@@ -63,7 +63,7 @@ class ApplicationActivationsHandlerTest extends MerchantSDKTestCase
             ))
         );
 
-        $requestFactory = self::createMock(RequestFactory::class);
+        $requestFactory = self::createMock(RequestFactoryInterface::class);
         $requestFactory->method('createRequest')->willReturn(self::createMock(RequestInterface::class));
 
         $wrapper = new HttpWrapper('-merchant-api-pub-http-host-', 'divido', $httpClient, $requestFactory);
@@ -97,7 +97,7 @@ class ApplicationActivationsHandlerTest extends MerchantSDKTestCase
             ))
         );
 
-        $requestFactory = self::createMock(RequestFactory::class);
+        $requestFactory = self::createMock(RequestFactoryInterface::class);
         $requestFactory->method('createRequest')->willReturn(self::createMock(RequestInterface::class));
 
         $wrapper = new HttpWrapper('-merchant-api-pub-http-host-', 'divido', $httpClient, $requestFactory);
@@ -132,7 +132,7 @@ class ApplicationActivationsHandlerTest extends MerchantSDKTestCase
             ))
         );
 
-        $requestFactory = self::createMock(RequestFactory::class);
+        $requestFactory = self::createMock(RequestFactoryInterface::class);
         $requestFactory->method('createRequest')->willReturn(self::createMock(RequestInterface::class));
 
         $wrapper = new HttpWrapper('-merchant-api-pub-http-host-', 'divido', $httpClient, $requestFactory);
@@ -168,7 +168,7 @@ class ApplicationActivationsHandlerTest extends MerchantSDKTestCase
             ))
         );
 
-        $requestFactory = self::createMock(RequestFactory::class);
+        $requestFactory = self::createMock(RequestFactoryInterface::class);
         $requestFactory->method('createRequest')->willReturn(self::createMock(RequestInterface::class));
 
         $wrapper = new HttpWrapper('-merchant-api-pub-http-host-', 'divido', $httpClient, $requestFactory);
@@ -199,7 +199,7 @@ class ApplicationActivationsHandlerTest extends MerchantSDKTestCase
             ))
         );
 
-        $requestFactory = self::createMock(RequestFactory::class);
+        $requestFactory = self::createMock(RequestFactoryInterface::class);
         $requestFactory->method('createRequest')->willReturn(self::createMock(RequestInterface::class));
 
         $wrapper = new HttpWrapper('-merchant-api-pub-http-host-', 'divido', $httpClient, $requestFactory);
@@ -224,7 +224,7 @@ class ApplicationActivationsHandlerTest extends MerchantSDKTestCase
             ))
         );
 
-        $requestFactory = self::createMock(RequestFactory::class);
+        $requestFactory = self::createMock(RequestFactoryInterface::class);
         $requestFactory->method('createRequest')->willReturn(self::createMock(RequestInterface::class));
 
         $wrapper = new HttpWrapper('-merchant-api-pub-http-host-', 'divido', $httpClient, $requestFactory);

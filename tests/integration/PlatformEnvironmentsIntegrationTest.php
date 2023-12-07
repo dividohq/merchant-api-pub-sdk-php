@@ -8,7 +8,7 @@ use Divido\MerchantSDK\Client;
 use Divido\MerchantSDK\Environment;
 use Divido\MerchantSDK\Test\Unit\MerchantSDKTestCase;
 use Divido\MerchantSDK\Wrappers\HttpWrapper;
-use Http\Message\RequestFactory;
+use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseFactoryInterface;
 
@@ -21,7 +21,7 @@ class PlatformEnvironmentsIntegrationTest extends MerchantSDKTestCase
             $this->createResponseMock(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/environment.json'))
         );
 
-        $requestFactory = self::createMock(RequestFactory::class);
+        $requestFactory = self::createMock(RequestFactoryInterface::class);
         $requestFactory->method('createRequest')->willReturn(self::createMock(RequestInterface::class));
 
         $wrapper = new HttpWrapper('-merchant-api-pub-http-host-', 'divido', $httpClient, $requestFactory);

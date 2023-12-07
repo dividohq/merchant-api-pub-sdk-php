@@ -10,7 +10,7 @@ use Divido\MerchantSDK\Handlers\ApiRequestOptions;
 use Divido\MerchantSDK\Response\ResponseWrapper;
 use Divido\MerchantSDK\Test\Unit\MerchantSDKTestCase;
 use Divido\MerchantSDK\Wrappers\HttpWrapper;
-use Http\Message\RequestFactory;
+use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseFactoryInterface;
 
@@ -23,7 +23,7 @@ class ChannelsIntegrationTest extends MerchantSDKTestCase
             $this->createResponseMock(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/channels_page_1.json'))
         );
 
-        $requestFactory = self::createMock(RequestFactory::class);
+        $requestFactory = self::createMock(RequestFactoryInterface::class);
         $requestFactory->method('createRequest')->willReturn(self::createMock(RequestInterface::class));
 
         $wrapper = new HttpWrapper('-merchant-api-pub-http-host-', 'divido', $httpClient, $requestFactory);
@@ -48,7 +48,7 @@ class ChannelsIntegrationTest extends MerchantSDKTestCase
             $this->createResponseMock(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/channels_page_1.json'))
         );
 
-        $requestFactory = self::createMock(RequestFactory::class);
+        $requestFactory = self::createMock(RequestFactoryInterface::class);
         $requestFactory->method('createRequest')->willReturn(self::createMock(RequestInterface::class));
 
         $wrapper = new HttpWrapper('-merchant-api-pub-http-host-', 'divido', $httpClient, $requestFactory);
@@ -73,7 +73,7 @@ class ChannelsIntegrationTest extends MerchantSDKTestCase
             $this->createResponseMock(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/channels_page_1.json'))
         );
 
-        $requestFactory = self::createMock(RequestFactory::class);
+        $requestFactory = self::createMock(RequestFactoryInterface::class);
         $requestFactory->method('createRequest')->willReturn(self::createMock(RequestInterface::class));
 
         $wrapper = new HttpWrapper('-merchant-api-pub-http-host-', 'divido', $httpClient, $requestFactory);
@@ -98,7 +98,7 @@ class ChannelsIntegrationTest extends MerchantSDKTestCase
             $this->createResponseMock(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/channels_page_1.json'))
         );
 
-        $requestFactory = self::createMock(RequestFactory::class);
+        $requestFactory = self::createMock(RequestFactoryInterface::class);
         $requestFactory->method('createRequest')->willReturn(self::createMock(RequestInterface::class));
 
         $wrapper = new HttpWrapper('-merchant-api-pub-http-host-', 'divido', $httpClient, $requestFactory);
@@ -125,7 +125,7 @@ class ChannelsIntegrationTest extends MerchantSDKTestCase
         $httpClient->addResponse(
             $this->createResponseMock(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/channels_page_1.json'))
         );
-        $requestFactory = self::createMock(RequestFactory::class);
+        $requestFactory = self::createMock(RequestFactoryInterface::class);
         $requestFactory->method('createRequest')->willReturn(self::createMock(RequestInterface::class));
 
         $wrapper = new HttpWrapper('-merchant-api-pub-http-host-', 'divido', $httpClient, $requestFactory);
@@ -146,7 +146,7 @@ class ChannelsIntegrationTest extends MerchantSDKTestCase
             $this->createResponseMock(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/channels_page_1.json'))
         );
 
-        $requestFactory = self::createMock(RequestFactory::class);
+        $requestFactory = self::createMock(RequestFactoryInterface::class);
         $requestFactory->method('createRequest')->willReturn(self::createMock(RequestInterface::class));
 
         $wrapper = new HttpWrapper('-merchant-api-pub-http-host-', 'divido', $httpClient, $requestFactory);
