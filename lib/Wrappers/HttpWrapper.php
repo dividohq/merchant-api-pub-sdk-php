@@ -82,11 +82,11 @@ class HttpWrapper implements WrapperInterface
      * @param string $uri
      * @param array $query
      * @param array $headers
-     * @param string|null $body
+     * @param string $body
      * @return ResponseInterface
      * @throws MerchantApiBadResponseException
      */
-    public function request(string $method, string $uri, array $query = [], array $headers = [], ?string $body = null)
+    public function request(string $method, string $uri, array $query = [], array $headers = [], string $body = WrapperInterface::NO_BODY)
     {
         // Add the header to each call
         $headers['X-Divido-Api-Key'] = $this->apiKey;
@@ -98,7 +98,7 @@ class HttpWrapper implements WrapperInterface
             $uri
         );
 
-        if(is_string($body)) {
+        if (trim($body) !== WrapperInterface::NO_BODY) {
             $request = $request->withBody($this->getStreamFactory()->createStream($body));
         }
         
