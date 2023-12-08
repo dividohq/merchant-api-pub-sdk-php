@@ -83,11 +83,11 @@ class HttpWrapper implements WrapperInterface
      * @param string $uri
      * @param array $query
      * @param array $headers
-     * @param mixed $body
+     * @param string|null $body
      * @return ResponseInterface
      * @throws MerchantApiBadResponseException
      */
-    public function request(string $method, string $uri, array $query = [], array $headers = [], $body = null)
+    public function request(string $method, string $uri, array $query = [], array $headers = [], ?string $body = null)
     {
         // Add the header to each call
         $headers['X-Divido-Api-Key'] = $this->apiKey;
@@ -101,10 +101,6 @@ class HttpWrapper implements WrapperInterface
 
         if(is_string($body)) {
             $request = $request->withBody($this->getStreamFactory()->createStream($body));
-        } elseif (class_implements(\Psr\Http\Message\StreamInterface::class)){
-            $request = $request->withBody($body);
-        } elseif ($body !== null){
-            throw new InvalidRequestException("Unexpected request body received");
         }
         
         foreach($headers as $key=>$value){
