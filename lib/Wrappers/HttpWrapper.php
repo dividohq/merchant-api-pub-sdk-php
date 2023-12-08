@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Divido\MerchantSDK\Wrappers;
 
-use Divido\MerchantSDK\Exceptions\InvalidRequestException;
 use Divido\MerchantSDK\Exceptions\MerchantApiBadResponseException;
 use Http\Discovery\Psr17FactoryDiscovery;
 use Http\Discovery\Psr18ClientDiscovery;
