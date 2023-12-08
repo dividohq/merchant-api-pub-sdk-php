@@ -36,7 +36,7 @@ class SettlementsIntegrationTest extends MerchantSDKTestCase
         self::assertInstanceOf(ResponseWrapper::class, $settlements);
         self::assertCount(4, $settlements->getResources());
         self::assertIsObject($settlements->getResources()[0]);
-        self::assertObjectHasAttribute('id', $settlements->getResources()[0]);
+        self::assertObjectHasProperty('id', $settlements->getResources()[0]);
         self::assertSame('6EC506EE-7919-11E8-A4CE-0242AC1E000B', $settlements->getResources()[0]->id);
     }
 
@@ -62,7 +62,7 @@ class SettlementsIntegrationTest extends MerchantSDKTestCase
         self::assertInstanceOf(ResponseWrapper::class, $settlements);
         self::assertCount(4, $settlements->getResources());
         self::assertIsObject($settlements->getResources()[0]);
-        self::assertObjectHasAttribute('id', $settlements->getResources()[0]);
+        self::assertObjectHasProperty('id', $settlements->getResources()[0]);
         self::assertSame('6EC506EE-7919-11E8-A4CE-0242AC1E000B', $settlements->getResources()[0]->id);
     }
 
@@ -88,7 +88,7 @@ class SettlementsIntegrationTest extends MerchantSDKTestCase
         self::assertInstanceOf(ResponseWrapper::class, $settlements);
         self::assertCount(4, $settlements->getResources());
         self::assertIsObject($settlements->getResources()[0]);
-        self::assertObjectHasAttribute('id', $settlements->getResources()[0]);
+        self::assertObjectHasProperty('id', $settlements->getResources()[0]);
         self::assertSame('6EC506EE-7919-11E8-A4CE-0242AC1E000B', $settlements->getResources()[0]->id);
     }
 
@@ -115,10 +115,10 @@ class SettlementsIntegrationTest extends MerchantSDKTestCase
         self::assertInstanceOf(\Generator::class, $settlements);
 
         $plan = $settlements->current();
-        self::assertCount(4, $settlements);
+        self::assertCount(4, iterator_to_array($settlements, false));
 
         self::assertIsObject($plan);
-        self::assertObjectHasAttribute('id', $plan);
+        self::assertObjectHasProperty('id', $plan);
         self::assertSame('6EC506EE-7919-11E8-A4CE-0242AC1E000B', $plan->id);
     }
 
@@ -166,10 +166,10 @@ class SettlementsIntegrationTest extends MerchantSDKTestCase
         self::assertInstanceOf(\Generator::class, $settlements);
 
         $settlement = $settlements->current();
-        self::assertCount(4, $settlements);
+        self::assertCount(4, iterator_to_array($settlements, false));
 
         self::assertIsObject($settlement);
-        self::assertObjectHasAttribute('id', $settlement);
+        self::assertObjectHasProperty('id', $settlement);
         self::assertSame('6EC506EE-7919-11E8-A4CE-0242AC1E000B', $settlement->id);
     }
 }

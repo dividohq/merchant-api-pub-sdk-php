@@ -36,7 +36,7 @@ class ApplicationsHandlerTest extends MerchantSDKTestCase
         self::assertInstanceOf(ResponseWrapper::class, $applications);
         self::assertCount(25, $applications->getResources());
         self::assertIsObject($applications->getResources()[0]);
-        self::assertObjectHasAttribute('id', $applications->getResources()[0]);
+        self::assertObjectHasProperty('id', $applications->getResources()[0]);
         self::assertSame('0074dd19-dbba-4d80-bdb7-c4a2176cb399', $applications->getResources()[0]->id);
     }
 
@@ -62,7 +62,7 @@ class ApplicationsHandlerTest extends MerchantSDKTestCase
         self::assertInstanceOf(ResponseWrapper::class, $applications);
         self::assertCount(25, $applications->getResources());
         self::assertIsObject($applications->getResources()[0]);
-        self::assertObjectHasAttribute('id', $applications->getResources()[0]);
+        self::assertObjectHasProperty('id', $applications->getResources()[0]);
         self::assertSame('0074dd19-dbba-4d80-bdb7-c4a2176cb399', $applications->getResources()[0]->id);
     }
 
@@ -93,7 +93,7 @@ class ApplicationsHandlerTest extends MerchantSDKTestCase
         self::assertInstanceOf(ResponseWrapper::class, $applications);
         self::assertCount(35, $applications->getResources());
         self::assertIsObject($applications->getResources()[0]);
-        self::assertObjectHasAttribute('id', $applications->getResources()[0]);
+        self::assertObjectHasProperty('id', $applications->getResources()[0]);
         self::assertSame('0074dd19-dbba-4d80-bdb7-c4a2176cb399', $applications->getResources()[0]->id);
         self::assertSame('97ed2a20-a362-4a66-b252-237aea10ead5', $applications->getResources()[34]->id);
     }
@@ -160,10 +160,10 @@ class ApplicationsHandlerTest extends MerchantSDKTestCase
         self::assertInstanceOf(\Generator::class, $applications);
 
         $application = $applications->current();
-        self::assertCount(35, $applications);
+        self::assertCount(35, iterator_to_array($applications, false));
 
         self::assertIsObject($application);
-        self::assertObjectHasAttribute('id', $application);
+        self::assertObjectHasProperty('id', $application);
         self::assertSame('0074dd19-dbba-4d80-bdb7-c4a2176cb399', $application->id);
     }
 
@@ -195,12 +195,10 @@ class ApplicationsHandlerTest extends MerchantSDKTestCase
 
         $application = $applications->current();
 
-        // Bug?:
-        // Failed asserting that actual size 0 matches expected size 0
-        self::assertCount(25, $applications);
+        self::assertCount(25, iterator_to_array($applications, false));
 
         self::assertIsObject($application);
-        self::assertObjectHasAttribute('id', $application);
+        self::assertObjectHasProperty('id', $application);
         self::assertSame('0074dd19-dbba-4d80-bdb7-c4a2176cb399', $application->id);
     }
 

@@ -55,7 +55,7 @@ class ApplicationActivationsHandlerTest extends MerchantSDKTestCase
         self::assertCount(2, $activations->getResources());
 
         self::assertIsObject($activations->getResources()[0]);
-        self::assertObjectHasAttribute('id', $activations->getResources()[0]);
+        self::assertObjectHasProperty('id', $activations->getResources()[0]);
         self::assertSame('97ca1476-2c9c-4ca2-b4c6-1f41f2ecdf5b', $activations->getResources()[0]->id);
     }
 
@@ -83,7 +83,7 @@ class ApplicationActivationsHandlerTest extends MerchantSDKTestCase
         self::assertCount(2, $activations->getResources());
 
         self::assertIsObject($activations->getResources()[0]);
-        self::assertObjectHasAttribute('id', $activations->getResources()[0]);
+        self::assertObjectHasProperty('id', $activations->getResources()[0]);
         self::assertSame('97ca1476-2c9c-4ca2-b4c6-1f41f2ecdf5b', $activations->getResources()[0]->id);
     }
 
@@ -115,7 +115,7 @@ class ApplicationActivationsHandlerTest extends MerchantSDKTestCase
         self::assertInstanceOf(ResponseWrapper::class, $activations);
         self::assertCount(3, $activations->getResources());
         self::assertIsObject($activations->getResources()[0]);
-        self::assertObjectHasAttribute('id', $activations->getResources()[0]);
+        self::assertObjectHasProperty('id', $activations->getResources()[0]);
         self::assertSame('97ca1476-2c9c-4ca2-b4c6-1f41f2ecdf5b', $activations->getResources()[0]->id);
         self::assertSame('69c08979-b727-407b-b449-6f03de02dd77', $activations->getResources()[1]->id);
         self::assertSame('69c08979-b727-407b-b449-6f03de02dd78', $activations->getResources()[2]->id);
@@ -149,10 +149,10 @@ class ApplicationActivationsHandlerTest extends MerchantSDKTestCase
         self::assertInstanceOf(\Generator::class, $activations);
 
         $activation = $activations->current();
-        self::assertCount(3, $activations);
+        self::assertCount(3, iterator_to_array($activations, false));
 
         self::assertIsObject($activation);
-        self::assertObjectHasAttribute('id', $activation);
+        self::assertObjectHasProperty('id', $activation);
         self::assertSame('97ca1476-2c9c-4ca2-b4c6-1f41f2ecdf5b', $activation->id);
     }
 
@@ -184,10 +184,10 @@ class ApplicationActivationsHandlerTest extends MerchantSDKTestCase
         self::assertInstanceOf(\Generator::class, $activations);
 
         $activation = $activations->current();
-        self::assertCount(2, $activations);
+        self::assertCount(2, iterator_to_array($activations, false));
 
         self::assertIsObject($activation);
-        self::assertObjectHasAttribute('id', $activation);
+        self::assertObjectHasProperty('id', $activation);
         self::assertSame('97ca1476-2c9c-4ca2-b4c6-1f41f2ecdf5b', $activation->id);
     }
 

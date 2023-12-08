@@ -34,7 +34,7 @@ class FinancesIntegrationTest extends MerchantSDKTestCase
         self::assertInstanceOf(ResponseWrapper::class, $plans);
         self::assertCount(4, $plans->getResources());
         self::assertIsObject($plans->getResources()[0]);
-        self::assertObjectHasAttribute('id', $plans->getResources()[0]);
+        self::assertObjectHasProperty('id', $plans->getResources()[0]);
         self::assertSame('F7485F0E5-202B-4879-4F00-154E109E7FE4', $plans->getResources()[0]->id);    }
 
     public function test_GetFinancesByPageFromClient_ReturnsFinances()
@@ -57,7 +57,7 @@ class FinancesIntegrationTest extends MerchantSDKTestCase
         self::assertInstanceOf(ResponseWrapper::class, $plans);
         self::assertCount(4, $plans->getResources());
         self::assertIsObject($plans->getResources()[0]);
-        self::assertObjectHasAttribute('id', $plans->getResources()[0]);
+        self::assertObjectHasProperty('id', $plans->getResources()[0]);
         self::assertSame('F7485F0E5-202B-4879-4F00-154E109E7FE4', $plans->getResources()[0]->id);    }
 
     public function test_GetAllFinancesFromClient_ReturnsFinances()
@@ -80,7 +80,7 @@ class FinancesIntegrationTest extends MerchantSDKTestCase
         self::assertInstanceOf(ResponseWrapper::class, $plans);
         self::assertCount(4, $plans->getResources());
         self::assertIsObject($plans->getResources()[0]);
-        self::assertObjectHasAttribute('id', $plans->getResources()[0]);
+        self::assertObjectHasProperty('id', $plans->getResources()[0]);
         self::assertSame('F7485F0E5-202B-4879-4F00-154E109E7FE4', $plans->getResources()[0]->id);
     }
 
@@ -104,10 +104,10 @@ class FinancesIntegrationTest extends MerchantSDKTestCase
         self::assertInstanceOf(\Generator::class, $plans);
 
         $plan = $plans->current();
-        self::assertCount(4, $plans);
+        self::assertCount(4, iterator_to_array($plans, false));
 
         self::assertIsObject($plan);
-        self::assertObjectHasAttribute('id', $plan);
+        self::assertObjectHasProperty('id', $plan);
         self::assertSame('F7485F0E5-202B-4879-4F00-154E109E7FE4', $plan->id);
     }
 
@@ -151,10 +151,10 @@ class FinancesIntegrationTest extends MerchantSDKTestCase
         self::assertInstanceOf(\Generator::class, $plans);
 
         $plan = $plans->current();
-        self::assertCount(4, $plans);
+        self::assertCount(4, iterator_to_array($plans, false));
 
         self::assertIsObject($plan);
-        self::assertObjectHasAttribute('id', $plan);
+        self::assertObjectHasProperty('id', $plan);
         self::assertSame('F7485F0E5-202B-4879-4F00-154E109E7FE4', $plan->id);
     }
 }

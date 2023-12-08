@@ -47,7 +47,7 @@ class ApplicationRefundsIntegrationTest extends MerchantSDKTestCase
         self::assertCount(2, $refunds->getResources());
 
         self::assertIsObject($refunds->getResources()[0]);
-        self::assertObjectHasAttribute('id', $refunds->getResources()[0]);
+        self::assertObjectHasProperty('id', $refunds->getResources()[0]);
         self::assertSame('97ca1476-2c9c-4ca2-b4c6-1f41f2ecdf5b', $refunds->getResources()[0]->id);
 
     }
@@ -75,7 +75,7 @@ class ApplicationRefundsIntegrationTest extends MerchantSDKTestCase
         self::assertCount(2, $refunds->getResources());
 
         self::assertIsObject($refunds->getResources()[0]);
-        self::assertObjectHasAttribute('id', $refunds->getResources()[0]);
+        self::assertObjectHasProperty('id', $refunds->getResources()[0]);
         self::assertSame('97ca1476-2c9c-4ca2-b4c6-1f41f2ecdf5b', $refunds->getResources()[0]->id);
     }
 
@@ -111,7 +111,7 @@ class ApplicationRefundsIntegrationTest extends MerchantSDKTestCase
         self::assertInstanceOf(ResponseWrapper::class, $refunds);
         // self::assertCount(2, $refunds->getResources());
         self::assertIsObject($refunds->getResources()[0]);
-        self::assertObjectHasAttribute('id', $refunds->getResources()[0]);
+        self::assertObjectHasProperty('id', $refunds->getResources()[0]);
         self::assertSame('97ca1476-2c9c-4ca2-b4c6-1f41f2ecdf5b', $refunds->getResources()[0]->id);
         self::assertSame('69c08979-b727-407b-b449-6f03de02dd77', $refunds->getResources()[1]->id);
     }
@@ -141,10 +141,10 @@ class ApplicationRefundsIntegrationTest extends MerchantSDKTestCase
         self::assertInstanceOf(\Generator::class, $refunds);
 
         $refund = $refunds->current();
-        self::assertCount(3, $refunds);
+        self::assertCount(3, iterator_to_array($refunds, false));
 
         self::assertIsObject($refund);
-        self::assertObjectHasAttribute('id', $refund);
+        self::assertObjectHasProperty('id', $refund);
         self::assertSame('97ca1476-2c9c-4ca2-b4c6-1f41f2ecdf5b', $refund->id);
     }
 
@@ -193,10 +193,10 @@ class ApplicationRefundsIntegrationTest extends MerchantSDKTestCase
         self::assertInstanceOf(\Generator::class, $refunds);
 
         $refund = $refunds->current();
-        self::assertCount(2, $refunds);
+        self::assertCount(2, iterator_to_array($refunds, false));
 
         self::assertIsObject($refund);
-        self::assertObjectHasAttribute('id', $refund);
+        self::assertObjectHasProperty('id', $refund);
         self::assertSame('97ca1476-2c9c-4ca2-b4c6-1f41f2ecdf5b', $refund->id);
     }
 

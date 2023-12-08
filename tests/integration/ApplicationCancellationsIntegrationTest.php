@@ -47,7 +47,7 @@ class ApplicationCancellationsIntegrationTest extends MerchantSDKTestCase
         self::assertCount(2, $cancellations->getResources());
 
         self::assertIsObject($cancellations->getResources()[0]);
-        self::assertObjectHasAttribute('id', $cancellations->getResources()[0]);
+        self::assertObjectHasProperty('id', $cancellations->getResources()[0]);
         self::assertSame('5d1b94f5-3a7f-4f70-be6e-bb53abd7f955', $cancellations->getResources()[0]->id);
     }
 
@@ -82,7 +82,7 @@ class ApplicationCancellationsIntegrationTest extends MerchantSDKTestCase
         self::assertCount(2, $cancellations->getResources());
 
         self::assertIsObject($cancellations->getResources()[0]);
-        self::assertObjectHasAttribute('id', $cancellations->getResources()[0]);
+        self::assertObjectHasProperty('id', $cancellations->getResources()[0]);
         self::assertSame('5d1b94f5-3a7f-4f70-be6e-bb53abd7f955', $cancellations->getResources()[0]->id);
     }
 
@@ -118,7 +118,7 @@ class ApplicationCancellationsIntegrationTest extends MerchantSDKTestCase
         self::assertInstanceOf(ResponseWrapper::class, $cancellations);
         self::assertCount(3, $cancellations->getResources());
         self::assertIsObject($cancellations->getResources()[0]);
-        self::assertObjectHasAttribute('id', $cancellations->getResources()[0]);
+        self::assertObjectHasProperty('id', $cancellations->getResources()[0]);
         self::assertSame('5d1b94f5-3a7f-4f70-be6e-bb53abd7f955', $cancellations->getResources()[0]->id);
         self::assertSame('5d1b94f5-3a7f-4f70-be6e-ab53abd7f950', $cancellations->getResources()[1]->id);
     }
@@ -156,10 +156,10 @@ class ApplicationCancellationsIntegrationTest extends MerchantSDKTestCase
         self::assertInstanceOf(\Generator::class, $cancellations);
 
         $cancellation = $cancellations->current();
-        self::assertCount(3, $cancellations);
+        self::assertCount(3, iterator_to_array($cancellations, false));
 
         self::assertIsObject($cancellation);
-        self::assertObjectHasAttribute('id', $cancellation);
+        self::assertObjectHasProperty('id', $cancellation);
         self::assertSame('5d1b94f5-3a7f-4f70-be6e-bb53abd7f955', $cancellation->id);
     }
 
@@ -208,10 +208,10 @@ class ApplicationCancellationsIntegrationTest extends MerchantSDKTestCase
         self::assertInstanceOf(\Generator::class, $cancellations);
 
         $cancellation = $cancellations->current();
-        self::assertCount(2, $cancellations);
+        self::assertCount(2, iterator_to_array($cancellations, false));
 
         self::assertIsObject($cancellation);
-        self::assertObjectHasAttribute('id', $cancellation);
+        self::assertObjectHasProperty('id', $cancellation);
         self::assertSame('5d1b94f5-3a7f-4f70-be6e-bb53abd7f955', $cancellation->id);
     }
 }
