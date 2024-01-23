@@ -32,7 +32,7 @@ class ApplicationCancellationsHandlerTest extends MerchantSDKTestCase
 
         $handler = new Handler($wrapper);
 
-        $application = (new Application)->withId($this->applicationId);
+        $application = (new Application())->withId($this->applicationId);
         $requestOptions = (new ApiRequestOptions());
 
         $cancellations = $handler->getApplicationCancellations($requestOptions, $application);
@@ -60,7 +60,7 @@ class ApplicationCancellationsHandlerTest extends MerchantSDKTestCase
 
         $handler = new Handler($wrapper);
 
-        $application = (new Application)->withId($this->applicationId);
+        $application = (new Application())->withId($this->applicationId);
         $requestOptions = (new ApiRequestOptions());
 
         $cancellations = $handler->getApplicationCancellationsByPage($requestOptions, $application);
@@ -93,7 +93,7 @@ class ApplicationCancellationsHandlerTest extends MerchantSDKTestCase
 
         $handler = new Handler($wrapper);
 
-        $application = (new Application)->withId($this->applicationId);
+        $application = (new Application())->withId($this->applicationId);
 
         $requestOptions = (new ApiRequestOptions())->setPaginated(false);
         $cancellations = $handler->getAllApplicationCancellations($requestOptions, $application);
@@ -127,7 +127,7 @@ class ApplicationCancellationsHandlerTest extends MerchantSDKTestCase
 
         $handler = new Handler($wrapper);
 
-        $application = (new Application)->withId($this->applicationId);
+        $application = (new Application())->withId($this->applicationId);
         $requestOptions = (new ApiRequestOptions())->setPaginated(false);
 
         $cancellations = $handler->yieldAllApplicationCancellations($requestOptions, $application);
@@ -162,7 +162,7 @@ class ApplicationCancellationsHandlerTest extends MerchantSDKTestCase
 
         $handler = new Handler($wrapper);
 
-        $application = (new Application)->withId($this->applicationId);
+        $application = (new Application())->withId($this->applicationId);
         $requestOptions = (new ApiRequestOptions())->setPaginated(true);
 
         $cancellations = $handler->yieldApplicationCancellations($requestOptions, $application);
@@ -192,7 +192,7 @@ class ApplicationCancellationsHandlerTest extends MerchantSDKTestCase
 
         $handler = new Handler($wrapper);
 
-        $application = (new Application)->withId($this->applicationId);
+        $application = (new Application())->withId($this->applicationId);
 
         $response = $handler->getSingleApplicationCancellation($application, '5d1b94f5-3a7f-4f70-be6e-bb53abd7f955');
 
@@ -221,9 +221,9 @@ class ApplicationCancellationsHandlerTest extends MerchantSDKTestCase
 
         $handler = new Handler($wrapper);
 
-        $application = (new Application)->withId($this->applicationId);
+        $application = (new Application())->withId($this->applicationId);
 
-        $cancellation = (new \Divido\MerchantSDK\Models\ApplicationCancellation)
+        $cancellation = (new \Divido\MerchantSDK\Models\ApplicationCancellation())
             ->withAmount(1000)
             ->withReference('D4M-njPjFRE-MxsB')
             ->withComment('Item cancelled')

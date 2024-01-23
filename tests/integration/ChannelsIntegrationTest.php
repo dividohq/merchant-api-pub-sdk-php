@@ -119,7 +119,7 @@ class ChannelsIntegrationTest extends MerchantSDKTestCase
         $httpClient->addResponse(
             $this->createResponseMock(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/channels_page_1.json'))
         );
-        
+
         $requestFactory = $this->createRequestFactory();
 
         $wrapper = new HttpWrapper('-merchant-api-pub-http-host-', 'divido', $httpClient, $requestFactory);

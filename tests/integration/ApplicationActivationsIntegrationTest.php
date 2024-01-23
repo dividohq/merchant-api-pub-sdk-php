@@ -19,7 +19,8 @@ class ApplicationActivationsIntegrationTest extends MerchantSDKTestCase
 
     private $sdk;
 
-    public function setUp() :void{
+    public function setUp(): void
+    {
         $httpClient = new \Http\Mock\Client(self::createMock(ResponseFactoryInterface::class));
         $httpClient->addResponse(
             $this->createResponseMock(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/application_activations_page_1.json'))
@@ -46,7 +47,7 @@ class ApplicationActivationsIntegrationTest extends MerchantSDKTestCase
         if ($applicationModelProvided) {
             $application = $this->applicationId;
         } else {
-            $application = (new Application)->withId($this->applicationId);
+            $application = (new Application())->withId($this->applicationId);
         }
 
         $activations = $this->sdk->getApplicationActivationsByPage($requestOptions, $application);

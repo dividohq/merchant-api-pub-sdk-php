@@ -9,7 +9,7 @@ use Psr\Http\Message\ResponseInterface;
 
 interface WrapperInterface
 {
-    const NO_BODY = '';
+    public const NO_BODY = '';
 
     /**
      * Request method

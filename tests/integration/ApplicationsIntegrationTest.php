@@ -36,7 +36,8 @@ class ApplicationsIntegrationTest extends MerchantSDKTestCase
         self::assertCount(25, $applications->getResources());
         self::assertIsObject($applications->getResources()[0]);
         self::assertObjectHasProperty('id', $applications->getResources()[0]);
-        self::assertSame('0074dd19-dbba-4d80-bdb7-c4a2176cb399', $applications->getResources()[0]->id);    }
+        self::assertSame('0074dd19-dbba-4d80-bdb7-c4a2176cb399', $applications->getResources()[0]->id);
+    }
 
     public function test_GetApplicationsFromClient_WithInvalidRequest_ThrowsException()
     {
@@ -96,7 +97,8 @@ class ApplicationsIntegrationTest extends MerchantSDKTestCase
         self::assertCount(25, $applications->getResources());
         self::assertIsObject($applications->getResources()[0]);
         self::assertObjectHasProperty('id', $applications->getResources()[0]);
-        self::assertSame('0074dd19-dbba-4d80-bdb7-c4a2176cb399', $applications->getResources()[0]->id);    }
+        self::assertSame('0074dd19-dbba-4d80-bdb7-c4a2176cb399', $applications->getResources()[0]->id);
+    }
 
     public function test_GetAllApplicationsFromClient_ReturnsAllApplications()
     {
@@ -123,7 +125,8 @@ class ApplicationsIntegrationTest extends MerchantSDKTestCase
         self::assertIsObject($applications->getResources()[0]);
         self::assertObjectHasProperty('id', $applications->getResources()[0]);
         self::assertSame('0074dd19-dbba-4d80-bdb7-c4a2176cb399', $applications->getResources()[0]->id);
-        self::assertSame('97ed2a20-a362-4a66-b252-237aea10ead5', $applications->getResources()[34]->id);    }
+        self::assertSame('97ed2a20-a362-4a66-b252-237aea10ead5', $applications->getResources()[34]->id);
+    }
 
     public function test_YieldAllApplicationsFromClient_ReturnsApplicationsGenerator()
     {
@@ -152,7 +155,8 @@ class ApplicationsIntegrationTest extends MerchantSDKTestCase
 
         self::assertIsObject($application);
         self::assertObjectHasProperty('id', $application);
-        self::assertSame('0074dd19-dbba-4d80-bdb7-c4a2176cb399', $application->id);    }
+        self::assertSame('0074dd19-dbba-4d80-bdb7-c4a2176cb399', $application->id);
+    }
 
     public function test_GetApplicationsByPageFromClient_WithSort_ReturnsSortedApplications()
     {
@@ -160,7 +164,7 @@ class ApplicationsIntegrationTest extends MerchantSDKTestCase
         $httpClient->addResponse(
             $this->createResponseMock(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/applications_page_1.json'))
         );
-        
+
         $requestFactory = $this->createRequestFactory();
 
         $wrapper = new HttpWrapper('-merchant-api-pub-http-host-', 'divido', $httpClient, $requestFactory);

@@ -32,10 +32,12 @@ class MerchantSDKTestCase extends TestCase
         return $requestFactory;
     }
 
-    protected function createMockRequest(){
+    protected function createMockRequest()
+    {
         $mockRequest = self::createMock(RequestInterface::class);
         $mockRequest->method('withHeader')->willReturnSelf();
         $mockRequest->method('withBody')->willReturnSelf();
+
         return $mockRequest;
     }
 }

@@ -35,7 +35,8 @@ class FinancesIntegrationTest extends MerchantSDKTestCase
         self::assertCount(4, $plans->getResources());
         self::assertIsObject($plans->getResources()[0]);
         self::assertObjectHasProperty('id', $plans->getResources()[0]);
-        self::assertSame('F7485F0E5-202B-4879-4F00-154E109E7FE4', $plans->getResources()[0]->id);    }
+        self::assertSame('F7485F0E5-202B-4879-4F00-154E109E7FE4', $plans->getResources()[0]->id);
+    }
 
     public function test_GetFinancesByPageFromClient_ReturnsFinances()
     {
@@ -58,7 +59,8 @@ class FinancesIntegrationTest extends MerchantSDKTestCase
         self::assertCount(4, $plans->getResources());
         self::assertIsObject($plans->getResources()[0]);
         self::assertObjectHasProperty('id', $plans->getResources()[0]);
-        self::assertSame('F7485F0E5-202B-4879-4F00-154E109E7FE4', $plans->getResources()[0]->id);    }
+        self::assertSame('F7485F0E5-202B-4879-4F00-154E109E7FE4', $plans->getResources()[0]->id);
+    }
 
     public function test_GetAllFinancesFromClient_ReturnsFinances()
     {
@@ -117,7 +119,7 @@ class FinancesIntegrationTest extends MerchantSDKTestCase
         $httpClient->addResponse(
             $this->createResponseMock(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/finance_get_plans.json'))
         );
-        
+
         $requestFactory = $this->createRequestFactory();
 
         $wrapper = new HttpWrapper('-merchant-api-pub-http-host-', 'divido', $httpClient, $requestFactory);

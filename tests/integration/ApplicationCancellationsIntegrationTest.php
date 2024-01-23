@@ -36,7 +36,7 @@ class ApplicationCancellationsIntegrationTest extends MerchantSDKTestCase
         if ($applicationModelProvided) {
             $application = $this->applicationId;
         } else {
-            $application = (new Application)->withId($this->applicationId);
+            $application = (new Application())->withId($this->applicationId);
         }
 
         $requestOptions = (new ApiRequestOptions())->setSort('-created_at');
@@ -72,7 +72,7 @@ class ApplicationCancellationsIntegrationTest extends MerchantSDKTestCase
 
         $sdk = new Client($wrapper, Environment::SANDBOX);
 
-        $application = (new Application)->withId($this->applicationId);
+        $application = (new Application())->withId($this->applicationId);
 
         $requestOptions = (new ApiRequestOptions())->setSort('-created_at');
 
@@ -110,7 +110,7 @@ class ApplicationCancellationsIntegrationTest extends MerchantSDKTestCase
         if ($applicationModelProvided) {
             $application = $this->applicationId;
         } else {
-            $application = (new Application)->withId($this->applicationId);
+            $application = (new Application())->withId($this->applicationId);
         }
 
         $cancellations = $sdk->getAllApplicationCancellations($requestOptions, $application);
@@ -149,7 +149,7 @@ class ApplicationCancellationsIntegrationTest extends MerchantSDKTestCase
 
         $requestOptions = (new ApiRequestOptions());
 
-        $application = (new Application)->withId($this->applicationId);
+        $application = (new Application())->withId($this->applicationId);
 
         $cancellations = $sdk->yieldAllApplicationCancellations($requestOptions, $application);
 
@@ -178,7 +178,7 @@ class ApplicationCancellationsIntegrationTest extends MerchantSDKTestCase
 
         $requestOptions = (new ApiRequestOptions())->setSort('-created_at');
 
-        $application = (new Application)->withId($this->applicationId);
+        $application = (new Application())->withId($this->applicationId);
 
         $sdk->getApplicationCancellationsByPage($requestOptions, $application);
 

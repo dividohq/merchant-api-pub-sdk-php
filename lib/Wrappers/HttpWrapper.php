@@ -60,7 +60,7 @@ class HttpWrapper implements WrapperInterface
         $this->apiKey = $apiKey;
         $this->httpClient = $httpClient ?: Psr18ClientDiscovery::find();
         $this->requestFactory = $requestFactory ?: Psr17FactoryDiscovery::findRequestFactory();
-        $this->streamFactory = $streamFactory; 
+        $this->streamFactory = $streamFactory;
     }
 
     /**
@@ -68,10 +68,12 @@ class HttpWrapper implements WrapperInterface
      *
      * @return StreamFactoryInterface
      */
-    private function getStreamFactory() {
+    private function getStreamFactory()
+    {
         if($this->streamFactory === null) {
             $this->streamFactory = Psr17FactoryDiscovery::findStreamFactory();
         }
+
         return $this->streamFactory;
     }
 
@@ -94,15 +96,15 @@ class HttpWrapper implements WrapperInterface
         $uri = $this->baseUrl  . '/' . $uri . '?' . http_build_query($query, '', '&');
 
         $request = $this->requestFactory->createRequest(
-            strtoupper($method), 
+            strtoupper($method),
             $uri
         );
 
         if (trim($body) !== WrapperInterface::NO_BODY) {
             $request = $request->withBody($this->getStreamFactory()->createStream($body));
         }
-        
-        foreach($headers as $key=>$value){
+
+        foreach($headers as $key => $value) {
             $request = $request->withHeader($key, $value);
         }
 

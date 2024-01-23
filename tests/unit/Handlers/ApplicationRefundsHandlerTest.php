@@ -32,7 +32,7 @@ class ApplicationRefundsHandlerTest extends MerchantSDKTestCase
 
         $handler = new Handler($wrapper);
 
-        $application = (new Application)->withId($this->applicationId);
+        $application = (new Application())->withId($this->applicationId);
         $requestOptions = (new ApiRequestOptions());
 
         $refunds = $handler->getApplicationRefunds($requestOptions, $application);
@@ -60,7 +60,7 @@ class ApplicationRefundsHandlerTest extends MerchantSDKTestCase
 
         $handler = new Handler($wrapper);
 
-        $application = (new Application)->withId($this->applicationId);
+        $application = (new Application())->withId($this->applicationId);
         $requestOptions = (new ApiRequestOptions());
 
         $refunds = $handler->getApplicationRefundsByPage($requestOptions, $application);
@@ -93,7 +93,7 @@ class ApplicationRefundsHandlerTest extends MerchantSDKTestCase
 
         $handler = new Handler($wrapper);
 
-        $application = (new Application)->withId($this->applicationId);
+        $application = (new Application())->withId($this->applicationId);
 
         $requestOptions = (new ApiRequestOptions())->setPaginated(false);
         $refunds = $handler->getAllApplicationRefunds($requestOptions, $application);
@@ -127,7 +127,7 @@ class ApplicationRefundsHandlerTest extends MerchantSDKTestCase
 
         $handler = new Handler($wrapper);
 
-        $application = (new Application)->withId($this->applicationId);
+        $application = (new Application())->withId($this->applicationId);
         $requestOptions = (new ApiRequestOptions())->setPaginated(false);
 
         $refunds = $handler->yieldAllApplicationRefunds($requestOptions, $application);
@@ -162,7 +162,7 @@ class ApplicationRefundsHandlerTest extends MerchantSDKTestCase
 
         $handler = new Handler($wrapper);
 
-        $application = (new Application)->withId($this->applicationId);
+        $application = (new Application())->withId($this->applicationId);
         $requestOptions = (new ApiRequestOptions())->setPaginated(true);
 
         $refunds = $handler->yieldApplicationRefunds($requestOptions, $application);
@@ -192,7 +192,7 @@ class ApplicationRefundsHandlerTest extends MerchantSDKTestCase
 
         $handler = new Handler($wrapper);
 
-        $application = (new Application)->withId($this->applicationId);
+        $application = (new Application())->withId($this->applicationId);
 
         $response = $handler->getSingleApplicationRefund($application, '97ca1476-2c9c-4ca2-b4c6-1f41f2ecdf5b');
 
@@ -221,9 +221,9 @@ class ApplicationRefundsHandlerTest extends MerchantSDKTestCase
 
         $handler = new Handler($wrapper);
 
-        $application = (new Application)->withId($this->applicationId);
+        $application = (new Application())->withId($this->applicationId);
 
-        $refund = (new \Divido\MerchantSDK\Models\ApplicationRefund)
+        $refund = (new \Divido\MerchantSDK\Models\ApplicationRefund())
             ->withAmount(1000)
             ->withReference('D4M-njPjFRE-MxsB')
             ->withComment('Item refunded')

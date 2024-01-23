@@ -18,8 +18,12 @@ class SettlementsIntegrationTest extends MerchantSDKTestCase
     {
         $httpClient = new \Http\Mock\Client(self::createMock(ResponseFactoryInterface::class));
         $httpClient->addResponse(
-            $this->createResponseMock(200, [], file_get_contents(
-                APP_PATH . '/tests/assets/responses/settlements_page_1.json')
+            $this->createResponseMock(
+                200,
+                [],
+                file_get_contents(
+                    APP_PATH . '/tests/assets/responses/settlements_page_1.json'
+                )
             )
         );
 
@@ -44,8 +48,12 @@ class SettlementsIntegrationTest extends MerchantSDKTestCase
     {
         $httpClient = new \Http\Mock\Client(self::createMock(ResponseFactoryInterface::class));
         $httpClient->addResponse(
-            $this->createResponseMock(200, [], file_get_contents(
-                APP_PATH . '/tests/assets/responses/settlements_page_1.json')
+            $this->createResponseMock(
+                200,
+                [],
+                file_get_contents(
+                    APP_PATH . '/tests/assets/responses/settlements_page_1.json'
+                )
             )
         );
 
@@ -70,8 +78,12 @@ class SettlementsIntegrationTest extends MerchantSDKTestCase
     {
         $httpClient = new \Http\Mock\Client(self::createMock(ResponseFactoryInterface::class));
         $httpClient->addResponse(
-            $this->createResponseMock(200, [], file_get_contents(
-                APP_PATH . '/tests/assets/responses/settlements_page_1.json')
+            $this->createResponseMock(
+                200,
+                [],
+                file_get_contents(
+                    APP_PATH . '/tests/assets/responses/settlements_page_1.json'
+                )
             )
         );
 
@@ -97,8 +109,12 @@ class SettlementsIntegrationTest extends MerchantSDKTestCase
         $httpClient = new \Http\Mock\Client(self::createMock(ResponseFactoryInterface::class));
 
         $httpClient->addResponse(
-            $this->createResponseMock(200, [], file_get_contents(
-                APP_PATH . '/tests/assets/responses/settlements_page_1.json')
+            $this->createResponseMock(
+                200,
+                [],
+                file_get_contents(
+                    APP_PATH . '/tests/assets/responses/settlements_page_1.json'
+                )
             )
         );
 
@@ -126,11 +142,15 @@ class SettlementsIntegrationTest extends MerchantSDKTestCase
     {
         $httpClient = new \Http\Mock\Client(self::createMock(ResponseFactoryInterface::class));
         $httpClient->addResponse(
-            $this->createResponseMock(200, [], file_get_contents(
-                APP_PATH . '/tests/assets/responses/settlements_page_1.json')
+            $this->createResponseMock(
+                200,
+                [],
+                file_get_contents(
+                    APP_PATH . '/tests/assets/responses/settlements_page_1.json'
+                )
             )
         );
-        
+
         $requestFactory = $this->createRequestFactory();
 
         $wrapper = new HttpWrapper('-merchant-api-pub-http-host-', 'divido', $httpClient, $requestFactory);
@@ -148,8 +168,12 @@ class SettlementsIntegrationTest extends MerchantSDKTestCase
     {
         $httpClient = new \Http\Mock\Client(self::createMock(ResponseFactoryInterface::class));
         $httpClient->addResponse(
-            $this->createResponseMock(200, [], file_get_contents(
-                APP_PATH . '/tests/assets/responses/settlements_page_1.json')
+            $this->createResponseMock(
+                200,
+                [],
+                file_get_contents(
+                    APP_PATH . '/tests/assets/responses/settlements_page_1.json'
+                )
             )
         );
 

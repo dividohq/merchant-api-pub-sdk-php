@@ -46,7 +46,7 @@ class ApplicationActivationsHandlerTest extends MerchantSDKTestCase
 
         $handler = new Handler($wrapper);
 
-        $application = (new Application)->withId($this->applicationId);
+        $application = (new Application())->withId($this->applicationId);
         $requestOptions = (new ApiRequestOptions())->setSort('-created_at');
 
         $activations = $handler->getApplicationActivations($requestOptions, $application);
@@ -74,7 +74,7 @@ class ApplicationActivationsHandlerTest extends MerchantSDKTestCase
 
         $handler = new Handler($wrapper);
 
-        $application = (new Application)->withId($this->applicationId);
+        $application = (new Application())->withId($this->applicationId);
         $requestOptions = (new ApiRequestOptions());
 
         $activations = $handler->getApplicationActivationsByPage($requestOptions, $application);
@@ -107,7 +107,7 @@ class ApplicationActivationsHandlerTest extends MerchantSDKTestCase
 
         $handler = new Handler($wrapper);
 
-        $application = (new Application)->withId($this->applicationId);
+        $application = (new Application())->withId($this->applicationId);
 
         $requestOptions = (new ApiRequestOptions())->setPaginated(false);
         $activations = $handler->getAllApplicationActivations($requestOptions, $application);
@@ -141,7 +141,7 @@ class ApplicationActivationsHandlerTest extends MerchantSDKTestCase
 
         $handler = new Handler($wrapper);
 
-        $application = (new Application)->withId($this->applicationId);
+        $application = (new Application())->withId($this->applicationId);
         $requestOptions = (new ApiRequestOptions())->setPaginated(false);
 
         $activations = $handler->yieldAllApplicationActivations($requestOptions, $application);
@@ -176,7 +176,7 @@ class ApplicationActivationsHandlerTest extends MerchantSDKTestCase
 
         $handler = new Handler($wrapper);
 
-        $application = (new Application)->withId($this->applicationId);
+        $application = (new Application())->withId($this->applicationId);
         $requestOptions = (new ApiRequestOptions())->setPaginated(true);
 
         $activations = $handler->yieldApplicationActivations($requestOptions, $application);
@@ -206,7 +206,7 @@ class ApplicationActivationsHandlerTest extends MerchantSDKTestCase
 
         $handler = new Handler($wrapper);
 
-        $application = (new Application)->withId($this->applicationId);
+        $application = (new Application())->withId($this->applicationId);
 
         $response = $handler->getSingleApplicationActivation($application, '69c08979-b727-407b-b449-6f03de02dd77');
 
@@ -235,9 +235,9 @@ class ApplicationActivationsHandlerTest extends MerchantSDKTestCase
 
         $handler = new Handler($wrapper);
 
-        $application = (new Application)->withId($this->applicationId);
+        $application = (new Application())->withId($this->applicationId);
 
-        $activation = (new \Divido\MerchantSDK\Models\ApplicationActivation)
+        $activation = (new \Divido\MerchantSDK\Models\ApplicationActivation())
             ->withAmount(1000)
             ->withReference('D4M-njPjFRE-MxsB')
             ->withComment('Item activated')

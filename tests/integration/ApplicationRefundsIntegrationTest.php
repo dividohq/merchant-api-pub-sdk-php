@@ -38,7 +38,7 @@ class ApplicationRefundsIntegrationTest extends MerchantSDKTestCase
         if ($applicationModelProvided) {
             $application = $this->applicationId;
         } else {
-            $application = (new Application)->withId($this->applicationId);
+            $application = (new Application())->withId($this->applicationId);
         }
 
         $refunds = $sdk->getApplicationRefundsByPage($requestOptions, $application);
@@ -67,7 +67,7 @@ class ApplicationRefundsIntegrationTest extends MerchantSDKTestCase
 
         $requestOptions = (new ApiRequestOptions());
 
-        $application = (new Application)->withId($this->applicationId);
+        $application = (new Application())->withId($this->applicationId);
 
         $refunds = $sdk->getApplicationRefundsByPage($requestOptions, $application);
 
@@ -103,7 +103,7 @@ class ApplicationRefundsIntegrationTest extends MerchantSDKTestCase
         if ($applicationModelProvided) {
             $application = $this->applicationId;
         } else {
-            $application = (new Application)->withId($this->applicationId);
+            $application = (new Application())->withId($this->applicationId);
         }
 
         $refunds = $sdk->getAllApplicationRefunds($requestOptions, $application);
@@ -134,7 +134,7 @@ class ApplicationRefundsIntegrationTest extends MerchantSDKTestCase
 
         $requestOptions = (new ApiRequestOptions())->setPage(2);
 
-        $application = (new Application)->withId($this->applicationId);
+        $application = (new Application())->withId($this->applicationId);
 
         $refunds = $sdk->yieldAllApplicationRefunds($requestOptions, $application);
 
@@ -163,7 +163,7 @@ class ApplicationRefundsIntegrationTest extends MerchantSDKTestCase
 
         $requestOptions = (new ApiRequestOptions())->setSort('-created_at');
 
-        $application = (new Application)->withId($this->applicationId);
+        $application = (new Application())->withId($this->applicationId);
 
         $sdk->getApplicationRefundsByPage($requestOptions, $application);
 

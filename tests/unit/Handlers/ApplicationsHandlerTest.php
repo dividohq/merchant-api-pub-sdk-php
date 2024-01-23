@@ -266,7 +266,7 @@ class ApplicationsHandlerTest extends MerchantSDKTestCase
 
         $handler = new Handler($wrapper);
 
-        $application = (new \Divido\MerchantSDK\Models\Application)
+        $application = (new \Divido\MerchantSDK\Models\Application())
             ->withCountryId('GB')
             ->withCurrencyId('GBP')
             ->withLanguageId('EN')
@@ -362,7 +362,7 @@ class ApplicationsHandlerTest extends MerchantSDKTestCase
 
         $handler = new Handler($wrapper);
 
-        $application = (new \Divido\MerchantSDK\Models\Application)
+        $application = (new \Divido\MerchantSDK\Models\Application())
             ->withId('6985ef52-7d7c-457e-9a03-e98b648bf9b7')
             ->withFinancePlanId('F335FED7A-A266-A8BF-960A-4CB56CC6DE6F')
             ->withDepositAmount(10000);

@@ -35,11 +35,11 @@ class ApplicationDocumentsHandlerTest extends MerchantSDKTestCase
 
         $handler = new Handler($wrapper);
 
-        $application = (new Application)->withId($this->applicationId);
+        $application = (new Application())->withId($this->applicationId);
 
         $image = "todo - make this an image file.";
 
-        $document = (new \Divido\MerchantSDK\Models\ApplicationDocument)->withDocument($image);
+        $document = (new \Divido\MerchantSDK\Models\ApplicationDocument())->withDocument($image);
 
         $response = $handler->createApplicationDocument($application, $document);
 
@@ -59,7 +59,7 @@ class ApplicationDocumentsHandlerTest extends MerchantSDKTestCase
 
         $handler = new Handler($wrapper);
 
-        $application = (new Application)->withId($this->applicationId);
+        $application = (new Application())->withId($this->applicationId);
 
         $documentId = 'qwerty-123456-typewriter-foo';
 
