@@ -34,7 +34,7 @@ class ChannelsHandlerTest extends MerchantSDKTestCase
         self::assertInstanceOf(ResponseWrapper::class, $channels);
         self::assertCount(2, $channels->getResources());
         self::assertIsObject($channels->getResources()[0]);
-        self::assertObjectHasAttribute('id', $channels->getResources()[0]);
+        self::assertObjectHasProperty('id', $channels->getResources()[0]);
         self::assertSame('CF0A92CE9-4935-DC6F-DD0D-463EC9D654A1', $channels->getResources()[0]->id);
     }
 
@@ -60,7 +60,7 @@ class ChannelsHandlerTest extends MerchantSDKTestCase
         self::assertInstanceOf(ResponseWrapper::class, $channels);
         self::assertCount(2, $channels->getResources());
         self::assertIsObject($channels->getResources()[0]);
-        self::assertObjectHasAttribute('id', $channels->getResources()[0]);
+        self::assertObjectHasProperty('id', $channels->getResources()[0]);
         self::assertSame('CF0A92CE9-4935-DC6F-DD0D-463EC9D654A1', $channels->getResources()[0]->id);
     }
 
@@ -86,7 +86,7 @@ class ChannelsHandlerTest extends MerchantSDKTestCase
         self::assertInstanceOf(ResponseWrapper::class, $channels);
         self::assertCount(2, $channels->getResources());
         self::assertIsObject($channels->getResources()[0]);
-        self::assertObjectHasAttribute('id', $channels->getResources()[0]);
+        self::assertObjectHasProperty('id', $channels->getResources()[0]);
         self::assertSame('CF0A92CE9-4935-DC6F-DD0D-463EC9D654A1', $channels->getResources()[0]->id);
     }
 
@@ -112,10 +112,10 @@ class ChannelsHandlerTest extends MerchantSDKTestCase
         self::assertInstanceOf(\Generator::class, $channels);
 
         $plan = $channels->current();
-        self::assertCount(2, $channels);
+        self::assertCount(2, iterator_to_array($channels, false));
 
         self::assertIsObject($plan);
-        self::assertObjectHasAttribute('id', $plan);
+        self::assertObjectHasProperty('id', $plan);
         self::assertSame('CF0A92CE9-4935-DC6F-DD0D-463EC9D654A1', $plan->id);
     }
 
@@ -142,12 +142,10 @@ class ChannelsHandlerTest extends MerchantSDKTestCase
 
         $channel = $channels->current();
 
-        // Bug?:
-        // Failed asserting that actual size 0 matches expected size 0
-        self::assertCount(2, $channels);
+        self::assertCount(2, iterator_to_array($channels, false));
 
         self::assertIsObject($channel);
-        self::assertObjectHasAttribute('id', $channel);
+        self::assertObjectHasProperty('id', $channel);
         self::assertSame('CF0A92CE9-4935-DC6F-DD0D-463EC9D654A1', $channel->id);
     }
 

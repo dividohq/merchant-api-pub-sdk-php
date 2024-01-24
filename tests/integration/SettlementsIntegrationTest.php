@@ -10,8 +10,6 @@ use Divido\MerchantSDK\Handlers\ApiRequestOptions;
 use Divido\MerchantSDK\Response\ResponseWrapper;
 use Divido\MerchantSDK\Test\Unit\MerchantSDKTestCase;
 use Divido\MerchantSDK\Wrappers\HttpWrapper;
-use Http\Message\RequestFactory;
-use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseFactoryInterface;
 
 class SettlementsIntegrationTest extends MerchantSDKTestCase
@@ -20,13 +18,16 @@ class SettlementsIntegrationTest extends MerchantSDKTestCase
     {
         $httpClient = new \Http\Mock\Client(self::createMock(ResponseFactoryInterface::class));
         $httpClient->addResponse(
-            $this->createResponseMock(200, [], file_get_contents(
-                APP_PATH . '/tests/assets/responses/settlements_page_1.json')
+            $this->createResponseMock(
+                200,
+                [],
+                file_get_contents(
+                    APP_PATH . '/tests/assets/responses/settlements_page_1.json'
+                )
             )
         );
 
-        $requestFactory = self::createMock(RequestFactory::class);
-        $requestFactory->method('createRequest')->willReturn(self::createMock(RequestInterface::class));
+        $requestFactory = $this->createRequestFactory();
 
         $wrapper = new HttpWrapper('-merchant-api-pub-http-host-', 'divido', $httpClient, $requestFactory);
 
@@ -39,7 +40,7 @@ class SettlementsIntegrationTest extends MerchantSDKTestCase
         self::assertInstanceOf(ResponseWrapper::class, $settlements);
         self::assertCount(4, $settlements->getResources());
         self::assertIsObject($settlements->getResources()[0]);
-        self::assertObjectHasAttribute('id', $settlements->getResources()[0]);
+        self::assertObjectHasProperty('id', $settlements->getResources()[0]);
         self::assertSame('6EC506EE-7919-11E8-A4CE-0242AC1E000B', $settlements->getResources()[0]->id);
     }
 
@@ -47,13 +48,16 @@ class SettlementsIntegrationTest extends MerchantSDKTestCase
     {
         $httpClient = new \Http\Mock\Client(self::createMock(ResponseFactoryInterface::class));
         $httpClient->addResponse(
-            $this->createResponseMock(200, [], file_get_contents(
-                APP_PATH . '/tests/assets/responses/settlements_page_1.json')
+            $this->createResponseMock(
+                200,
+                [],
+                file_get_contents(
+                    APP_PATH . '/tests/assets/responses/settlements_page_1.json'
+                )
             )
         );
 
-        $requestFactory = self::createMock(RequestFactory::class);
-        $requestFactory->method('createRequest')->willReturn(self::createMock(RequestInterface::class));
+        $requestFactory = $this->createRequestFactory();
 
         $wrapper = new HttpWrapper('-merchant-api-pub-http-host-', 'divido', $httpClient, $requestFactory);
 
@@ -66,7 +70,7 @@ class SettlementsIntegrationTest extends MerchantSDKTestCase
         self::assertInstanceOf(ResponseWrapper::class, $settlements);
         self::assertCount(4, $settlements->getResources());
         self::assertIsObject($settlements->getResources()[0]);
-        self::assertObjectHasAttribute('id', $settlements->getResources()[0]);
+        self::assertObjectHasProperty('id', $settlements->getResources()[0]);
         self::assertSame('6EC506EE-7919-11E8-A4CE-0242AC1E000B', $settlements->getResources()[0]->id);
     }
 
@@ -74,13 +78,16 @@ class SettlementsIntegrationTest extends MerchantSDKTestCase
     {
         $httpClient = new \Http\Mock\Client(self::createMock(ResponseFactoryInterface::class));
         $httpClient->addResponse(
-            $this->createResponseMock(200, [], file_get_contents(
-                APP_PATH . '/tests/assets/responses/settlements_page_1.json')
+            $this->createResponseMock(
+                200,
+                [],
+                file_get_contents(
+                    APP_PATH . '/tests/assets/responses/settlements_page_1.json'
+                )
             )
         );
 
-        $requestFactory = self::createMock(RequestFactory::class);
-        $requestFactory->method('createRequest')->willReturn(self::createMock(RequestInterface::class));
+        $requestFactory = $this->createRequestFactory();
 
         $wrapper = new HttpWrapper('-merchant-api-pub-http-host-', 'divido', $httpClient, $requestFactory);
 
@@ -93,7 +100,7 @@ class SettlementsIntegrationTest extends MerchantSDKTestCase
         self::assertInstanceOf(ResponseWrapper::class, $settlements);
         self::assertCount(4, $settlements->getResources());
         self::assertIsObject($settlements->getResources()[0]);
-        self::assertObjectHasAttribute('id', $settlements->getResources()[0]);
+        self::assertObjectHasProperty('id', $settlements->getResources()[0]);
         self::assertSame('6EC506EE-7919-11E8-A4CE-0242AC1E000B', $settlements->getResources()[0]->id);
     }
 
@@ -102,13 +109,16 @@ class SettlementsIntegrationTest extends MerchantSDKTestCase
         $httpClient = new \Http\Mock\Client(self::createMock(ResponseFactoryInterface::class));
 
         $httpClient->addResponse(
-            $this->createResponseMock(200, [], file_get_contents(
-                APP_PATH . '/tests/assets/responses/settlements_page_1.json')
+            $this->createResponseMock(
+                200,
+                [],
+                file_get_contents(
+                    APP_PATH . '/tests/assets/responses/settlements_page_1.json'
+                )
             )
         );
 
-        $requestFactory = self::createMock(RequestFactory::class);
-        $requestFactory->method('createRequest')->willReturn(self::createMock(RequestInterface::class));
+        $requestFactory = $this->createRequestFactory();
 
         $wrapper = new HttpWrapper('-merchant-api-pub-http-host-', 'divido', $httpClient, $requestFactory);
 
@@ -121,10 +131,10 @@ class SettlementsIntegrationTest extends MerchantSDKTestCase
         self::assertInstanceOf(\Generator::class, $settlements);
 
         $plan = $settlements->current();
-        self::assertCount(4, $settlements);
+        self::assertCount(4, iterator_to_array($settlements, false));
 
         self::assertIsObject($plan);
-        self::assertObjectHasAttribute('id', $plan);
+        self::assertObjectHasProperty('id', $plan);
         self::assertSame('6EC506EE-7919-11E8-A4CE-0242AC1E000B', $plan->id);
     }
 
@@ -132,12 +142,16 @@ class SettlementsIntegrationTest extends MerchantSDKTestCase
     {
         $httpClient = new \Http\Mock\Client(self::createMock(ResponseFactoryInterface::class));
         $httpClient->addResponse(
-            $this->createResponseMock(200, [], file_get_contents(
-                APP_PATH . '/tests/assets/responses/settlements_page_1.json')
+            $this->createResponseMock(
+                200,
+                [],
+                file_get_contents(
+                    APP_PATH . '/tests/assets/responses/settlements_page_1.json'
+                )
             )
         );
-        $requestFactory = self::createMock(RequestFactory::class);
-        $requestFactory->method('createRequest')->willReturn(self::createMock(RequestInterface::class));
+
+        $requestFactory = $this->createRequestFactory();
 
         $wrapper = new HttpWrapper('-merchant-api-pub-http-host-', 'divido', $httpClient, $requestFactory);
 
@@ -154,13 +168,16 @@ class SettlementsIntegrationTest extends MerchantSDKTestCase
     {
         $httpClient = new \Http\Mock\Client(self::createMock(ResponseFactoryInterface::class));
         $httpClient->addResponse(
-            $this->createResponseMock(200, [], file_get_contents(
-                APP_PATH . '/tests/assets/responses/settlements_page_1.json')
+            $this->createResponseMock(
+                200,
+                [],
+                file_get_contents(
+                    APP_PATH . '/tests/assets/responses/settlements_page_1.json'
+                )
             )
         );
 
-        $requestFactory = self::createMock(RequestFactory::class);
-        $requestFactory->method('createRequest')->willReturn(self::createMock(RequestInterface::class));
+        $requestFactory = $this->createRequestFactory();
 
         $wrapper = new HttpWrapper('-merchant-api-pub-http-host-', 'divido', $httpClient, $requestFactory);
 
@@ -173,10 +190,10 @@ class SettlementsIntegrationTest extends MerchantSDKTestCase
         self::assertInstanceOf(\Generator::class, $settlements);
 
         $settlement = $settlements->current();
-        self::assertCount(4, $settlements);
+        self::assertCount(4, iterator_to_array($settlements, false));
 
         self::assertIsObject($settlement);
-        self::assertObjectHasAttribute('id', $settlement);
+        self::assertObjectHasProperty('id', $settlement);
         self::assertSame('6EC506EE-7919-11E8-A4CE-0242AC1E000B', $settlement->id);
     }
 }

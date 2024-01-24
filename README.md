@@ -10,7 +10,9 @@ Docker needs to be running for these commands to work.
 
 ## Requirements
 
-PHP 5.6 and later.
+Version 3.0.0 and above support PHP 5.6 to 7.0
+
+Version 4.0.0 and above support PHP 7.1 and later.
 
 ## Getting Started
 

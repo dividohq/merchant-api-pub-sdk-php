@@ -9,6 +9,8 @@ use Divido\MerchantSDK\Handlers\Applications\Handler;
 use Divido\MerchantSDK\Response\ResponseWrapper;
 use Divido\MerchantSDK\Wrappers\HttpWrapper;
 use Psr\Http\Message\ResponseFactoryInterface;
+use Psr\Http\Message\StreamFactoryInterface;
+use Psr\Http\Message\StreamInterface;
 
 class ApplicationsHandlerTest extends MerchantSDKTestCase
 {
@@ -34,7 +36,7 @@ class ApplicationsHandlerTest extends MerchantSDKTestCase
         self::assertInstanceOf(ResponseWrapper::class, $applications);
         self::assertCount(25, $applications->getResources());
         self::assertIsObject($applications->getResources()[0]);
-        self::assertObjectHasAttribute('id', $applications->getResources()[0]);
+        self::assertObjectHasProperty('id', $applications->getResources()[0]);
         self::assertSame('0074dd19-dbba-4d80-bdb7-c4a2176cb399', $applications->getResources()[0]->id);
     }
 
@@ -60,7 +62,7 @@ class ApplicationsHandlerTest extends MerchantSDKTestCase
         self::assertInstanceOf(ResponseWrapper::class, $applications);
         self::assertCount(25, $applications->getResources());
         self::assertIsObject($applications->getResources()[0]);
-        self::assertObjectHasAttribute('id', $applications->getResources()[0]);
+        self::assertObjectHasProperty('id', $applications->getResources()[0]);
         self::assertSame('0074dd19-dbba-4d80-bdb7-c4a2176cb399', $applications->getResources()[0]->id);
     }
 
@@ -91,7 +93,7 @@ class ApplicationsHandlerTest extends MerchantSDKTestCase
         self::assertInstanceOf(ResponseWrapper::class, $applications);
         self::assertCount(35, $applications->getResources());
         self::assertIsObject($applications->getResources()[0]);
-        self::assertObjectHasAttribute('id', $applications->getResources()[0]);
+        self::assertObjectHasProperty('id', $applications->getResources()[0]);
         self::assertSame('0074dd19-dbba-4d80-bdb7-c4a2176cb399', $applications->getResources()[0]->id);
         self::assertSame('97ed2a20-a362-4a66-b252-237aea10ead5', $applications->getResources()[34]->id);
     }
@@ -158,10 +160,10 @@ class ApplicationsHandlerTest extends MerchantSDKTestCase
         self::assertInstanceOf(\Generator::class, $applications);
 
         $application = $applications->current();
-        self::assertCount(35, $applications);
+        self::assertCount(35, iterator_to_array($applications, false));
 
         self::assertIsObject($application);
-        self::assertObjectHasAttribute('id', $application);
+        self::assertObjectHasProperty('id', $application);
         self::assertSame('0074dd19-dbba-4d80-bdb7-c4a2176cb399', $application->id);
     }
 
@@ -193,12 +195,10 @@ class ApplicationsHandlerTest extends MerchantSDKTestCase
 
         $application = $applications->current();
 
-        // Bug?:
-        // Failed asserting that actual size 0 matches expected size 0
-        self::assertCount(25, $applications);
+        self::assertCount(25, iterator_to_array($applications, false));
 
         self::assertIsObject($application);
-        self::assertObjectHasAttribute('id', $application);
+        self::assertObjectHasProperty('id', $application);
         self::assertSame('0074dd19-dbba-4d80-bdb7-c4a2176cb399', $application->id);
     }
 
@@ -257,11 +257,16 @@ class ApplicationsHandlerTest extends MerchantSDKTestCase
 
         $requestFactory = $this->createRequestFactory();
 
-        $wrapper = new HttpWrapper('-merchant-api-pub-http-host-', 'divido', $httpClient, $requestFactory);
+        $mockStreamFactory = $this->createMock(StreamFactoryInterface::class);
+        $mockStreamFactory->method('createStream')->willReturn(
+            $this->createMock(StreamInterface::class)
+        );
+
+        $wrapper = new HttpWrapper('-merchant-api-pub-http-host-', 'divido', $httpClient, $requestFactory, $mockStreamFactory);
 
         $handler = new Handler($wrapper);
 
-        $application = (new \Divido\MerchantSDK\Models\Application)
+        $application = (new \Divido\MerchantSDK\Models\Application())
             ->withCountryId('GB')
             ->withCurrencyId('GBP')
             ->withLanguageId('EN')
@@ -314,7 +319,12 @@ class ApplicationsHandlerTest extends MerchantSDKTestCase
 
         $requestFactory = $this->createRequestFactory();
 
-        $wrapper = new HttpWrapper('-merchant-api-pub-http-host-', 'divido', $httpClient, $requestFactory);
+        $mockStreamFactory = $this->createMock(StreamFactoryInterface::class);
+        $mockStreamFactory->method('createStream')->willReturn(
+            $this->createMock(StreamInterface::class)
+        );
+
+        $wrapper = new HttpWrapper('-merchant-api-pub-http-host-', 'divido', $httpClient, $requestFactory, $mockStreamFactory);
 
         $handler = new Handler($wrapper);
 
@@ -343,11 +353,16 @@ class ApplicationsHandlerTest extends MerchantSDKTestCase
 
         $requestFactory = $this->createRequestFactory();
 
-        $wrapper = new HttpWrapper('-merchant-api-pub-http-host-', 'divido', $httpClient, $requestFactory);
+        $mockStreamFactory = $this->createMock(StreamFactoryInterface::class);
+        $mockStreamFactory->method('createStream')->willReturn(
+            $this->createMock(StreamInterface::class)
+        );
+
+        $wrapper = new HttpWrapper('-merchant-api-pub-http-host-', 'divido', $httpClient, $requestFactory, $mockStreamFactory);
 
         $handler = new Handler($wrapper);
 
-        $application = (new \Divido\MerchantSDK\Models\Application)
+        $application = (new \Divido\MerchantSDK\Models\Application())
             ->withId('6985ef52-7d7c-457e-9a03-e98b648bf9b7')
             ->withFinancePlanId('F335FED7A-A266-A8BF-960A-4CB56CC6DE6F')
             ->withDepositAmount(10000);

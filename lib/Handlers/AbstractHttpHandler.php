@@ -18,12 +18,17 @@ use Psr\Http\Message\ResponseInterface;
  */
 abstract class AbstractHttpHandler
 {
-    const POST_METHOD = 'POST';
-    const GET_METHOD = 'GET';
-    const PUT_METHOD = 'PUT';
-    const PATCH_METHOD = 'PATCH';
-    const DELETE_METHOD = 'DELETE';
-    const HEAD_METHOD = 'HEAD';
+    public const POST_METHOD = 'POST';
+
+    public const GET_METHOD = 'GET';
+
+    public const PUT_METHOD = 'PUT';
+
+    public const PATCH_METHOD = 'PATCH';
+
+    public const DELETE_METHOD = 'DELETE';
+
+    public const HEAD_METHOD = 'HEAD';
 
     /**
      * @var WrapperInterface
@@ -86,8 +91,7 @@ abstract class AbstractHttpHandler
         $hasMorePages = true;
         $options->setPage(1);
 
-        while ($hasMorePages)
-        {
+        while ($hasMorePages) {
             /** @var ResponseWrapper $response */
             $response = call_user_func([$this, $callback], $options, ...$args);
 
@@ -121,8 +125,7 @@ abstract class AbstractHttpHandler
         $hasMorePages = true;
         $options->setPage(1);
 
-        while ($hasMorePages)
-        {
+        while ($hasMorePages) {
             /** @var ResponseWrapper $response */
             $response = call_user_func([$this, $callback], $options, ...$args);
             foreach ($response->getResources() as $resource) {

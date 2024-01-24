@@ -10,8 +10,6 @@ use Divido\MerchantSDK\Handlers\ApiRequestOptions;
 use Divido\MerchantSDK\Response\ResponseWrapper;
 use Divido\MerchantSDK\Test\Unit\MerchantSDKTestCase;
 use Divido\MerchantSDK\Wrappers\HttpWrapper;
-use Http\Message\RequestFactory;
-use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseFactoryInterface;
 
 class ChannelsIntegrationTest extends MerchantSDKTestCase
@@ -23,8 +21,7 @@ class ChannelsIntegrationTest extends MerchantSDKTestCase
             $this->createResponseMock(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/channels_page_1.json'))
         );
 
-        $requestFactory = self::createMock(RequestFactory::class);
-        $requestFactory->method('createRequest')->willReturn(self::createMock(RequestInterface::class));
+        $requestFactory = $this->createRequestFactory();
 
         $wrapper = new HttpWrapper('-merchant-api-pub-http-host-', 'divido', $httpClient, $requestFactory);
 
@@ -37,7 +34,7 @@ class ChannelsIntegrationTest extends MerchantSDKTestCase
         self::assertInstanceOf(ResponseWrapper::class, $channels);
         self::assertCount(2, $channels->getResources());
         self::assertIsObject($channels->getResources()[0]);
-        self::assertObjectHasAttribute('id', $channels->getResources()[0]);
+        self::assertObjectHasProperty('id', $channels->getResources()[0]);
         self::assertSame('CF0A92CE9-4935-DC6F-DD0D-463EC9D654A1', $channels->getResources()[0]->id);
     }
 
@@ -48,8 +45,7 @@ class ChannelsIntegrationTest extends MerchantSDKTestCase
             $this->createResponseMock(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/channels_page_1.json'))
         );
 
-        $requestFactory = self::createMock(RequestFactory::class);
-        $requestFactory->method('createRequest')->willReturn(self::createMock(RequestInterface::class));
+        $requestFactory = $this->createRequestFactory();
 
         $wrapper = new HttpWrapper('-merchant-api-pub-http-host-', 'divido', $httpClient, $requestFactory);
 
@@ -62,7 +58,7 @@ class ChannelsIntegrationTest extends MerchantSDKTestCase
         self::assertInstanceOf(ResponseWrapper::class, $channels);
         self::assertCount(2, $channels->getResources());
         self::assertIsObject($channels->getResources()[0]);
-        self::assertObjectHasAttribute('id', $channels->getResources()[0]);
+        self::assertObjectHasProperty('id', $channels->getResources()[0]);
         self::assertSame('CF0A92CE9-4935-DC6F-DD0D-463EC9D654A1', $channels->getResources()[0]->id);
     }
 
@@ -73,8 +69,7 @@ class ChannelsIntegrationTest extends MerchantSDKTestCase
             $this->createResponseMock(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/channels_page_1.json'))
         );
 
-        $requestFactory = self::createMock(RequestFactory::class);
-        $requestFactory->method('createRequest')->willReturn(self::createMock(RequestInterface::class));
+        $requestFactory = $this->createRequestFactory();
 
         $wrapper = new HttpWrapper('-merchant-api-pub-http-host-', 'divido', $httpClient, $requestFactory);
 
@@ -87,7 +82,7 @@ class ChannelsIntegrationTest extends MerchantSDKTestCase
         self::assertInstanceOf(ResponseWrapper::class, $channels);
         self::assertCount(2, $channels->getResources());
         self::assertIsObject($channels->getResources()[0]);
-        self::assertObjectHasAttribute('id', $channels->getResources()[0]);
+        self::assertObjectHasProperty('id', $channels->getResources()[0]);
         self::assertSame('CF0A92CE9-4935-DC6F-DD0D-463EC9D654A1', $channels->getResources()[0]->id);
     }
 
@@ -98,8 +93,7 @@ class ChannelsIntegrationTest extends MerchantSDKTestCase
             $this->createResponseMock(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/channels_page_1.json'))
         );
 
-        $requestFactory = self::createMock(RequestFactory::class);
-        $requestFactory->method('createRequest')->willReturn(self::createMock(RequestInterface::class));
+        $requestFactory = $this->createRequestFactory();
 
         $wrapper = new HttpWrapper('-merchant-api-pub-http-host-', 'divido', $httpClient, $requestFactory);
 
@@ -112,10 +106,10 @@ class ChannelsIntegrationTest extends MerchantSDKTestCase
         self::assertInstanceOf(\Generator::class, $channels);
 
         $plan = $channels->current();
-        self::assertCount(2, $channels);
+        self::assertCount(2, iterator_to_array($channels, false));
 
         self::assertIsObject($plan);
-        self::assertObjectHasAttribute('id', $plan);
+        self::assertObjectHasProperty('id', $plan);
         self::assertSame('CF0A92CE9-4935-DC6F-DD0D-463EC9D654A1', $plan->id);
     }
 
@@ -125,8 +119,8 @@ class ChannelsIntegrationTest extends MerchantSDKTestCase
         $httpClient->addResponse(
             $this->createResponseMock(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/channels_page_1.json'))
         );
-        $requestFactory = self::createMock(RequestFactory::class);
-        $requestFactory->method('createRequest')->willReturn(self::createMock(RequestInterface::class));
+
+        $requestFactory = $this->createRequestFactory();
 
         $wrapper = new HttpWrapper('-merchant-api-pub-http-host-', 'divido', $httpClient, $requestFactory);
 
@@ -146,8 +140,7 @@ class ChannelsIntegrationTest extends MerchantSDKTestCase
             $this->createResponseMock(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/channels_page_1.json'))
         );
 
-        $requestFactory = self::createMock(RequestFactory::class);
-        $requestFactory->method('createRequest')->willReturn(self::createMock(RequestInterface::class));
+        $requestFactory = $this->createRequestFactory();
 
         $wrapper = new HttpWrapper('-merchant-api-pub-http-host-', 'divido', $httpClient, $requestFactory);
 
@@ -160,10 +153,10 @@ class ChannelsIntegrationTest extends MerchantSDKTestCase
         self::assertInstanceOf(\Generator::class, $channels);
 
         $channel = $channels->current();
-        self::assertCount(2, $channels);
+        self::assertCount(2, iterator_to_array($channels, false));
 
         self::assertIsObject($channel);
-        self::assertObjectHasAttribute('id', $channel);
+        self::assertObjectHasProperty('id', $channel);
         self::assertSame('CF0A92CE9-4935-DC6F-DD0D-463EC9D654A1', $channel->id);
     }
 }

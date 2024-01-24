@@ -11,8 +11,6 @@ use Divido\MerchantSDK\Models\Application;
 use Divido\MerchantSDK\Response\ResponseWrapper;
 use Divido\MerchantSDK\Test\Unit\MerchantSDKTestCase;
 use Divido\MerchantSDK\Wrappers\HttpWrapper;
-use Http\Message\RequestFactory;
-use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseFactoryInterface;
 
 class ApplicationRefundsIntegrationTest extends MerchantSDKTestCase
@@ -29,8 +27,7 @@ class ApplicationRefundsIntegrationTest extends MerchantSDKTestCase
             $this->createResponseMock(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/application_refunds_page_1.json'))
         );
 
-        $requestFactory = self::createMock(RequestFactory::class);
-        $requestFactory->method('createRequest')->willReturn(self::createMock(RequestInterface::class));
+        $requestFactory = $this->createRequestFactory();
 
         $wrapper = new HttpWrapper('-merchant-api-pub-http-host-', 'divido', $httpClient, $requestFactory);
 
@@ -41,7 +38,7 @@ class ApplicationRefundsIntegrationTest extends MerchantSDKTestCase
         if ($applicationModelProvided) {
             $application = $this->applicationId;
         } else {
-            $application = (new Application)->withId($this->applicationId);
+            $application = (new Application())->withId($this->applicationId);
         }
 
         $refunds = $sdk->getApplicationRefundsByPage($requestOptions, $application);
@@ -50,7 +47,7 @@ class ApplicationRefundsIntegrationTest extends MerchantSDKTestCase
         self::assertCount(2, $refunds->getResources());
 
         self::assertIsObject($refunds->getResources()[0]);
-        self::assertObjectHasAttribute('id', $refunds->getResources()[0]);
+        self::assertObjectHasProperty('id', $refunds->getResources()[0]);
         self::assertSame('97ca1476-2c9c-4ca2-b4c6-1f41f2ecdf5b', $refunds->getResources()[0]->id);
 
     }
@@ -62,8 +59,7 @@ class ApplicationRefundsIntegrationTest extends MerchantSDKTestCase
             $this->createResponseMock(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/application_refunds_page_1.json'))
         );
 
-        $requestFactory = self::createMock(RequestFactory::class);
-        $requestFactory->method('createRequest')->willReturn(self::createMock(RequestInterface::class));
+        $requestFactory = $this->createRequestFactory();
 
         $wrapper = new HttpWrapper('-merchant-api-pub-http-host-', 'divido', $httpClient, $requestFactory);
 
@@ -71,7 +67,7 @@ class ApplicationRefundsIntegrationTest extends MerchantSDKTestCase
 
         $requestOptions = (new ApiRequestOptions());
 
-        $application = (new Application)->withId($this->applicationId);
+        $application = (new Application())->withId($this->applicationId);
 
         $refunds = $sdk->getApplicationRefundsByPage($requestOptions, $application);
 
@@ -79,7 +75,7 @@ class ApplicationRefundsIntegrationTest extends MerchantSDKTestCase
         self::assertCount(2, $refunds->getResources());
 
         self::assertIsObject($refunds->getResources()[0]);
-        self::assertObjectHasAttribute('id', $refunds->getResources()[0]);
+        self::assertObjectHasProperty('id', $refunds->getResources()[0]);
         self::assertSame('97ca1476-2c9c-4ca2-b4c6-1f41f2ecdf5b', $refunds->getResources()[0]->id);
     }
 
@@ -96,8 +92,7 @@ class ApplicationRefundsIntegrationTest extends MerchantSDKTestCase
             $this->createResponseMock(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/application_refunds_page_2.json'))
         );
 
-        $requestFactory = self::createMock(RequestFactory::class);
-        $requestFactory->method('createRequest')->willReturn(self::createMock(RequestInterface::class));
+        $requestFactory = $this->createRequestFactory();
 
         $wrapper = new HttpWrapper('-merchant-api-pub-http-host-', 'divido', $httpClient, $requestFactory);
 
@@ -108,7 +103,7 @@ class ApplicationRefundsIntegrationTest extends MerchantSDKTestCase
         if ($applicationModelProvided) {
             $application = $this->applicationId;
         } else {
-            $application = (new Application)->withId($this->applicationId);
+            $application = (new Application())->withId($this->applicationId);
         }
 
         $refunds = $sdk->getAllApplicationRefunds($requestOptions, $application);
@@ -116,7 +111,7 @@ class ApplicationRefundsIntegrationTest extends MerchantSDKTestCase
         self::assertInstanceOf(ResponseWrapper::class, $refunds);
         // self::assertCount(2, $refunds->getResources());
         self::assertIsObject($refunds->getResources()[0]);
-        self::assertObjectHasAttribute('id', $refunds->getResources()[0]);
+        self::assertObjectHasProperty('id', $refunds->getResources()[0]);
         self::assertSame('97ca1476-2c9c-4ca2-b4c6-1f41f2ecdf5b', $refunds->getResources()[0]->id);
         self::assertSame('69c08979-b727-407b-b449-6f03de02dd77', $refunds->getResources()[1]->id);
     }
@@ -131,8 +126,7 @@ class ApplicationRefundsIntegrationTest extends MerchantSDKTestCase
             $this->createResponseMock(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/application_refunds_page_2.json'))
         );
 
-        $requestFactory = self::createMock(RequestFactory::class);
-        $requestFactory->method('createRequest')->willReturn(self::createMock(RequestInterface::class));
+        $requestFactory = $this->createRequestFactory();
 
         $wrapper = new HttpWrapper('-merchant-api-pub-http-host-', 'divido', $httpClient, $requestFactory);
 
@@ -140,17 +134,17 @@ class ApplicationRefundsIntegrationTest extends MerchantSDKTestCase
 
         $requestOptions = (new ApiRequestOptions())->setPage(2);
 
-        $application = (new Application)->withId($this->applicationId);
+        $application = (new Application())->withId($this->applicationId);
 
         $refunds = $sdk->yieldAllApplicationRefunds($requestOptions, $application);
 
         self::assertInstanceOf(\Generator::class, $refunds);
 
         $refund = $refunds->current();
-        self::assertCount(3, $refunds);
+        self::assertCount(3, iterator_to_array($refunds, false));
 
         self::assertIsObject($refund);
-        self::assertObjectHasAttribute('id', $refund);
+        self::assertObjectHasProperty('id', $refund);
         self::assertSame('97ca1476-2c9c-4ca2-b4c6-1f41f2ecdf5b', $refund->id);
     }
 
@@ -161,8 +155,7 @@ class ApplicationRefundsIntegrationTest extends MerchantSDKTestCase
             $this->createResponseMock(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/application_refunds_page_1.json'))
         );
 
-        $requestFactory = self::createMock(RequestFactory::class);
-        $requestFactory->method('createRequest')->willReturn(self::createMock(RequestInterface::class));
+        $requestFactory = $this->createRequestFactory();
 
         $wrapper = new HttpWrapper('-merchant-api-pub-http-host-', 'divido', $httpClient, $requestFactory);
 
@@ -170,7 +163,7 @@ class ApplicationRefundsIntegrationTest extends MerchantSDKTestCase
 
         $requestOptions = (new ApiRequestOptions())->setSort('-created_at');
 
-        $application = (new Application)->withId($this->applicationId);
+        $application = (new Application())->withId($this->applicationId);
 
         $sdk->getApplicationRefundsByPage($requestOptions, $application);
 
@@ -187,8 +180,7 @@ class ApplicationRefundsIntegrationTest extends MerchantSDKTestCase
             $this->createResponseMock(200, [], file_get_contents(APP_PATH . '/tests/assets/responses/application_refunds_page_2.json'))
         );
 
-        $requestFactory = self::createMock(RequestFactory::class);
-        $requestFactory->method('createRequest')->willReturn(self::createMock(RequestInterface::class));
+        $requestFactory = $this->createRequestFactory();
 
         $wrapper = new HttpWrapper('-merchant-api-pub-http-host-', 'divido', $httpClient, $requestFactory);
 
@@ -201,10 +193,10 @@ class ApplicationRefundsIntegrationTest extends MerchantSDKTestCase
         self::assertInstanceOf(\Generator::class, $refunds);
 
         $refund = $refunds->current();
-        self::assertCount(2, $refunds);
+        self::assertCount(2, iterator_to_array($refunds, false));
 
         self::assertIsObject($refund);
-        self::assertObjectHasAttribute('id', $refund);
+        self::assertObjectHasProperty('id', $refund);
         self::assertSame('97ca1476-2c9c-4ca2-b4c6-1f41f2ecdf5b', $refund->id);
     }
 

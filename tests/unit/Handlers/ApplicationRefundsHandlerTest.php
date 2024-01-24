@@ -9,9 +9,9 @@ use Divido\MerchantSDK\Handlers\ApplicationRefunds\Handler;
 use Divido\MerchantSDK\Models\Application;
 use Divido\MerchantSDK\Response\ResponseWrapper;
 use Divido\MerchantSDK\Wrappers\HttpWrapper;
-use Http\Message\RequestFactory;
-use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseFactoryInterface;
+use Psr\Http\Message\StreamFactoryInterface;
+use Psr\Http\Message\StreamInterface;
 
 class ApplicationRefundsHandlerTest extends MerchantSDKTestCase
 {
@@ -26,14 +26,13 @@ class ApplicationRefundsHandlerTest extends MerchantSDKTestCase
             ))
         );
 
-        $requestFactory = self::createMock(RequestFactory::class);
-        $requestFactory->method('createRequest')->willReturn(self::createMock(RequestInterface::class));
+        $requestFactory = $this->createRequestFactory();
 
         $wrapper = new HttpWrapper('-merchant-api-pub-http-host-', 'divido', $httpClient, $requestFactory);
 
         $handler = new Handler($wrapper);
 
-        $application = (new Application)->withId($this->applicationId);
+        $application = (new Application())->withId($this->applicationId);
         $requestOptions = (new ApiRequestOptions());
 
         $refunds = $handler->getApplicationRefunds($requestOptions, $application);
@@ -42,7 +41,7 @@ class ApplicationRefundsHandlerTest extends MerchantSDKTestCase
         self::assertCount(2, $refunds->getResources());
 
         self::assertIsObject($refunds->getResources()[0]);
-        self::assertObjectHasAttribute('id', $refunds->getResources()[0]);
+        self::assertObjectHasProperty('id', $refunds->getResources()[0]);
         self::assertSame('97ca1476-2c9c-4ca2-b4c6-1f41f2ecdf5b', $refunds->getResources()[0]->id);
     }
 
@@ -55,14 +54,13 @@ class ApplicationRefundsHandlerTest extends MerchantSDKTestCase
             ))
         );
 
-        $requestFactory = self::createMock(RequestFactory::class);
-        $requestFactory->method('createRequest')->willReturn(self::createMock(RequestInterface::class));
+        $requestFactory = $this->createRequestFactory();
 
         $wrapper = new HttpWrapper('-merchant-api-pub-http-host-', 'divido', $httpClient, $requestFactory);
 
         $handler = new Handler($wrapper);
 
-        $application = (new Application)->withId($this->applicationId);
+        $application = (new Application())->withId($this->applicationId);
         $requestOptions = (new ApiRequestOptions());
 
         $refunds = $handler->getApplicationRefundsByPage($requestOptions, $application);
@@ -71,7 +69,7 @@ class ApplicationRefundsHandlerTest extends MerchantSDKTestCase
         self::assertCount(2, $refunds->getResources());
 
         self::assertIsObject($refunds->getResources()[0]);
-        self::assertObjectHasAttribute('id', $refunds->getResources()[0]);
+        self::assertObjectHasProperty('id', $refunds->getResources()[0]);
         self::assertSame('97ca1476-2c9c-4ca2-b4c6-1f41f2ecdf5b', $refunds->getResources()[0]->id);
     }
 
@@ -89,14 +87,13 @@ class ApplicationRefundsHandlerTest extends MerchantSDKTestCase
             ))
         );
 
-        $requestFactory = self::createMock(RequestFactory::class);
-        $requestFactory->method('createRequest')->willReturn(self::createMock(RequestInterface::class));
+        $requestFactory = $this->createRequestFactory();
 
         $wrapper = new HttpWrapper('-merchant-api-pub-http-host-', 'divido', $httpClient, $requestFactory);
 
         $handler = new Handler($wrapper);
 
-        $application = (new Application)->withId($this->applicationId);
+        $application = (new Application())->withId($this->applicationId);
 
         $requestOptions = (new ApiRequestOptions())->setPaginated(false);
         $refunds = $handler->getAllApplicationRefunds($requestOptions, $application);
@@ -104,7 +101,7 @@ class ApplicationRefundsHandlerTest extends MerchantSDKTestCase
         self::assertInstanceOf(ResponseWrapper::class, $refunds);
         self::assertCount(3, $refunds->getResources());
         self::assertIsObject($refunds->getResources()[0]);
-        self::assertObjectHasAttribute('id', $refunds->getResources()[0]);
+        self::assertObjectHasProperty('id', $refunds->getResources()[0]);
         self::assertSame('97ca1476-2c9c-4ca2-b4c6-1f41f2ecdf5b', $refunds->getResources()[0]->id);
         self::assertSame('69c08979-b727-407b-b449-6f03de02dd77', $refunds->getResources()[1]->id);
         self::assertSame('69c08979-b727-407b-b449-6f03de02dd78', $refunds->getResources()[2]->id);
@@ -124,14 +121,13 @@ class ApplicationRefundsHandlerTest extends MerchantSDKTestCase
             ))
         );
 
-        $requestFactory = self::createMock(RequestFactory::class);
-        $requestFactory->method('createRequest')->willReturn(self::createMock(RequestInterface::class));
+        $requestFactory = $this->createRequestFactory();
 
         $wrapper = new HttpWrapper('-merchant-api-pub-http-host-', 'divido', $httpClient, $requestFactory);
 
         $handler = new Handler($wrapper);
 
-        $application = (new Application)->withId($this->applicationId);
+        $application = (new Application())->withId($this->applicationId);
         $requestOptions = (new ApiRequestOptions())->setPaginated(false);
 
         $refunds = $handler->yieldAllApplicationRefunds($requestOptions, $application);
@@ -139,10 +135,10 @@ class ApplicationRefundsHandlerTest extends MerchantSDKTestCase
         self::assertInstanceOf(\Generator::class, $refunds);
 
         $refund = $refunds->current();
-        self::assertCount(3, $refunds);
+        self::assertCount(3, iterator_to_array($refunds, false));
 
         self::assertIsObject($refund);
-        self::assertObjectHasAttribute('id', $refund);
+        self::assertObjectHasProperty('id', $refund);
         self::assertSame('97ca1476-2c9c-4ca2-b4c6-1f41f2ecdf5b', $refund->id);
     }
 
@@ -160,14 +156,13 @@ class ApplicationRefundsHandlerTest extends MerchantSDKTestCase
             ))
         );
 
-        $requestFactory = self::createMock(RequestFactory::class);
-        $requestFactory->method('createRequest')->willReturn(self::createMock(RequestInterface::class));
+        $requestFactory = $this->createRequestFactory();
 
         $wrapper = new HttpWrapper('-merchant-api-pub-http-host-', 'divido', $httpClient, $requestFactory);
 
         $handler = new Handler($wrapper);
 
-        $application = (new Application)->withId($this->applicationId);
+        $application = (new Application())->withId($this->applicationId);
         $requestOptions = (new ApiRequestOptions())->setPaginated(true);
 
         $refunds = $handler->yieldApplicationRefunds($requestOptions, $application);
@@ -175,10 +170,10 @@ class ApplicationRefundsHandlerTest extends MerchantSDKTestCase
         self::assertInstanceOf(\Generator::class, $refunds);
 
         $refund = $refunds->current();
-        self::assertCount(2, $refunds);
+        self::assertCount(2, iterator_to_array($refunds, false));
 
         self::assertIsObject($refund);
-        self::assertObjectHasAttribute('id', $refund);
+        self::assertObjectHasProperty('id', $refund);
         self::assertSame('97ca1476-2c9c-4ca2-b4c6-1f41f2ecdf5b', $refund->id);
     }
 
@@ -191,14 +186,13 @@ class ApplicationRefundsHandlerTest extends MerchantSDKTestCase
             ))
         );
 
-        $requestFactory = self::createMock(RequestFactory::class);
-        $requestFactory->method('createRequest')->willReturn(self::createMock(RequestInterface::class));
+        $requestFactory = $this->createRequestFactory();
 
         $wrapper = new HttpWrapper('-merchant-api-pub-http-host-', 'divido', $httpClient, $requestFactory);
 
         $handler = new Handler($wrapper);
 
-        $application = (new Application)->withId($this->applicationId);
+        $application = (new Application())->withId($this->applicationId);
 
         $response = $handler->getSingleApplicationRefund($application, '97ca1476-2c9c-4ca2-b4c6-1f41f2ecdf5b');
 
@@ -216,16 +210,20 @@ class ApplicationRefundsHandlerTest extends MerchantSDKTestCase
             ))
         );
 
-        $requestFactory = self::createMock(RequestFactory::class);
-        $requestFactory->method('createRequest')->willReturn(self::createMock(RequestInterface::class));
+        $requestFactory = $this->createRequestFactory();
 
-        $wrapper = new HttpWrapper('-merchant-api-pub-http-host-', 'divido', $httpClient, $requestFactory);
+        $mockStreamFactory = $this->createMock(StreamFactoryInterface::class);
+        $mockStreamFactory->method('createStream')->willReturn(
+            $this->createMock(StreamInterface::class)
+        );
+
+        $wrapper = new HttpWrapper('-merchant-api-pub-http-host-', 'divido', $httpClient, $requestFactory, $mockStreamFactory);
 
         $handler = new Handler($wrapper);
 
-        $application = (new Application)->withId($this->applicationId);
+        $application = (new Application())->withId($this->applicationId);
 
-        $refund = (new \Divido\MerchantSDK\Models\ApplicationRefund)
+        $refund = (new \Divido\MerchantSDK\Models\ApplicationRefund())
             ->withAmount(1000)
             ->withReference('D4M-njPjFRE-MxsB')
             ->withComment('Item refunded')

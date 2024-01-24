@@ -9,9 +9,9 @@ use Divido\MerchantSDK\Handlers\ApplicationCancellations\Handler;
 use Divido\MerchantSDK\Models\Application;
 use Divido\MerchantSDK\Response\ResponseWrapper;
 use Divido\MerchantSDK\Wrappers\HttpWrapper;
-use Http\Message\RequestFactory;
-use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseFactoryInterface;
+use Psr\Http\Message\StreamFactoryInterface;
+use Psr\Http\Message\StreamInterface;
 
 class ApplicationCancellationsHandlerTest extends MerchantSDKTestCase
 {
@@ -26,14 +26,13 @@ class ApplicationCancellationsHandlerTest extends MerchantSDKTestCase
             ))
         );
 
-        $requestFactory = self::createMock(RequestFactory::class);
-        $requestFactory->method('createRequest')->willReturn(self::createMock(RequestInterface::class));
+        $requestFactory = $this->createRequestFactory();
 
         $wrapper = new HttpWrapper('-merchant-api-pub-http-host-', 'divido', $httpClient, $requestFactory);
 
         $handler = new Handler($wrapper);
 
-        $application = (new Application)->withId($this->applicationId);
+        $application = (new Application())->withId($this->applicationId);
         $requestOptions = (new ApiRequestOptions());
 
         $cancellations = $handler->getApplicationCancellations($requestOptions, $application);
@@ -42,7 +41,7 @@ class ApplicationCancellationsHandlerTest extends MerchantSDKTestCase
         self::assertCount(2, $cancellations->getResources());
 
         self::assertIsObject($cancellations->getResources()[0]);
-        self::assertObjectHasAttribute('id', $cancellations->getResources()[0]);
+        self::assertObjectHasProperty('id', $cancellations->getResources()[0]);
         self::assertSame('5d1b94f5-3a7f-4f70-be6e-bb53abd7f955', $cancellations->getResources()[0]->id);
     }
 
@@ -55,14 +54,13 @@ class ApplicationCancellationsHandlerTest extends MerchantSDKTestCase
             ))
         );
 
-        $requestFactory = self::createMock(RequestFactory::class);
-        $requestFactory->method('createRequest')->willReturn(self::createMock(RequestInterface::class));
+        $requestFactory = $this->createRequestFactory();
 
         $wrapper = new HttpWrapper('-merchant-api-pub-http-host-', 'divido', $httpClient, $requestFactory);
 
         $handler = new Handler($wrapper);
 
-        $application = (new Application)->withId($this->applicationId);
+        $application = (new Application())->withId($this->applicationId);
         $requestOptions = (new ApiRequestOptions());
 
         $cancellations = $handler->getApplicationCancellationsByPage($requestOptions, $application);
@@ -71,7 +69,7 @@ class ApplicationCancellationsHandlerTest extends MerchantSDKTestCase
         self::assertCount(2, $cancellations->getResources());
 
         self::assertIsObject($cancellations->getResources()[0]);
-        self::assertObjectHasAttribute('id', $cancellations->getResources()[0]);
+        self::assertObjectHasProperty('id', $cancellations->getResources()[0]);
         self::assertSame('5d1b94f5-3a7f-4f70-be6e-bb53abd7f955', $cancellations->getResources()[0]->id);
     }
 
@@ -89,14 +87,13 @@ class ApplicationCancellationsHandlerTest extends MerchantSDKTestCase
             ))
         );
 
-        $requestFactory = self::createMock(RequestFactory::class);
-        $requestFactory->method('createRequest')->willReturn(self::createMock(RequestInterface::class));
+        $requestFactory = $this->createRequestFactory();
 
         $wrapper = new HttpWrapper('-merchant-api-pub-http-host-', 'divido', $httpClient, $requestFactory);
 
         $handler = new Handler($wrapper);
 
-        $application = (new Application)->withId($this->applicationId);
+        $application = (new Application())->withId($this->applicationId);
 
         $requestOptions = (new ApiRequestOptions())->setPaginated(false);
         $cancellations = $handler->getAllApplicationCancellations($requestOptions, $application);
@@ -104,7 +101,7 @@ class ApplicationCancellationsHandlerTest extends MerchantSDKTestCase
         self::assertInstanceOf(ResponseWrapper::class, $cancellations);
         self::assertCount(3, $cancellations->getResources());
         self::assertIsObject($cancellations->getResources()[0]);
-        self::assertObjectHasAttribute('id', $cancellations->getResources()[0]);
+        self::assertObjectHasProperty('id', $cancellations->getResources()[0]);
         self::assertSame('5d1b94f5-3a7f-4f70-be6e-bb53abd7f955', $cancellations->getResources()[0]->id);
         self::assertSame('5d1b94f5-3a7f-4f70-be6e-ab53abd7f950', $cancellations->getResources()[1]->id);
         self::assertSame('5d1b94f5-3a7f-4f70-be6e-bb53abd7f955', $cancellations->getResources()[2]->id);
@@ -124,14 +121,13 @@ class ApplicationCancellationsHandlerTest extends MerchantSDKTestCase
             ))
         );
 
-        $requestFactory = self::createMock(RequestFactory::class);
-        $requestFactory->method('createRequest')->willReturn(self::createMock(RequestInterface::class));
+        $requestFactory = $this->createRequestFactory();
 
         $wrapper = new HttpWrapper('-merchant-api-pub-http-host-', 'divido', $httpClient, $requestFactory);
 
         $handler = new Handler($wrapper);
 
-        $application = (new Application)->withId($this->applicationId);
+        $application = (new Application())->withId($this->applicationId);
         $requestOptions = (new ApiRequestOptions())->setPaginated(false);
 
         $cancellations = $handler->yieldAllApplicationCancellations($requestOptions, $application);
@@ -139,10 +135,10 @@ class ApplicationCancellationsHandlerTest extends MerchantSDKTestCase
         self::assertInstanceOf(\Generator::class, $cancellations);
 
         $cancellation = $cancellations->current();
-        self::assertCount(3, $cancellations);
+        self::assertCount(3, iterator_to_array($cancellations, false));
 
         self::assertIsObject($cancellation);
-        self::assertObjectHasAttribute('id', $cancellation);
+        self::assertObjectHasProperty('id', $cancellation);
         self::assertSame('5d1b94f5-3a7f-4f70-be6e-bb53abd7f955', $cancellation->id);
     }
 
@@ -160,14 +156,13 @@ class ApplicationCancellationsHandlerTest extends MerchantSDKTestCase
             ))
         );
 
-        $requestFactory = self::createMock(RequestFactory::class);
-        $requestFactory->method('createRequest')->willReturn(self::createMock(RequestInterface::class));
+        $requestFactory = $this->createRequestFactory();
 
         $wrapper = new HttpWrapper('-merchant-api-pub-http-host-', 'divido', $httpClient, $requestFactory);
 
         $handler = new Handler($wrapper);
 
-        $application = (new Application)->withId($this->applicationId);
+        $application = (new Application())->withId($this->applicationId);
         $requestOptions = (new ApiRequestOptions())->setPaginated(true);
 
         $cancellations = $handler->yieldApplicationCancellations($requestOptions, $application);
@@ -175,10 +170,10 @@ class ApplicationCancellationsHandlerTest extends MerchantSDKTestCase
         self::assertInstanceOf(\Generator::class, $cancellations);
 
         $cancellation = $cancellations->current();
-        self::assertCount(2, $cancellations);
+        self::assertCount(2, iterator_to_array($cancellations, false));
 
         self::assertIsObject($cancellation);
-        self::assertObjectHasAttribute('id', $cancellation);
+        self::assertObjectHasProperty('id', $cancellation);
         self::assertSame('5d1b94f5-3a7f-4f70-be6e-bb53abd7f955', $cancellation->id);
     }
 
@@ -191,14 +186,13 @@ class ApplicationCancellationsHandlerTest extends MerchantSDKTestCase
             ))
         );
 
-        $requestFactory = self::createMock(RequestFactory::class);
-        $requestFactory->method('createRequest')->willReturn(self::createMock(RequestInterface::class));
+        $requestFactory = $this->createRequestFactory();
 
         $wrapper = new HttpWrapper('-merchant-api-pub-http-host-', 'divido', $httpClient, $requestFactory);
 
         $handler = new Handler($wrapper);
 
-        $application = (new Application)->withId($this->applicationId);
+        $application = (new Application())->withId($this->applicationId);
 
         $response = $handler->getSingleApplicationCancellation($application, '5d1b94f5-3a7f-4f70-be6e-bb53abd7f955');
 
@@ -216,16 +210,20 @@ class ApplicationCancellationsHandlerTest extends MerchantSDKTestCase
             ))
         );
 
-        $requestFactory = self::createMock(RequestFactory::class);
-        $requestFactory->method('createRequest')->willReturn(self::createMock(RequestInterface::class));
+        $requestFactory = $this->createRequestFactory();
 
-        $wrapper = new HttpWrapper('-merchant-api-pub-http-host-', 'divido', $httpClient, $requestFactory);
+        $mockStreamFactory = $this->createMock(StreamFactoryInterface::class);
+        $mockStreamFactory->method('createStream')->willReturn(
+            $this->createMock(StreamInterface::class)
+        );
+
+        $wrapper = new HttpWrapper('-merchant-api-pub-http-host-', 'divido', $httpClient, $requestFactory, $mockStreamFactory);
 
         $handler = new Handler($wrapper);
 
-        $application = (new Application)->withId($this->applicationId);
+        $application = (new Application())->withId($this->applicationId);
 
-        $cancellation = (new \Divido\MerchantSDK\Models\ApplicationCancellation)
+        $cancellation = (new \Divido\MerchantSDK\Models\ApplicationCancellation())
             ->withAmount(1000)
             ->withReference('D4M-njPjFRE-MxsB')
             ->withComment('Item cancelled')

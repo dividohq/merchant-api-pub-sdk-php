@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Divido\MerchantSDK\Test\Unit;
 
-use Http\Message\RequestFactory;
 use PHPUnit\Framework\TestCase;
+use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamInterface;
@@ -26,9 +26,18 @@ class MerchantSDKTestCase extends TestCase
 
     protected function createRequestFactory()
     {
-        $requestFactory = self::createMock(RequestFactory::class);
-        $requestFactory->method('createRequest')->willReturn(self::createMock(RequestInterface::class));
+        $requestFactory = self::createMock(RequestFactoryInterface::class);
+        $requestFactory->method('createRequest')->willReturn($this->createMockRequest());
 
         return $requestFactory;
+    }
+
+    protected function createMockRequest()
+    {
+        $mockRequest = self::createMock(RequestInterface::class);
+        $mockRequest->method('withHeader')->willReturnSelf();
+        $mockRequest->method('withBody')->willReturnSelf();
+
+        return $mockRequest;
     }
 }

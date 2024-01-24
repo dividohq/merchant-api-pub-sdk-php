@@ -52,7 +52,7 @@ trait ClientProxyTrait
     public function getApplicationActivationsByPage(ApiRequestOptions $options, $application)
     {
         if (is_string($application)) {
-            $application = (new Application)->withId($application);
+            $application = (new Application())->withId($application);
         }
 
         $options->setPaginated(true);
@@ -71,7 +71,7 @@ trait ClientProxyTrait
     public function getAllApplicationActivations(ApiRequestOptions $options, $application)
     {
         if (is_string($application)) {
-            $application = (new Application)->withId($application);
+            $application = (new Application())->withId($application);
         }
 
         $options->setPaginated(false);
@@ -90,7 +90,7 @@ trait ClientProxyTrait
     public function yieldAllApplicationActivations(ApiRequestOptions $options, $application)
     {
         if (is_string($application)) {
-            $application = (new Application)->withId($application);
+            $application = (new Application())->withId($application);
         }
 
         $options->setPaginated(false);
@@ -110,7 +110,7 @@ trait ClientProxyTrait
     public function yieldApplicationActivationsByPage(ApiRequestOptions $options, $application)
     {
         if (is_string($application)) {
-            $application = (new Application)->withId($application);
+            $application = (new Application())->withId($application);
         }
 
         $options->setPaginated(true);

@@ -17,23 +17,23 @@ use Divido\MerchantSDK\Exceptions\InvalidEnvironmentException;
  */
 class Environment
 {
-    const DEV = "dev";
+    public const DEV = "dev";
 
-    const TESTING = "testing";
+    public const TESTING = "testing";
 
-    const SANDBOX = "sandbox";
+    public const SANDBOX = "sandbox";
 
-    const STAGING = "staging";
+    public const STAGING = "staging";
 
-    const USER_ACCEPTANCE_TESTING = "uat";
+    public const USER_ACCEPTANCE_TESTING = "uat";
 
-    const PRODUCTION = "production";
+    public const PRODUCTION = "production";
 
-    const LIVE = "production";
+    public const LIVE = "production";
 
-    const CONFIGURATION_PROPERTY_BASE_URI = 'base_uri';
+    public const CONFIGURATION_PROPERTY_BASE_URI = 'base_uri';
 
-    const CONFIGURATION = [
+    public const CONFIGURATION = [
         'dev' => [
             self::CONFIGURATION_PROPERTY_BASE_URI => 'https://merchant-api-pub.api.dev.divido.net',
         ],
@@ -58,15 +58,15 @@ class Environment
      */
     public static function validateApiKeyFormat($apiKey)
     {
-        if(empty($apiKey)){
+        if(empty($apiKey)) {
             throw new InvalidApiKeyFormatException('API Key can not be empty');
         }
 
-        if(strpos($apiKey, '_') === false){
+        if(strpos($apiKey, '_') === false) {
             throw new InvalidApiKeyFormatException('API key does not contain an underscore');
         }
 
-        if(strpos($apiKey, '_') === 0){
+        if(strpos($apiKey, '_') === 0) {
             throw new InvalidApiKeyFormatException('API key can not start with an underscore');
         }
 
@@ -98,7 +98,7 @@ class Environment
             : 'self::'. $environment;
 
         // Check that the constant is defined.
-        if(!defined($constantName)){
+        if(!defined($constantName)) {
             throw new InvalidEnvironmentException('Could not find environment with name: ' . $environment);
         }
 
@@ -106,7 +106,7 @@ class Environment
         $constantValue = constant($constantName);
 
         // If the accessed constant is not a string
-        if(!is_string($constantValue)){
+        if(!is_string($constantValue)) {
             throw new InvalidEnvironmentException('Could not find valid environment value for environment name: ' . $environment);
         }
 
@@ -134,12 +134,12 @@ class Environment
         $environmentConfiguration = self::CONFIGURATION[$environmentName];
 
         // If no property is supplied, return the entire configuration array as is
-        if($propertyName === null){
+        if($propertyName === null) {
             return $environmentConfiguration;
         }
 
         // Property does not exist
-        if(!array_key_exists($propertyName, $environmentConfiguration)){
+        if(!array_key_exists($propertyName, $environmentConfiguration)) {
             throw new InvalidConfigurationPropertyNameException('Could not find configuration property');
         }
 
