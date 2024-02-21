@@ -38,13 +38,13 @@ class Environment
             self::CONFIGURATION_PROPERTY_BASE_URI => 'https://merchant-api-pub.api.dev.divido.net',
         ],
         'testing' => [
-            self::CONFIGURATION_PROPERTY_BASE_URI => 'https://merchant-api-pub.api.testing.divido.net',
+            self::CONFIGURATION_PROPERTY_BASE_URI => 'https://merchant-api.api.testing.divido.net',
         ],
         'sandbox' => [
             self::CONFIGURATION_PROPERTY_BASE_URI => 'https://merchant.api.sandbox.divido.net',
         ],
         'staging' => [
-            self::CONFIGURATION_PROPERTY_BASE_URI => 'https://merchant-api-pub.api.staging.divido.net',
+            self::CONFIGURATION_PROPERTY_BASE_URI => 'https://merchant-api.api.staging.divido.net',
         ],
         'production' => [
             self::CONFIGURATION_PROPERTY_BASE_URI => 'https://merchant.api.divido.com',
