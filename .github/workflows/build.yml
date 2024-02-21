@@ -31,7 +31,7 @@ jobs:
           RELEASERC_JSON: '{"plugins": ["@semantic-release/commit-analyzer","@semantic-release/release-notes-generator","@semantic-release/github"]}'
         run: echo $RELEASERC_JSON > .releaserc
       - name: Semantic Release
-        uses: cycjimmy/semantic-release-action@v2
+        uses: cycjimmy/semantic-release-action@v3
         with:
           semantic_version: 17.0.8
           branches: |
