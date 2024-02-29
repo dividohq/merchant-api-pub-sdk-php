@@ -70,7 +70,7 @@ $httpClientWrapper = new \Divido\MerchantSDK\Wrappers\HttpWrapper(
 $sdk = new \Divido\MerchantSDK\Client($httpClientWrapper, $env);
 ```
 
-The SDK will automiatcally attempt to discover a compatible request factory interface to use. 
+The SDK will automatically attempt to discover a compatible request factory interface to use. 
 But with version 4+ of the SDK, you can explicitly specify this as a third argument for the Wrapper, ie:
 
 ```
