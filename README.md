@@ -70,6 +70,28 @@ $httpClientWrapper = new \Divido\MerchantSDK\Wrappers\HttpWrapper(
 $sdk = new \Divido\MerchantSDK\Client($httpClientWrapper, $env);
 ```
 
+The SDK will automiatcally attempt to discover a compatible request factory interface to use. 
+But with version 4+ of the SDK, you can explicitly specify this as a third argument for the Wrapper, ie:
+
+```
+$httpClientWrapper = new \Divido\MerchantSDK\Wrappers\HttpWrapper(
+    'TENANT_URI',
+    'TENANT_API_KEY',
+    new \Laminas\Diactoros\RequestFactory()
+);
+```
+
+You can also explicitly specify a Stream Factory Interface as your fourth argument:
+```
+$httpClientWrapper = new \Divido\MerchantSDK\Wrappers\HttpWrapper(
+    'TENANT_URI',
+    'TENANT_API_KEY',
+    new \Laminas\Diactoros\RequestFactory()
+    new \Laminas\Diactoros\StreamFactory()
+);
+```
+
+
 ### Get all finance plans
 
 ```php
